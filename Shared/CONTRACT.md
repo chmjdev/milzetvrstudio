@@ -1,9 +1,21 @@
-# Shared content contract — foundation
+# Milzet content contracts
 
-`project.mjs` currently validates empty editable drafts only. Runtime packages are a separate upcoming schema, not these draft JSON files. WebXR and Unity are required delivery targets; neither runtime is implemented by this foundation.
+## Editable empty draft
 
-Draft fields: schemaVersion=1, kind=milzet-authoring-draft, id, title, template, targets=[webxr,unity], assets=[], scenes=[], bindings=[], phases=[induct,shadow,perform,prove] each with empty steps.
+`project.mjs` preserves the original empty-only `milzet-authoring-draft` v1 contract. It is not a playable package. Asset-inclusive content uses the distinct format below.
 
-Reject unknown fields and schema versions. Reject populated arrays until their validators/importers exist. An empty draft is not a playable scenario. Client assets remain outside shipped source. No executable rules, remote credentials, user identities or CareerWIL business records belong in the content contract.
+## Playable package v1
 
-The future compiled package must use relative paths, asset hashes, explicit projection, immutable revisions and validated references. Unity/WebXR adapters will share fixtures and capabilities. Use Y-up metres in the format; define coordinate/handedness conversion explicitly before 3D adapters are written.
+The envelope is JSON: `formatVersion:1`, `kind:milzet-playable`, `manifest` (a JSON string), `manifestSha256` (SHA-256 of its exact UTF-8 bytes), and `files:[{path,base64}]`.
+
+Manifest: id, title, fixture boolean, entryPhase, assets, plate, hotspots, phases. Asset records contain id, relative path, MIME, byte length and SHA-256. Files must match the manifest exactly; no external paths or requests. Accepted media: PNG/JPEG flat plate, WAV audio, at most 12 MB each, package at most 24 MB of JSON characters (UI also limits file bytes). Base64 increases size. This is a small-scene prototype format, not large-video transport.
+
+Plate: assetId and projection=flat. Hotspots: id, label, text, normalized x/y (top-left origin), narrationAssetId or empty string, evidence boolean. The browser maps [0,1] anchors to a 4m × 2.4m plate. Its default center is (0,1.5,-2), Y-up; Unity rendering must define the handedness conversion before visual parity acceptance.
+
+Phases are a nonempty ordered subset of induct/shadow/perform/prove with hotspotIds, next phase or empty terminal, and gate=none|host. Every phase must be reachable from entryPhase; cycles are rejected. All phase hotspots must be visited before advance. Host gates cannot be bypassed by content. Session completion is terminal and emitted once.
+
+The local test-host callback receives unique event IDs, package ID, revision hash, phase, type and hotspot ID. It emits hotspot.selected, evidence.requested, phase.completed, phase.started and scenario.completed. This is a test-host contract only; identity, authorization, persistence, assessment decisions and retries at an external service are not implemented. The C# engine emits type/phase/hotspot to its host adapter; a production adapter must attach session IDs and package revision as the web adapter does.
+
+Recovery stores the entire envelope and asset bytes in IndexedDB transactionally. Backups export that same envelope. Sessions intentionally restart on recovery. Real progress is external. Files/hashes and phase validation are checked by both JS and the native C# reader; shared negative fixtures test corruption and unsupported content.
+
+No teacher assets, credentials, executable rules or CareerWIL business records belong here. Rubrics/answer keys are not part of v1. The fixture remains conspicuously marked when media is replaced; marking reviewed client content requires a later authoring workflow.

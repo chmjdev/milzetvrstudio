@@ -1,6 +1,6 @@
 # milzetvrstudio content-generation fork plan
 
-Revised 8 September 2026 after scope confirmation. Fork name, location, delivery targets and generation direction are recorded below. Planning only; no fork or implementation has been executed.
+Revised 8 September 2026 after scope confirmation. Fork name, location, delivery targets and generation direction are recorded below. The content-free fork was created at commit 8ca1b0e. The first playable-package increment is now implemented and undergoing final verification; see MILZET_IMPLEMENTATION_STATUS.md for current evidence.
 
 ## Objective
 
@@ -78,6 +78,16 @@ Manual import and template-based composition must work without an AI service. Ge
 - **Host contract:** package import, launch configuration and optional runtime callbacks. CareerWIL-specific implementation remains outside VR Studio.
 
 Keep reusable rendering independent of anatomy lessons and of CareerWIL. Preserve the upstream application's existing work and asset originals.
+
+## Current acceptance tracking
+
+- Foundation: complete, local clean-content fork created.
+- Authoring: empty drafts, flat-media replacement, package backups and explicit phase editing implemented; general composer and provider integration pending.
+- Browser: flat-plate scene/hotspot preview and test-host handoff verified; immersive device acceptance pending.
+- Native: C# package reader/session verified against the browser export; Unity visual playback pending.
+- Client content: procedural fixtures only; onsite media and client acceptance pending.
+
+The current implementation sequence brings the minimal playable contract alongside media import before the general composer. Phase subsets use explicit transitions and external release gates. Asset-inclusive package backups precede onsite acceptance; resumable provider jobs follow with provider integration.
 
 ## Delivery milestones
 
@@ -186,4 +196,4 @@ Requirements: `/Users/mziwamadoda/Downloads/DOC-20260904-WA0001.pdf`, particular
 
 Repository references reviewed: `README.md`, `AGENTS.md`, `.agents/VR_TOOLCHAIN.md`, `Web/README.md`, `Web/package.json`, `Web/lib/database.ts`, `Web/lib/session.ts`, `Web/lib/studio-runtime.ts`, `SharedContent/README.md`, `Tools/LessonStudio/LESSON_PACKAGE.md` and `Tools/LessonStudio/AUTHORING_BACKLOG.md`.
 
-No application implementation, paid generation, new repository, build or deployment was performed. Estimates follow baseline inspection and verification of the two required delivery targets; the PDF's historical prototype date is not a delivery commitment.
+The clean local repository and foundation build exist. The playable increment adds local code and tests; no paid generation, remote publication or headset deployment has occurred. Estimates follow baseline inspection and verification of the two required delivery targets; the PDF's historical prototype date is not a delivery commitment.

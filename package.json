@@ -12,20 +12,22 @@
     "lint": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node tests/browser.mjs",
-    "audit:content": "node scripts/audit-content.mjs"
+    "audit:content": "node scripts/audit-content.mjs",
+    "test:native": "node scripts/test-native.mjs"
   },
   "dependencies": {
+    "clsx": "2.1.1",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "clsx": "2.1.1",
-    "tailwind-merge": "3.6.0"
+    "tailwind-merge": "3.6.0",
+    "three": "0.181.2"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "6.0.2",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "playwright": "1.62.1",
     "typescript": "5.9.3",
-    "vite": "8.2.2",
-    "playwright": "1.62.1"
+    "vite": "8.2.2"
   }
 }

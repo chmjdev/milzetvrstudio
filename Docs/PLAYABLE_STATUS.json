@@ -1,0 +1,15 @@
+{
+  "increment": "playable-flat-media-package",
+  "editor": "media replacement, explicit phase editing and asset-inclusive backup/recovery verified",
+  "web": "desktop/375px preview verified; immersive session entry implemented but device acceptance pending",
+  "native": "pure C# reader/session compiled and tested against shared fixtures and exact browser export; Unity rendering pending",
+  "clientContent": "procedural trench schematic plus audio cue only; not client media or instructional content",
+  "tests": [
+    "15 Node tests",
+    "TypeScript and production build",
+    "content audit",
+    "browser media/import/export/recovery/gate/event tests",
+    "C# shared validation/session and browser-export round trip"
+  ],
+  "restrictions": "No paid generation, private uploads, remote publication, headset deploy, CareerWIL writes or original vrstudio edits."
+}

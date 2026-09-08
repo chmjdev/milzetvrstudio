@@ -1,25 +1,30 @@
 # Milzet VR Studio
 
-A clean content-authoring foundation derived from VR Studio. Product location: Binteca Interactive. CareerWIL is an external consumer.
+A content-free source fork of VR Studio for authoring client-owned VR scenarios. CareerWIL remains external.
 
-## Implemented
+## Implemented and checked
 
-Empty project creation; environment-template selection; four phase placeholders; browser-local save/reopen; validated empty-draft import/export; content-exclusion audit. No teaching models or media are shipped.
+- Empty drafts remain separate from playable packages.
+- Create an explicitly labelled procedural trench test package on demand: flat image plate, four hotspots, text prompts and a WAV test cue.
+- Import PNG/JPEG plates and WAV narration; export all asset bytes with the manifest in one portable JSON package.
+- Check SHA-256 hashes, version, paths, references and phase transitions before opening.
+- Recover package media from IndexedDB after reload. Export backups for independent archival; browser storage is not permanent.
+- Author phase subsets and explicit transitions. Preview with a local test-host release gate and evidence/completion events.
+- Render the package in a browser with Three.js; WebXR feature detection and session entry are implemented but headset playback has not been accepted.
+- Native C# package reader and phase engine compile and pass shared fixture/corruption/gate tests using Unity's bundled Mono. They also load the exact package exported by the browser.
 
-## Run locally
+## Still outstanding
 
-Node >=24. Run `npm ci`, `npm test`, `npm run audit:content`, and `npm run build`. `npm run dev` opens an ephemeral loopback authoring preview; use the address printed by Vite. This preview is not a registered estate service. No fixed port, remote domain or deployment is assigned. JCDS registration/deployment is a separate milestone.
+Native Unity scene rendering, headset input/acceptance, 180/360 projection, general asset library/composer, voice recording, provider generation/resume, and client onsite content acceptance. The C# reader test is not Unity visual playback or device acceptance. The fixture's short WAV is an audio loading cue, not spoken instruction; prompt read-aloud uses the browser speech facility.
 
-## Source provenance
+## Local checks
 
-`UPSTREAM.json` records the committed vrstudio baseline and exact copied file hashes. This is a clean source snapshot, not a clone containing excluded model history. New authoring-shell and contract files are authored here. The original source and its uncommitted work remain untouched.
+Node >=24. `npm ci`, `npm test`, `npm run audit:content`, `npm run build`, `npm run test:browser`, `npm run test:native`.
 
-## Data
+`npm run dev` serves an ephemeral loopback preview. It is not a registered estate service or deployment. No fixed port or remote domain is assigned.
 
-Drafts use the `milzetvrstudio.draft.v1` browser storage key. Export a JSON backup; browser storage is not permanent archival storage. Import replaces the active local draft. The current draft format is intentionally empty-only and is not a playable content package.
+Use “Create trench test fixture” in the package lab, inspect hotspots, simulate the host gate, then export. Import rejects corrupt packages without replacing the current recovery copy. Empty-draft storage and package recovery use separate stores. A recovered package starts a new preview attempt; real worker progress belongs to the host.
 
-## Not yet implemented
+## Provenance and scope
 
-Asset import, 3D composer, generation adapters, compiled package export, WebXR immersive runtime and Unity package playback. Shared contract and native target directories establish their boundaries only. Both playback targets remain required.
-
-No paid jobs, remote repository or headset deployment occurred in this foundation. Client-generated media will be stored outside the shipped library. See `Docs/PLAN.md` for the accepted plan.
+`UPSTREAM.json` records the source baseline and copied hashes. No old teaching assets or their Git history are included. Test media is generated only on demand; client data is separate. No paid generation, remote publication, external media uploads or headset deployment occurred.
