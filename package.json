@@ -14,7 +14,8 @@
     "test:browser": "node tests/browser.mjs",
     "audit:content": "node scripts/audit-content.mjs",
     "test:native": "node scripts/test-native.mjs",
-    "test:unity": "python3 scripts/verify-unity.py"
+    "test:unity": "python3 scripts/verify-unity.py",
+    "build:webxr": "tsc --noEmit && vite build --mode webxr"
   },
   "dependencies": {
     "clsx": "2.1.1",

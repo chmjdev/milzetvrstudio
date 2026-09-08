@@ -9,3 +9,5 @@ ClientProjects/
 .env*
 *.tsbuildinfo
 .DS_Store
+
+dist-webxr/

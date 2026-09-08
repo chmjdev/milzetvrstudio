@@ -1,0 +1,14 @@
+{
+  "creator": {
+    "id": "com.binteca.interactive.milzet.creator",
+    "platform": "web"
+  },
+  "viewer": {
+    "id": "com.binteca.interactive.milzet.viewer",
+    "platform": "unity"
+  },
+  "webxr": {
+    "id": "com.binteca.interactive.milzet.webxr",
+    "platform": "web"
+  }
+}
