@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "playMode": true,
+  "context": true,
+  "responsePayload": true,
+  "hostProgression": true,
+  "nodeTests": 27,
+  "browser": "activity authoring, order, hints, responses, private-rubric exclusion, context export and synthetic-microphone PCM recording passed",
+  "limits": [
+    "External host owns grading, evidence and worker records",
+    "Synthetic microphone check only; real microphone quality and headset UI pending",
+    "Time-window engine tested; automatic cue pause not yet separately accepted on a device"
+  ]
+}

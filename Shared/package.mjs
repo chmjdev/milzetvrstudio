@@ -1,3 +1,5 @@
+import {validateContext} from './context.mjs';
+import {validateActivities,activityResponse} from './activities.mjs';
 import {validateGlb,validateObjects} from './models.mjs';
 import {validateVideo} from './video.mjs';
 import { projections,validateProjection } from './projection.mjs';
@@ -9,7 +11,7 @@ export async function sha256(bytes) { return [...new Uint8Array(await crypto.sub
 export function toBase64(bytes) { let text = ''; for (let i = 0; i < bytes.length; i += 8192) text += String.fromCharCode(...bytes.subarray(i, i + 8192)); return btoa(text); }
 export function fromBase64(text) { check(typeof text === 'string' && text.length <= MAX_PACKAGE_BYTES && /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(text), 'Invalid asset encoding.'); return Uint8Array.from(atob(text), c => c.charCodeAt(0)); }
 export function validateManifest(m) {
-  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases',...(m.objects===undefined?[]:['objects'])]);
+  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases',...(m.objects===undefined?[]:['objects']),...(m.activities===undefined?[]:['activities']),...(m.context===undefined?[]:['context'])]);
   check(typeof m.id === 'string' && idPattern.test(m.id) && typeof m.title === 'string' && m.title.trim().length > 0 && m.title.length <= 120 && typeof m.fixture === 'boolean','Invalid package identity.');
   check(Array.isArray(m.assets) && m.assets.length >= 1 && m.assets.length <= 8,'Invalid asset count.');
   const ids = new Set(), paths = new Set();
@@ -44,21 +46,23 @@ export function validateManifest(m) {
   const visited = new Set(); let current = m.entryPhase;
   while(current) { check(!visited.has(current),'Cyclic phase transitions.'); visited.add(current); current=m.phases.find(p=>p.id===current).next; }
   check(visited.size===phases.size,'Unreachable phase.');
-  validateObjects(m);return m;
+  validateObjects(m);validateActivities(m);validateContext(m);return m;
 }
 export async function sealPackage(manifest, files) {
   validateManifest(manifest);
   const text = JSON.stringify(manifest);
-  const envelope = {formatVersion:manifest.objects!==undefined?4:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
+  const envelope = {formatVersion:manifest.context!==undefined?6:manifest.activities!==undefined?5:manifest.objects!==undefined?4:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
   await openPackage(JSON.stringify(envelope)); return envelope;
 }
 export async function openPackage(text) {
   check(typeof text==='string' && text.length <= MAX_PACKAGE_BYTES,'Package exceeds the 24 MB limit.');
   const e=JSON.parse(text); exact(e,['formatVersion','kind','manifest','manifestSha256','files']);
-  check([1,2,3,4].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
+  check([1,2,3,4,5,6].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
   check(await sha256(new TextEncoder().encode(e.manifest))===e.manifestSha256,'Manifest checksum mismatch.');
   const manifest=validateManifest(JSON.parse(e.manifest));
-  check(e.formatVersion===4 || manifest.objects===undefined && !manifest.assets.some(a=>a.mime==='model/gltf-binary'),'Models require package version 4.');
+  check(e.formatVersion===6 || manifest.context===undefined,'Context requires package version 6.');
+  check(e.formatVersion>=5 || manifest.activities===undefined,'Activities require package version 5.');
+  check(e.formatVersion>=4 || manifest.objects===undefined && !manifest.assets.some(a=>a.mime==='model/gltf-binary'),'Models require package version 4.');
   check(e.formatVersion>=3 || !manifest.assets.some(a=>a.mime==='video/mp4'),'Video requires package version 3.');
   check(e.formatVersion!==1 || manifest.plate.projection==='flat','Immersive projection requires package version 2.');
   check(Array.isArray(e.files) && e.files.length===manifest.assets.length,'Missing or extra package assets.');
@@ -83,12 +87,14 @@ export async function replaceAsset(envelope, assetId, bytes, mime) {
   return sealPackage(m,files);
 }
 export function createSession(manifest, revision, host) {
-  let phase=manifest.entryPhase;const seen=new Set();let complete=false;let seq=0;let advancing=false;
-  const emit=(type,hotspotId='')=>host.emit({eventId:host.sessionId+':'+(++seq),packageId:manifest.id,revision,phase,type,hotspotId});
+  let phase=manifest.entryPhase;const seen=new Set();let complete=false;let seq=0;let advancing=false;const responses=new Set(),hints=new Map();
+  const emit=(type,hotspotId='',details={})=>host.emit({...details,eventId:host.sessionId+':'+(++seq),packageId:manifest.id,revision,phase,type,hotspotId});
   return {
-    get phase(){return phase;}, get complete(){return complete;}, get visited(){return [...seen];},
+    get phase(){return phase;}, get complete(){return complete;}, get visited(){return [...seen];},get completedActivities(){return [...responses];},
+    respond(id,response,time=0){check(!complete,'Session is complete.');const a=activityResponse(manifest,phase,responses,id,response,time);responses.add(id);emit('activity.responded','',{activityId:id,response});if(a.kind==='observation')emit('evidence.requested','',{activityId:id,response:''});},
+    hint(id){check(!complete,'Session is complete.');const a=(manifest.activities||[]).find(a=>a.id===id && a.phase===phase);const count=hints.get(id)||0;check(a && a.phase!=='prove' && a.hint && count<a.maxHints,'No hint available.');hints.set(id,count+1);emit('hint.used','',{activityId:id,response:String(count+1)});return a.hint;},
     select(id){check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.includes(id),'Hotspot is not in the active phase.');seen.add(id);emit('hotspot.selected',id);if(manifest.hotspots.find(h=>h.id===id).evidence)emit('evidence.requested',id);},
-    async advance(){check(!advancing,'Transition already in progress.');advancing=true;try{check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.every(id=>seen.has(id)),'Visit every hotspot before continuing.');if(p.next){check(p.gate!=='host' || await host.authorize({packageId:manifest.id,revision,from:phase,to:p.next}),'Host release is required.');emit('phase.completed');phase=p.next;seen.clear();emit('phase.started');}else{complete=true;emit('scenario.completed');}}finally{advancing=false;}}
+    async advance(){check(!advancing,'Transition already in progress.');advancing=true;try{check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.every(id=>seen.has(id)),'Visit every hotspot before continuing.');check((manifest.activities||[]).filter(a=>a.phase===phase).every(a=>responses.has(a.id)),'Complete every activity before continuing.');if(p.next){check(p.gate!=='host' || await host.authorize({packageId:manifest.id,revision,from:phase,to:p.next}),'Host release is required.');emit('phase.completed');phase=p.next;seen.clear();emit('phase.started');}else{complete=true;emit('scenario.completed');}}finally{advancing=false;}}
   };
 }
 

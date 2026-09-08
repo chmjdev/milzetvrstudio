@@ -1,5 +1,5 @@
 import {check,sha256,toBase64,fromBase64,openPackage} from './package.mjs';
-export function emptyLibrary(){return {version:1,kind:'milzet-source-library',assets:[],revisions:[],jobs:[]};}
+export function emptyLibrary(){return {version:1,kind:'milzet-source-library',assets:[],revisions:[],jobs:[],rubrics:[]};}
 function text(value,max=2000){return typeof value==='string' && value.length<=max;}
 export function validateSource(bytes,mime){
  check(bytes.length>0 && bytes.length<=12000000,'Source asset limit is 12 MB.');
@@ -19,7 +19,7 @@ export async function importSource(library,name,mime,bytes,provenance){
  const next=structuredClone(library);next.assets.push(asset);await validateLibrary(next);return next;
 }
 export async function validateLibrary(value){
- check(value && value.version===1 && value.kind==='milzet-source-library' && Object.keys(value).sort().join(',')==='assets,jobs,kind,revisions,version','Unsupported source library.');
+ check(value && value.version===1 && value.kind==='milzet-source-library' && Object.keys(value).sort().join(',')===(value.rubrics===undefined?'assets,jobs,kind,revisions,version':'assets,jobs,kind,revisions,rubrics,version'),'Unsupported source library.');
  check(Array.isArray(value.assets) && value.assets.length<=32 && Array.isArray(value.revisions) && value.revisions.length<=20 && Array.isArray(value.jobs) && value.jobs.length<=100,'Source library limit exceeded.');
  check(JSON.stringify(value).length<=120000000,'Source backup exceeds 120 MB.');
  const ids=new Set();
@@ -28,6 +28,7 @@ export async function validateLibrary(value){
  check(new Set(value.jobs.map(j=>j.id)).size===value.jobs.length,'Duplicate generation request.');
  for(const r of value.revisions){const p=await openPackage(JSON.stringify(r.envelope));check(r.revision===p.envelope.manifestSha256 && text(r.savedAt,40),'Invalid scenario revision.');}
  for(const j of value.jobs)check(j && text(j.id,80) && ['meshy','elevenlabs'].includes(j.provider) && ['prepared','submitted','succeeded','failed','uncertain'].includes(j.status) && text(j.prompt,5000) && text(j.remoteId,200),'Invalid generation job.');
+ for(const r of value.rubrics||[])check(r && /^[a-f0-9]{64}$/.test(r.revision) && text(r.title,120) && text(r.text,10000),'Invalid private rubric.');
  return value;
 }
 export async function archiveRevision(library,envelope){

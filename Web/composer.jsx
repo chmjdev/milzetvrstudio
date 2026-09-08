@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ContextEditor } from './context-editor';
+import { ActivityEditor } from './activity-editor';
 import { applyComposition, newHotspot } from '../Shared/authoring.mjs';
 
 export function Composer({ loaded, busy, apply }) {
@@ -61,7 +63,7 @@ export function Composer({ loaded, busy, apply }) {
           {phase && <>{draft.hotspots.map(h => <label className="check-row" key={h.id}><input type="checkbox" aria-label={id + ': ' + h.label} checked={phase.hotspotIds.includes(h.id)} onChange={e => edit(m => { const p = m.phases.find(p => p.id === id); p.hotspotIds = e.target.checked ? [...p.hotspotIds, h.id] : p.hotspotIds.filter(key => key !== h.id); })}/>{h.label}</label>)}{phase.next && <label className="check-row"><input type="checkbox" aria-label={'Host release after ' + id} checked={phase.gate === 'host'} onChange={e => edit(m => { m.phases.find(p => p.id === id).gate = e.target.checked ? 'host' : 'none'; })}/>Host release before {phase.next}</label>}</>}
         </div>;
       })}</div>
-      <button className="primary" disabled={!dirty} onClick={() => apply(async () => applyComposition(loaded.envelope, draft))}>Apply composition</button>
+      <ContextEditor draft={draft} edit={edit}/><ActivityEditor draft={draft} edit={edit}/><button className="primary" disabled={!dirty} onClick={() => apply(async () => applyComposition(loaded.envelope, draft))}>Apply composition</button>
     </fieldset>
   </details>;
 }

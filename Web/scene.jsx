@@ -2,7 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import * as T from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {anchor,surface} from '../Shared/projection.mjs';
-export function Scene({loaded,onSelect}) {
+export function Scene({loaded,onSelect,onTime}) {
  const mount=useRef(null), runtime=useRef(null), select=useRef(onSelect),video=useRef(null);select.current=onSelect;
  const [available,setAvailable]=useState(false),[error,setError]=useState(''),[duration,setDuration]=useState(0),[time,setTime]=useState(0);
  useEffect(()=>{
@@ -14,7 +14,7 @@ export function Scene({loaded,onSelect}) {
    mount.current.appendChild(renderer.domElement);
    const asset=loaded.manifest.assets.find(a=>a.id===loaded.manifest.plate.assetId);
    url=URL.createObjectURL(new Blob([loaded.bytes.get(asset.id)],{type:asset.mime}));
-   if(asset.mime==='video/mp4'){const media=document.createElement('video');media.src=url;media.playsInline=true;media.preload='auto';media.onloadedmetadata=()=>{const ratio=loaded.manifest.plate.projection==='equirect360'?2:1;if(immersive && media.videoWidth!==media.videoHeight*ratio){setError('Video dimensions do not match the selected mono projection.');media.removeAttribute('src');return;}setDuration(media.duration);};media.ontimeupdate=()=>setTime(media.currentTime);media.onerror=()=>setError('The browser could not decode this video. Use H.264 MP4.');video.current=media;texture=new T.VideoTexture(media);}else{texture=new T.TextureLoader().load(url);}texture.colorSpace=T.SRGBColorSpace;
+   if(asset.mime==='video/mp4'){const media=document.createElement('video');media.src=url;media.playsInline=true;media.preload='auto';media.onloadedmetadata=()=>{const ratio=loaded.manifest.plate.projection==='equirect360'?2:1;if(immersive && media.videoWidth!==media.videoHeight*ratio){setError('Video dimensions do not match the selected mono projection.');media.removeAttribute('src');return;}setDuration(media.duration);};media.ontimeupdate=()=>{setTime(media.currentTime);if(onTime?.(media.currentTime))media.pause();};media.onerror=()=>setError('The browser could not decode this video. Use H.264 MP4.');video.current=media;texture=new T.VideoTexture(media);}else{texture=new T.TextureLoader().load(url);}texture.colorSpace=T.SRGBColorSpace;
    const geometry=immersive?new T.BufferGeometry():new T.PlaneGeometry(4,2.4);if(immersive){const data=surface(loaded.manifest.plate.projection);geometry.setAttribute('position',new T.Float32BufferAttribute(data.positions,3));geometry.setAttribute('uv',new T.Float32BufferAttribute(data.uvs,2));geometry.setIndex(data.indices);geometry.computeVertexNormals();}const material=new T.MeshBasicMaterial({map:texture});resources.push(geometry,material);
    const plate=new T.Mesh(geometry,material);if(!immersive)plate.position.set(0,1.5,-2);scene.add(plate);
    const targets=loaded.manifest.hotspots.map(h=>{const g=new T.SphereGeometry(.065,16,12),m=new T.MeshBasicMaterial({color:'#d6f895'});resources.push(g,m);const mesh=new T.Mesh(g,m);mesh.position.set(...anchor(h.x,h.y,loaded.manifest.plate.projection));mesh.userData.id=h.id;scene.add(mesh);return mesh;});
