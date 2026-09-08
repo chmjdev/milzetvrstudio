@@ -141,6 +141,27 @@ try {
   await page.setViewportSize({width:375,height:812});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth),false);
   await page.screenshot({path:'Artifacts/composer-phone.png',fullPage:true});
+  await page.getByText('Source library, revisions and generation requests',{exact:true}).click();
+  await page.getByLabel('Content owner',{exact:true}).fill('Test client');
+  await page.getByLabel('Usage rights or licence',{exact:true}).fill('Client-owned test source');
+  await page.getByLabel('Import original source',{exact:true}).setInputFiles({name:'source.png',mimeType:'image/png',buffer:Buffer.from(image.base64,'base64')});
+  await page.getByRole('status').filter({hasText:'Source library saved locally'}).waitFor();
+  await page.getByRole('button',{name:'Archive current scenario revision',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Source library saved locally'}).waitFor();
+  await page.getByLabel('Generation provider',{exact:true}).selectOption('meshy');
+  await page.getByLabel('Generation prompt',{exact:true}).fill('A plain inspection marker for a procedural test');
+  await page.getByRole('button',{name:'Prepare generation request',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Source library saved locally'}).waitFor();
+  const sourcesEvent=page.waitForEvent('download');await page.getByRole('button',{name:'Back up source library',exact:true}).click();const sourcesDownload=await sourcesEvent;
+  const sourceBackup=JSON.parse(await readFile(await sourcesDownload.path(),'utf8'));
+  assert.equal(sourceBackup.assets.length,1);assert.equal(sourceBackup.revisions.length,1);assert.equal(sourceBackup.jobs[0].status,'prepared');assert.equal(sourceBackup.assets[0].provenance.owner,'Test client');
+  await page.reload();await page.getByText('Source library, revisions and generation requests',{exact:true}).click();await page.getByRole('button',{name:'Download original',exact:true}).waitFor();
+  const corruptedSource=structuredClone(sourceBackup);corruptedSource.assets[0].sha256='bad';
+  await page.getByLabel('Restore source backup',{exact:true}).setInputFiles({name:'invalid-sources.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(corruptedSource))});
+  await page.getByRole('status').filter({hasText:'Source checksum mismatch'}).waitFor();await page.getByRole('button',{name:'Download original',exact:true}).waitFor();
+  await page.getByRole('button',{name:'Create scenario from this source',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  assert.equal(await page.getByLabel('Scenario title',{exact:true}).inputValue(),'source.png');
   for(const projection of ['equirect180','equirect360']) {
     const panorama=await page.evaluate(kind=>{const c=document.createElement('canvas');c.width=kind==='equirect180'?512:1024;c.height=512;const x=c.getContext('2d');x.fillStyle='#cc3333';x.fillRect(0,0,c.width,c.height);for(const [a,b,color] of [[.125,.375,'#cccc33'],[.375,.625,'#3366cc'],[.625,.875,'#33cc66']]){x.fillStyle=color;x.fillRect(c.width*a,0,c.width*(b-a),c.height);}return c.toDataURL('image/png').split(',')[1];},projection);
     await page.getByLabel('Create scenario from image',{exact:true}).setInputFiles({name:projection+'.png',mimeType:'image/png',buffer:Buffer.from(panorama,'base64')});
