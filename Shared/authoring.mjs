@@ -12,7 +12,7 @@ export async function createImageScenario(title, bytes, mime) {
 
 export async function applyComposition(envelope, draft) {
   const { manifest } = await openPackage(JSON.stringify(envelope));
-  return sealPackage({ ...manifest, title: draft.title, plate: structuredClone(draft.plate), hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
+  return sealPackage({ ...manifest, ...(draft.objects===undefined?{}:{objects:structuredClone(draft.objects)}), title: draft.title, plate: structuredClone(draft.plate), hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
 }
 
 export async function addNarration(envelope, bytes) {
@@ -22,4 +22,12 @@ export async function addNarration(envelope, bytes) {
   const asset = { id, path: `assets/${id}.wav`, mime: 'audio/wav', bytes: bytes.length, sha256: await sha256(bytes) };
   manifest.assets.push(asset);
   return sealPackage(manifest, [...envelope.files, { path: asset.path, base64: toBase64(bytes) }]);
+}
+
+export async function addModel(envelope,name,bytes){
+ const {manifest}=await openPackage(JSON.stringify(envelope));
+ const id='model-'+crypto.randomUUID();const asset={id,path:`assets/${id}.glb`,mime:'model/gltf-binary',bytes:bytes.length,sha256:await sha256(bytes)};
+ manifest.assets.push(asset);manifest.objects=manifest.objects||[];
+ manifest.objects.push({id:'object-'+crypto.randomUUID(),label:name.slice(0,80),assetId:id,parentId:'',position:[0,1.5,-1],rotation:[0,0,0],scale:[1,1,1],visible:true,hotspotId:''});
+ return sealPackage(manifest,[...envelope.files,{path:asset.path,base64:toBase64(bytes)}]);
 }

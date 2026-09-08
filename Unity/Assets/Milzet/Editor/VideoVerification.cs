@@ -19,7 +19,7 @@ public static class VideoVerification {
   player.Video.time=1.5;limit=Time.realtimeSinceStartup+10;while(Math.Abs(player.Video.time-1.5)>.15 && Time.realtimeSinceStartup<limit)yield return null;
   PackageReader.Require(Math.Abs(player.Video.time-1.5)<.15,"Video seek failed.");
   File.WriteAllText(Path.Combine(output,"video-verification.json"),"{\"passed\":true,\"playMode\":true,\"decodedFrame\":true,\"playbackAdvanced\":true,\"seek\":true,\"projection\":\"equirect360\",\"headset\":\"not tested\"}");
-  Debug.Log("MILZET_VIDEO_PASS");EditorApplication.Exit(0);
+  Debug.Log("MILZET_VIDEO_PASS");UnityEngine.Object.DestroyImmediate(player.gameObject);ModelVerification.StartCheck(directory,output);
  }
 }
 }

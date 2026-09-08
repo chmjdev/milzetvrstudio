@@ -29,3 +29,9 @@ UV origin is top-left; x increases right, y increases downward. Image centre fac
 ## MP4 extension (version 3)
 
 Packages containing `video/mp4` assets use version 3. MP4 paths end in `.mp4`; the plate can reference that asset with flat, equirect180 or equirect360 projection. Both readers inspect MP4 boxes for one H.264 video sample entry and verify encoded dimensions, including mono projection aspect. Clip limit: 12 MB and 4096 pixels per side. Codec decoding is verified separately from structural validation. The browser and native player expose play/pause/seek. Unity prepares a clip and decodes a frame before replacing the current scene; media is cached in its temporary application folder. No scripts are loaded from media.
+
+## GLB scene extension (version 4)
+
+A version-4 manifest adds `objects` with id, label, assetId, parentId, position, rotation, scale, visible and hotspotId. GLB assets use model/gltf-binary and .glb paths. Transforms are local to the parent, in metres and Euler XYZ degrees, with web forward −Z. Cycles, missing references and nonfinite/out-of-budget transforms are rejected. Unity reflects Z for authored transforms and compensates for glTFast’s X-reflected import coordinate convention. Both show static GLB scenes and link mesh selection to hotspot events. Animations are not controlled in this increment.
+
+Models must embed resources, use uncompressed GLB 2.0 and contain 1–200,000 vertices. Required extensions are limited to KHR_materials_unlit and KHR_texture_transform. Maximum 16 scene objects and eight total package assets. glTFast 6.20.0 is installed from Unity’s official registry. Models are prepared before replacing the native scene.

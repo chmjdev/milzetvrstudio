@@ -9,3 +9,5 @@
 Creator and WebXR currently share the browser authoring/preview implementation. These are web manifest identities, not Android applicationIds. There is no native Creator application in this repository. A later native Creator wrapper must use the reserved Creator identifier. The native Unity project is the Viewer target.
 
 No app was installed, uninstalled, migrated or published. Changing an Android applicationId creates a distinct app identity for future builds; existing installed apps/data are untouched. Browser recovery keys are unchanged, and the manifests do not establish offline/service-worker support. Native headset packaging, signing and deployment remain separate acceptance work.
+
+Unity Play Mode verification read PlayerSettings.GetApplicationIdentifier for both NamedBuildTarget.Android and Standalone and confirmed com.binteca.interactive.milzet.viewer. Evidence: Artifacts/UnityVisual/model-verification.json.

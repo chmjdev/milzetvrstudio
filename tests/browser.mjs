@@ -2,6 +2,7 @@ import { chromium } from 'playwright';
 import { createServer } from 'vite';
 import { mkdir, readFile } from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
+import {triangleGlb} from './model-fixture.mjs';
 import assert from 'node:assert/strict';
 const server = await createServer({ server: { host: '127.0.0.1', port: 0 } });
 let browser;
@@ -193,6 +194,18 @@ try {
   await page.locator('.scene-view').screenshot({path:'Artifacts/video-browser.png'});
   const videoExport=page.waitForEvent('download');await page.getByRole('button',{name:'Export package + media'}).click();const videoFile=await videoExport;await videoFile.saveAs('Artifacts/video-browser.milzet-package.json');
   assert.equal(JSON.parse(await readFile(await videoFile.path(),'utf8')).formatVersion,3);
+  await page.getByLabel('Open playable package',{exact:true}).setInputFiles({name:'model-base.json',mimeType:'application/json',buffer:Buffer.from(packageText)});
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  await page.getByLabel('Add GLB model',{exact:true}).setInputFiles({name:'test-triangle.glb',mimeType:'model/gltf-binary',buffer:Buffer.from(triangleGlb())});
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  await page.getByText('test-triangle.glb',{exact:true}).click();
+  await page.getByLabel('test-triangle.glb position X',{exact:true}).fill('0.25');
+  await page.getByLabel('Linked hotspot test-triangle.glb',{exact:true}).selectOption('point-1');
+  await page.getByRole('button',{name:'Apply composition',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  const modelExport=page.waitForEvent('download');await page.getByRole('button',{name:'Export package + media'}).click();const modelFile=await modelExport;await modelFile.saveAs('Artifacts/model-browser.milzet-package.json');
+  const modelPackage=JSON.parse(await readFile(await modelFile.path(),'utf8'));assert.equal(modelPackage.formatVersion,4);assert.equal(JSON.parse(modelPackage.manifest).objects[0].position[0],.25);
+  await page.locator('.scene-view').screenshot({path:'Artifacts/model-browser.png'});
   assert.deepEqual(errors, []);
   console.log('PASS: startup, create, reload, export, safe invalid import, valid import, desktop and 375px layout; zero browser errors; playable media backup/recovery/import and host gate/events passed.');
 } finally { await browser?.close(); await server.close(); }

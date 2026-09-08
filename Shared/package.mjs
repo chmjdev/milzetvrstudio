@@ -1,3 +1,4 @@
+import {validateGlb,validateObjects} from './models.mjs';
 import {validateVideo} from './video.mjs';
 import { projections,validateProjection } from './projection.mjs';
 const idPattern = /^[a-zA-Z0-9-]{1,80}$/;
@@ -8,16 +9,16 @@ export async function sha256(bytes) { return [...new Uint8Array(await crypto.sub
 export function toBase64(bytes) { let text = ''; for (let i = 0; i < bytes.length; i += 8192) text += String.fromCharCode(...bytes.subarray(i, i + 8192)); return btoa(text); }
 export function fromBase64(text) { check(typeof text === 'string' && text.length <= MAX_PACKAGE_BYTES && /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(text), 'Invalid asset encoding.'); return Uint8Array.from(atob(text), c => c.charCodeAt(0)); }
 export function validateManifest(m) {
-  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases']);
+  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases',...(m.objects===undefined?[]:['objects'])]);
   check(typeof m.id === 'string' && idPattern.test(m.id) && typeof m.title === 'string' && m.title.trim().length > 0 && m.title.length <= 120 && typeof m.fixture === 'boolean','Invalid package identity.');
   check(Array.isArray(m.assets) && m.assets.length >= 1 && m.assets.length <= 8,'Invalid asset count.');
   const ids = new Set(), paths = new Set();
   for (const a of m.assets) {
     exact(a,['id','path','mime','bytes','sha256']);
     check(typeof a.id === 'string' && idPattern.test(a.id) && !ids.has(a.id),'Duplicate or invalid asset ID.'); ids.add(a.id);
-    check(/^assets\/[a-zA-Z0-9-]+\.(png|jpg|wav|mp4)$/.test(a.path) && !paths.has(a.path),'Unsafe or duplicate asset path.'); paths.add(a.path);
-    check(['image/png','image/jpeg','audio/wav','video/mp4'].includes(a.mime) && Number.isInteger(a.bytes) && a.bytes > 0 && a.bytes <= 12000000 && /^[a-f0-9]{64}$/.test(a.sha256),'Invalid asset metadata.');
-    check(a.path.endsWith(a.mime === 'image/png' ? '.png' : a.mime === 'image/jpeg' ? '.jpg' : a.mime==='video/mp4'?'.mp4':'.wav'),'Asset extension mismatch.');
+    check(/^assets\/[a-zA-Z0-9-]+\.(png|jpg|wav|mp4|glb)$/.test(a.path) && !paths.has(a.path),'Unsafe or duplicate asset path.'); paths.add(a.path);
+    check(['image/png','image/jpeg','audio/wav','video/mp4','model/gltf-binary'].includes(a.mime) && Number.isInteger(a.bytes) && a.bytes > 0 && a.bytes <= 12000000 && /^[a-f0-9]{64}$/.test(a.sha256),'Invalid asset metadata.');
+    check(a.path.endsWith({'image/png':'.png','image/jpeg':'.jpg','video/mp4':'.mp4','model/gltf-binary':'.glb','audio/wav':'.wav'}[a.mime]),'Asset extension mismatch.');
   }
   exact(m.plate,['assetId','projection']);
   check(projections.includes(m.plate.projection) && m.assets.some(a=>a.id===m.plate.assetId && (a.mime.startsWith('image/') || a.mime==='video/mp4')),'Unsupported image projection.');
@@ -43,21 +44,22 @@ export function validateManifest(m) {
   const visited = new Set(); let current = m.entryPhase;
   while(current) { check(!visited.has(current),'Cyclic phase transitions.'); visited.add(current); current=m.phases.find(p=>p.id===current).next; }
   check(visited.size===phases.size,'Unreachable phase.');
-  return m;
+  validateObjects(m);return m;
 }
 export async function sealPackage(manifest, files) {
   validateManifest(manifest);
   const text = JSON.stringify(manifest);
-  const envelope = {formatVersion:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
+  const envelope = {formatVersion:manifest.objects!==undefined?4:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
   await openPackage(JSON.stringify(envelope)); return envelope;
 }
 export async function openPackage(text) {
   check(typeof text==='string' && text.length <= MAX_PACKAGE_BYTES,'Package exceeds the 24 MB limit.');
   const e=JSON.parse(text); exact(e,['formatVersion','kind','manifest','manifestSha256','files']);
-  check([1,2,3].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
+  check([1,2,3,4].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
   check(await sha256(new TextEncoder().encode(e.manifest))===e.manifestSha256,'Manifest checksum mismatch.');
   const manifest=validateManifest(JSON.parse(e.manifest));
-  check(e.formatVersion===3 || !manifest.assets.some(a=>a.mime==='video/mp4'),'Video requires package version 3.');
+  check(e.formatVersion===4 || manifest.objects===undefined && !manifest.assets.some(a=>a.mime==='model/gltf-binary'),'Models require package version 4.');
+  check(e.formatVersion>=3 || !manifest.assets.some(a=>a.mime==='video/mp4'),'Video requires package version 3.');
   check(e.formatVersion!==1 || manifest.plate.projection==='flat','Immersive projection requires package version 2.');
   check(Array.isArray(e.files) && e.files.length===manifest.assets.length,'Missing or extra package assets.');
   const bytes = new Map();
@@ -66,8 +68,8 @@ export async function openPackage(text) {
     const a=manifest.assets.find(a=>a.path===file.path);check(a && !bytes.has(a.id),'Unknown or duplicate package file.');
     const data=fromBase64(file.base64);
     check(data.length===a.bytes && await sha256(data)===a.sha256,'Asset checksum mismatch.');
-    check(a.mime==='image/png' ? data[0]===137 && data[1]===80 && data[2]===78 && data[3]===71 : a.mime==='image/jpeg' ? data[0]===255 && data[1]===216 : a.mime==='video/mp4'?new TextDecoder().decode(data.slice(4,8))==='ftyp':new TextDecoder().decode(data.slice(0,4))==='RIFF' && new TextDecoder().decode(data.slice(8,12))==='WAVE','Media signature mismatch.');
-    if(a.mime==='audio/wav')validateWave(data);if(a.mime==='video/mp4')validateVideo(data);
+    check(a.mime==='image/png' ? data[0]===137 && data[1]===80 && data[2]===78 && data[3]===71 : a.mime==='image/jpeg' ? data[0]===255 && data[1]===216 : a.mime==='model/gltf-binary'?new TextDecoder().decode(data.slice(0,4))==='glTF':a.mime==='video/mp4'?new TextDecoder().decode(data.slice(4,8))==='ftyp':new TextDecoder().decode(data.slice(0,4))==='RIFF' && new TextDecoder().decode(data.slice(8,12))==='WAVE','Media signature mismatch.');
+    if(a.mime==='audio/wav')validateWave(data);if(a.mime==='video/mp4')validateVideo(data);if(a.mime==='model/gltf-binary')validateGlb(data);
     bytes.set(a.id,data);
   }
   const plate=manifest.assets.find(a=>a.id===manifest.plate.assetId);if(plate.mime==='video/mp4')validateVideo(bytes.get(plate.id),manifest.plate.projection);else validateProjection(bytes.get(plate.id),plate.mime,manifest.plate.projection);

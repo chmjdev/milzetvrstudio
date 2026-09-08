@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "playMode": true,
+  "glbDecoded": true,
+  "transform": true,
+  "materialRender": true,
+  "linkedHotspotRay": true,
+  "viewerId": "com.binteca.interactive.milzet.viewer",
+  "headset": "not tested",
+  "nodeTests": 24,
+  "browser": "GLB import, transform editing, hotspot linkage and version-4 export passed",
+  "limits": [
+    "Static uncompressed embedded GLB only; no animation controls",
+    "Maximum 16 objects, 200000 vertices per model and 12 MB per asset",
+    "Procedural verification triangle only; no generated/client model acceptance"
+  ]
+}
