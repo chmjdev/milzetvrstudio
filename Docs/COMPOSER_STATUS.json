@@ -1,0 +1,28 @@
+{
+  "milestone": "Local flat-image scenario composer",
+  "status": "verified locally",
+  "scope": [
+    "Create image-only package without a test fixture",
+    "Place and edit up to 32 hotspots",
+    "Author text prompts and evidence requests",
+    "Import and assign PCM WAV narration",
+    "Select four-phase subsets and external release gates",
+    "Validate, recover and export self-contained packages"
+  ],
+  "limitations": [
+    "Flat image projection only",
+    "One image plate and one narration import/replacement control",
+    "Apply composition before export or switching packages",
+    "Source provenance, general 3D composition, 180/360 media and generation providers remain pending",
+    "No new Unity rendering or headset acceptance claimed",
+    "Browser test image is procedural; no client content acceptance"
+  ],
+  "verification": {
+    "nodeTests": 18,
+    "typecheckAndBuild": "passed",
+    "browser": "Chrome desktop and 375px; creation, editing, placement, invalid edit rejection, narration, export/recovery and host gate passed",
+    "native": "C# reader/session consumed exact browser-authored four-phase package",
+    "contentAudit": "passed; shipped library remains empty",
+    "unityPlayMode": "Not rerun: rendering implementation and package schema unchanged"
+  }
+}

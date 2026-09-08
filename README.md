@@ -30,3 +30,11 @@ Use “Create trench test fixture” in the package lab, inspect hotspots, simul
 ## Provenance and scope
 
 `UPSTREAM.json` records the source baseline and copied hashes. No old teaching assets or their Git history are included. Test media is generated only on demand; client data is separate. No paid generation, remote publication, external media uploads or headset deployment occurred.
+
+## Author a flat-image scenario
+
+Choose **Create scenario from image** to import a local PNG/JPEG into a new package. In **Compose scenario**, name the scenario, select numbered hotspots, and click the image to position them. Edit labels, prompts, evidence requests and numeric coordinates. Add or delete hotspots, enable the required phases and choose each phase's hotspots and host release rules.
+
+Choose **Apply composition** to validate and save the changes to package recovery. Each enabled phase must have a hotspot. A rejected edit leaves the saved package intact. Apply before exporting, importing media or opening another package; editor changes are not autosaved. **Export package + media** produces the self-contained package consumed by both players.
+
+**Import WAV narration** adds narration to image-only packages or replaces the existing narration. Select it for each hotspot in the composer and apply. PNG/JPEG and 16-bit PCM WAV limits remain unchanged. Text prompts display when a hotspot is inspected; this increment does not add timed overlays, 3D objects, video or immersive projection.

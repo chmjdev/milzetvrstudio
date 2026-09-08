@@ -82,7 +82,7 @@ Keep reusable rendering independent of anatomy lessons and of CareerWIL. Preserv
 ## Current acceptance tracking
 
 - Foundation: complete, local clean-content fork created.
-- Authoring: empty drafts, flat-media replacement, package backups and explicit phase editing implemented; general composer and provider integration pending.
+- Authoring: empty drafts, flat-media replacement, package backups and explicit phase editing implemented; visual flat-image hotspot and phase composer implemented; 3D/immersive composition and provider integration pending.
 - Browser: flat-plate scene/hotspot preview and test-host handoff verified; immersive device acceptance pending.
 - Native: Unity Play Mode rendering, ray selection, host events and audio-engine start verified against the browser export; headset acceptance pending.
 - Client content: procedural fixtures only; onsite media and client acceptance pending.
@@ -197,3 +197,7 @@ Requirements: `/Users/mziwamadoda/Downloads/DOC-20260904-WA0001.pdf`, particular
 Repository references reviewed: `README.md`, `AGENTS.md`, `.agents/VR_TOOLCHAIN.md`, `Web/README.md`, `Web/package.json`, `Web/lib/database.ts`, `Web/lib/session.ts`, `Web/lib/studio-runtime.ts`, `SharedContent/README.md`, `Tools/LessonStudio/LESSON_PACKAGE.md` and `Tools/LessonStudio/AUTHORING_BACKLOG.md`.
 
 The clean local repository and foundation build exist. The playable increment adds local code and tests; no paid generation, remote publication or headset deployment has occurred. Estimates follow baseline inspection and verification of the two required delivery targets; the PDF's historical prototype date is not a delivery commitment.
+
+### Local visual authoring increment — 8 September 2026
+
+The flat-image composer now creates packages directly from imported images, edits hotspot anchors/prompts/evidence/narration, and authors four-phase subsets with host gates. Applied edits are validated and recovered with their media. The browser-authored package is also checked by the native C# reader/session. See `COMPOSER_STATUS.json` for verification and limits. This increment does not complete the general 3D composer or 180/360 playback.

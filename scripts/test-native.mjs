@@ -9,3 +9,7 @@ function run(args){const r=spawnSync(mono,args,{stdio:'inherit'});if(r.status!==
 run([compiler,'-nologo','-out:Artifacts/reader-smoke.exe','-r:System.Runtime.Serialization.dll','-r:System.Xml.Linq.dll','Unity/Assets/Milzet/Runtime/PackageReader.cs','Unity/Assets/Milzet/Runtime/PcmWave.cs','Unity/Tests/ReaderSmoke.cs']);
 run(['Artifacts/reader-smoke.exe','Artifacts/contracts']);
 if(existsSync('Artifacts/trench-browser.milzet-package.json')){mkdirSync('Artifacts/browser-native',{recursive:true});copyFileSync('Artifacts/trench-browser.milzet-package.json','Artifacts/browser-native/valid-trench.json');run(['Artifacts/reader-smoke.exe','Artifacts/browser-native']);}
+if(existsSync('Artifacts/authored-browser.milzet-package.json')) {
+ run([compiler,'-nologo','-out:Artifacts/authored-smoke.exe','-r:System.Runtime.Serialization.dll','-r:System.Xml.Linq.dll','Unity/Assets/Milzet/Runtime/PackageReader.cs','Unity/Assets/Milzet/Runtime/PcmWave.cs','Unity/Tests/AuthoredSmoke.cs']);
+ run(['Artifacts/authored-smoke.exe','Artifacts/authored-browser.milzet-package.json']);
+}
