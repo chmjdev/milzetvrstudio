@@ -1,4 +1,4 @@
-import argparse, fcntl, hashlib, io, json, os, re, tempfile, urllib.request, urllib.error, wave
+import argparse, fcntl, hashlib, io, json, os, re, tempfile, urllib.request, urllib.error, uuid, wave
 from pathlib import Path
 
 def save(path, value):
@@ -24,23 +24,37 @@ def validate(job):
     if not isinstance(job.get('prompt'),str) or not job['prompt'].strip() or len(job['prompt'])>5000: raise ValueError('Invalid prompt.')
     if job['provider']=='elevenlabs' and not re.fullmatch(r'[a-zA-Z0-9_-]{1,80}',job.get('voiceId','')): raise ValueError('Verified voice ID required.')
     if job['provider']=='meshy' and len(job['prompt'])>600: raise ValueError('Meshy preview prompt limit is 600 characters.')
+    if job.get('stage','preview') not in ('preview','refine'): raise ValueError('Unsupported generation stage.')
+    if job.get('stage')=='refine':
+        if job['provider']!='meshy' or not re.fullmatch(r'[a-zA-Z0-9-]{1,100}',job.get('previewRemoteId','')) or not re.fullmatch(r'[a-zA-Z0-9-]{1,80}',job.get('parentJobId','')): raise ValueError('Refinement requires a completed Meshy preview reference.')
+
+def prepare_refine(job):
+    validate(job)
+    if job['provider']!='meshy' or job.get('stage','preview')!='preview' or job.get('status')!='succeeded' or not re.fullmatch(r'[a-zA-Z0-9-]{1,100}',job.get('remoteId','')): raise ValueError('A succeeded Meshy preview is required.')
+    return {'id':str(uuid.uuid4()),'provider':'meshy','stage':'refine','prompt':job['prompt'],'voiceId':'','status':'prepared','remoteId':'','parentJobId':job['id'],'previewRemoteId':job['remoteId']}
+
+def payload_for(job):
+    if job['provider']=='elevenlabs': return {'text':job['prompt'],'model_id':'eleven_multilingual_v2'}
+    if job.get('stage')=='refine': return {'mode':'refine','preview_task_id':job['previewRemoteId'],'ai_model':'meshy-6','enable_pbr':True,'texture_resolution':'2k','texture_prompt':job['prompt'],'remove_lighting':True,'target_formats':['glb']}
+    return {'mode':'preview','prompt':job['prompt'],'ai_model':'meshy-6','should_remesh':True,'topology':'triangle','target_polycount':30000,'target_formats':['glb']}
 
 def submit(path, job, output, transport=request):
     validate(job)
     if job.get('status')!='prepared': raise ValueError('Only prepared requests can be submitted. Reconcile uncertain requests with the provider; do not resubmit them.')
     key = os.environ.get('MESHY_API_KEY' if job['provider']=='meshy' else 'ELEVENLABS_API_KEY')
     if not key: raise ValueError('Run through the approved provider key loader.')
+    payload=payload_for(job)
     job['status']='uncertain'
-    job['requestSha256']=hashlib.sha256(json.dumps({k:job[k] for k in ('id','provider','prompt','voiceId')},sort_keys=True).encode()).hexdigest()
+    job['requestPayload']=payload
+    job['requestSha256']=hashlib.sha256(json.dumps({'provider':job['provider'],'voiceId':job.get('voiceId',''),'payload':payload},sort_keys=True).encode()).hexdigest()
     save(path,job)
     if job['provider']=='meshy':
-        payload={'mode':'preview','prompt':job['prompt'],'ai_model':'meshy-6','topology':'triangle','target_polycount':30000}
         data, headers=transport('https://api.meshy.ai/openapi/v2/text-to-3d',key,'meshy',payload)
         remote=json.loads(data).get('result')
         if not isinstance(remote,str) or not re.fullmatch(r'[a-zA-Z0-9-]{1,100}',remote): raise ValueError('No valid task ID returned; reconcile with Meshy.')
         job.update(status='submitted',remoteId=remote)
     else:
-        data, headers=transport('https://api.elevenlabs.io/v1/text-to-speech/'+job['voiceId']+'?output_format=pcm_24000',key,'elevenlabs',{'text':job['prompt'],'model_id':'eleven_multilingual_v2'})
+        data, headers=transport('https://api.elevenlabs.io/v1/text-to-speech/'+job['voiceId']+'?output_format=pcm_24000',key,'elevenlabs',payload)
         if not data or len(data)%2: raise ValueError('Invalid PCM response; request remains uncertain.')
         output.mkdir(parents=True,exist_ok=True)
         destination=output/(job['id']+'.wav')
@@ -55,12 +69,12 @@ def submit(path, job, output, transport=request):
     save(path,job)
     return job
 
-def poll(path,job,output):
+def poll(path,job,output,transport=request):
     validate(job)
     if job['provider']!='meshy' or job.get('status')!='submitted' or not re.fullmatch(r'[a-zA-Z0-9-]{1,100}',job.get('remoteId','')): raise ValueError('A submitted Meshy task ID is required.')
     key=os.environ.get('MESHY_API_KEY')
     if not key: raise ValueError('Run through the approved Meshy key loader.')
-    data,_=request('https://api.meshy.ai/openapi/v2/text-to-3d/'+job['remoteId'],key,'meshy')
+    data,_=transport('https://api.meshy.ai/openapi/v2/text-to-3d/'+job['remoteId'],key,'meshy')
     result=json.loads(data)
     job['providerStatus']=result.get('status');job['progress']=result.get('progress')
     if result.get('status')=='SUCCEEDED':
@@ -87,7 +101,7 @@ def fetch(path,job,output):
 
 def main():
     parser=argparse.ArgumentParser(description='Milzet local generation worker. No automatic retries of paid submissions.')
-    parser.add_argument('action',choices=['inspect','submit','poll','fetch'])
+    parser.add_argument('action',choices=['inspect','prepare-refine','submit','poll','fetch'])
     parser.add_argument('job',type=Path)
     parser.add_argument('--output',type=Path)
     parser.add_argument('--authorize-paid-submission',action='store_true')
@@ -98,6 +112,10 @@ def main():
         job=json.loads(path.read_text());validate(job)
         if args.action=='inspect': print(json.dumps(job,indent=2));return
         if args.output is None: raise ValueError('An output folder is required.')
+        if args.action=='prepare-refine':
+            child=prepare_refine(job);args.output.mkdir(parents=True,exist_ok=True);destination=args.output/(child['id']+'.milzet-job.json')
+            with destination.open('x') as stream: json.dump(child,stream,indent=2)
+            print(json.dumps({'preparedJob':str(destination.resolve()),'paidSubmission':False},indent=2));return
         if args.action=='submit':
             if not args.authorize_paid_submission: raise ValueError('Explicit paid-submission authorization is required.')
             job=submit(path,job,args.output.resolve())

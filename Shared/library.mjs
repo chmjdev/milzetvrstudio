@@ -27,7 +27,7 @@ export async function validateLibrary(value){
  for(const a of value.assets){check(!a.provenance.derivedFrom || value.assets.some(p=>p.id===a.provenance.derivedFrom && p.id!==a.id),'Missing original source reference.');check(!a.provenance.jobId || value.jobs.some(j=>j.id===a.provenance.jobId && j.provider===a.provenance.provider && j.status==='succeeded'),'Missing generation receipt.');}
  check(new Set(value.jobs.map(j=>j.id)).size===value.jobs.length,'Duplicate generation request.');
  for(const r of value.revisions){const p=await openPackage(JSON.stringify(r.envelope));check(r.revision===p.envelope.manifestSha256 && text(r.savedAt,40),'Invalid scenario revision.');}
- for(const j of value.jobs)check(j && text(j.id,80) && ['meshy','elevenlabs'].includes(j.provider) && ['prepared','submitted','succeeded','failed','uncertain'].includes(j.status) && text(j.prompt,5000) && text(j.remoteId,200),'Invalid generation job.');
+ for(const j of value.jobs){check(j && text(j.id,80) && ['meshy','elevenlabs'].includes(j.provider) && ['prepared','submitted','succeeded','failed','uncertain'].includes(j.status) && text(j.prompt,5000) && text(j.remoteId,200),'Invalid generation job.');check(j.stage===undefined || ['preview','refine'].includes(j.stage),'Invalid generation stage.');if(j.stage==='refine')check(j.provider==='meshy' && value.jobs.some(p=>p.id===j.parentJobId && p.provider==='meshy' && p.stage!=='refine' && p.status==='succeeded' && p.remoteId===j.previewRemoteId),'Missing completed preview for refinement.');}
  for(const r of value.rubrics||[])check(r && /^[a-f0-9]{64}$/.test(r.revision) && text(r.title,120) && text(r.text,10000),'Invalid private rubric.');
  return value;
 }
@@ -39,5 +39,10 @@ export async function archiveRevision(library,envelope){
 export function prepareJob(provider,prompt,voiceId=''){
  check(['meshy','elevenlabs'].includes(provider) && text(prompt,5000) && prompt.trim(),'A generation prompt is required.');
  check(provider!=='elevenlabs' || /^[a-zA-Z0-9_-]{1,80}$/.test(voiceId),'Choose a verified ElevenLabs voice ID.');
+ check(provider!=='meshy' || prompt.length<=600,'Meshy prompt limit is 600 characters.');
  return {id:crypto.randomUUID(),provider,prompt,voiceId,status:'prepared',remoteId:'',createdAt:new Date().toISOString()};
+}
+export function prepareRefine(preview){
+ check(preview?.provider==='meshy' && preview.stage!=='refine' && preview.status==='succeeded' && /^[a-zA-Z0-9-]{1,100}$/.test(preview.remoteId),'A succeeded Meshy preview is required.');
+ return {...prepareJob('meshy',preview.prompt),stage:'refine',parentJobId:preview.id,previewRemoteId:preview.remoteId};
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {emptyLibrary,importSource,validateLibrary,archiveRevision,prepareJob} from '../Shared/library.mjs';
+import {emptyLibrary,importSource,validateLibrary,archiveRevision,prepareJob,prepareRefine} from '../Shared/library.mjs';
 import {createImageScenario} from '../Shared/authoring.mjs';
 const png=new Uint8Array([137,80,78,71]);
 const provenance={owner:'Test client',credit:'Test author',license:'Client-owned',source:'Local test',capturedAt:'',provider:'',jobId:'',derivedFrom:''};
@@ -19,4 +19,14 @@ test('immutable scenario revisions and generation requests survive backup',async
  assert.equal(library.revisions[0].revision,pkg.manifestSha256);
  await assert.rejects(archiveRevision(library,pkg));
  assert.throws(()=>prepareJob('elevenlabs','Test',''));
+});
+
+test('refinement keeps completed parent provenance and rejects mismatched restored references',async()=>{
+ const library=emptyLibrary(),preview={...prepareJob('meshy','Traffic cone'),status:'succeeded',remoteId:'remote-preview'};
+ const refine=prepareRefine(preview);library.jobs.push(preview,refine);
+ await validateLibrary(JSON.parse(JSON.stringify(library)));
+ assert.notEqual(refine.id,preview.id);assert.equal(refine.previewRemoteId,preview.remoteId);
+ assert.throws(()=>prepareRefine({...preview,status:'uncertain'}));
+ assert.throws(()=>prepareRefine({...refine,status:'succeeded',remoteId:'remote-refine'}));
+ const corrupt=structuredClone(library);corrupt.jobs[1].previewRemoteId='wrong';await assert.rejects(validateLibrary(corrupt));
 });

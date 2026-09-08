@@ -157,6 +157,13 @@ try {
   const sourcesEvent=page.waitForEvent('download');await page.getByRole('button',{name:'Back up source library',exact:true}).click();const sourcesDownload=await sourcesEvent;
   const sourceBackup=JSON.parse(await readFile(await sourcesDownload.path(),'utf8'));
   assert.equal(sourceBackup.assets.length,1);assert.equal(sourceBackup.revisions.length,1);assert.equal(sourceBackup.jobs[0].status,'prepared');assert.equal(sourceBackup.assets[0].provenance.owner,'Test client');
+  const simulatedPreview={...sourceBackup.jobs[0],status:'succeeded',remoteId:'synthetic-preview'};
+  await page.getByLabel('Import worker job receipt',{exact:true}).setInputFiles({name:'synthetic-preview.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(simulatedPreview))});
+  await page.getByRole('button',{name:'Prepare texture refinement',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Source library saved locally'}).waitFor();
+  assert.equal(await page.getByRole('button',{name:'Prepare texture refinement',exact:true}).count(),0);
+  const refinedBackupEvent=page.waitForEvent('download');await page.getByRole('button',{name:'Back up source library',exact:true}).click();const refinedDownload=await refinedBackupEvent;
+  const refinedLibrary=JSON.parse(await readFile(await refinedDownload.path(),'utf8'));assert.equal(refinedLibrary.jobs.length,2);assert.equal(refinedLibrary.jobs[1].stage,'refine');assert.equal(refinedLibrary.jobs[1].previewRemoteId,'synthetic-preview');assert.equal(refinedLibrary.jobs[1].status,'prepared');
   await page.reload();await page.getByText('Source library, revisions and generation requests',{exact:true}).click();await page.getByRole('button',{name:'Download original',exact:true}).waitFor();
   const corruptedSource=structuredClone(sourceBackup);corruptedSource.assets[0].sha256='bad';
   await page.getByLabel('Restore source backup',{exact:true}).setInputFiles({name:'invalid-sources.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(corruptedSource))});
