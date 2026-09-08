@@ -1,6 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-const excluded = new Set(['node_modules','.git','Artifacts','ClientProjects']);
+const excluded = new Set(['node_modules','.git','Artifacts','ClientProjects','Library','Temp','Logs','UserSettings']);
 const media = /\.(glb|gltf|fbx|blend|unity|prefab|anim|mp3|wav|ogg|mp4|jpg|jpeg|png|pdf|pptx)$/i;
 const found=[];
 async function walk(dir) { for(const e of await readdir(dir,{withFileTypes:true})) { if(excluded.has(e.name))continue;const p=path.join(dir,e.name); if(e.isSymbolicLink()) throw Error('Unexpected symlink: '+p); if(e.isDirectory())await walk(p);else if(media.test(e.name))found.push(p); } }

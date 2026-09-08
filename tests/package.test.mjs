@@ -2,10 +2,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { trenchFixture } from '../Shared/fixture.mjs';
-import { openPackage,sealPackage,sha256,createSession } from '../Shared/package.mjs';
+import { openPackage,sealPackage,sha256,createSession,toBase64,fromBase64 } from '../Shared/package.mjs';
 const png=Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lZkAAAAASUVORK5CYII=','base64'));
 async function reseal(e,m){e.manifest=JSON.stringify(m);e.manifestSha256=await sha256(new TextEncoder().encode(e.manifest));return e;}
 const mutations={
+ 'wav-encoding':async e=>{const file=e.files[1],b=fromBase64(file.base64);b[20]=3;file.base64=toBase64(b);const m=JSON.parse(e.manifest);m.assets[1].sha256=await sha256(b);return reseal(e,m);},
  'version':async e=>{e.formatVersion=99;return e;},
  'manifest-hash':async e=>{e.manifest+=' ';return e;},
  'media-hash':async e=>{e.files[0].base64='AAAA';return e;},

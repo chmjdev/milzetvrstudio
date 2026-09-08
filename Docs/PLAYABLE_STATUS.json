@@ -2,7 +2,7 @@
   "increment": "playable-flat-media-package",
   "editor": "media replacement, explicit phase editing and asset-inclusive backup/recovery verified",
   "web": "desktop/375px preview verified; immersive session entry implemented but device acceptance pending",
-  "native": "pure C# reader/session compiled and tested against shared fixtures and exact browser export; Unity rendering pending",
+  "native": "Unity Play Mode visual playback verified in subsequent increment; see NATIVE_VISUAL_STATUS.json",
   "clientContent": "procedural trench schematic plus audio cue only; not client media or instructional content",
   "tests": [
     "15 Node tests",

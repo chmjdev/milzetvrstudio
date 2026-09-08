@@ -42,7 +42,7 @@ public static class PackageReader {
    var a=m.assets.FirstOrDefault(x=>x.path==f.path);Require(a!=null && !data.ContainsKey(a.id),"Unknown or duplicate file.");
    Require(f.base64!=null && f.base64.Length<=24000000 && Regex.IsMatch(f.base64,"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"),"Invalid asset encoding.");
    var bytes=Convert.FromBase64String(f.base64);Require(bytes.Length==a.bytes && Hash(bytes)==a.sha256,"Asset checksum mismatch.");
-   Require(a.mime=="image/png" ? bytes.Length>=4 && bytes[0]==137 && bytes[1]==80 && bytes[2]==78 && bytes[3]==71 : a.mime=="image/jpeg" ? bytes.Length>=2 && bytes[0]==255 && bytes[1]==216 : bytes.Length>=12 && Encoding.ASCII.GetString(bytes,0,4)=="RIFF" && Encoding.ASCII.GetString(bytes,8,4)=="WAVE","Media signature mismatch.");data.Add(a.id,bytes);
+   Require(a.mime=="image/png" ? bytes.Length>=4 && bytes[0]==137 && bytes[1]==80 && bytes[2]==78 && bytes[3]==71 : a.mime=="image/jpeg" ? bytes.Length>=2 && bytes[0]==255 && bytes[1]==216 : bytes.Length>=12 && Encoding.ASCII.GetString(bytes,0,4)=="RIFF" && Encoding.ASCII.GetString(bytes,8,4)=="WAVE","Media signature mismatch.");if(a.mime=="audio/wav")PcmWave.Decode(bytes);data.Add(a.id,bytes);
   }
   return new LoadedPackage{Manifest=m,Revision=e.manifestSha256,Assets=data};
  }

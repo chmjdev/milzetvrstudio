@@ -63,6 +63,7 @@ export async function openPackage(text) {
     const data=fromBase64(file.base64);
     check(data.length===a.bytes && await sha256(data)===a.sha256,'Asset checksum mismatch.');
     check(a.mime==='image/png' ? data[0]===137 && data[1]===80 && data[2]===78 && data[3]===71 : a.mime==='image/jpeg' ? data[0]===255 && data[1]===216 : new TextDecoder().decode(data.slice(0,4))==='RIFF' && new TextDecoder().decode(data.slice(8,12))==='WAVE','Media signature mismatch.');
+    if(a.mime==='audio/wav')validateWave(data);
     bytes.set(a.id,data);
   }
   return {envelope:e,manifest,bytes};
@@ -82,4 +83,16 @@ export function createSession(manifest, revision, host) {
     select(id){check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.includes(id),'Hotspot is not in the active phase.');seen.add(id);emit('hotspot.selected',id);if(manifest.hotspots.find(h=>h.id===id).evidence)emit('evidence.requested',id);},
     async advance(){check(!advancing,'Transition already in progress.');advancing=true;try{check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.every(id=>seen.has(id)),'Visit every hotspot before continuing.');if(p.next){check(p.gate!=='host' || await host.authorize({packageId:manifest.id,revision,from:phase,to:p.next}),'Host release is required.');emit('phase.completed');phase=p.next;seen.clear();emit('phase.started');}else{complete=true;emit('scenario.completed');}}finally{advancing=false;}}
   };
+}
+
+export function validateWave(bytes) {
+ check(bytes.length>=44,'WAV header is incomplete.');const v=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);const text=(a,b)=>new TextDecoder().decode(bytes.slice(a,b));
+ check(text(0,4)==='RIFF' && text(8,12)==='WAVE' && v.getUint32(4,true)===bytes.length-8,'Invalid WAV container.');
+ let offset=12,format=null,dataSize=null;
+ while(offset+8<=bytes.length){const type=text(offset,offset+4),size=v.getUint32(offset+4,true);offset+=8;check(offset+size<=bytes.length,'WAV chunk exceeds file.');
+ if(type==='fmt '){check(format===null && size>=16,'Invalid WAV format chunk.');format={encoding:v.getUint16(offset,true),channels:v.getUint16(offset+2,true),rate:v.getUint32(offset+4,true),byteRate:v.getUint32(offset+8,true),alignment:v.getUint16(offset+12,true),bits:v.getUint16(offset+14,true)};}
+ if(type==='data'){check(dataSize===null,'Duplicate WAV data.');dataSize=size;}offset+=size+(size%2);}
+ check(format && format.encoding===1 && [1,2].includes(format.channels) && format.bits===16 && format.rate>=8000 && format.rate<=96000,'Shared preview supports 16-bit PCM mono/stereo WAV at 8–96 kHz.');
+ check(format.alignment===format.channels*2 && format.byteRate===format.rate*format.alignment && dataSize>0 && dataSize%format.alignment===0,'Invalid WAV sample layout.');
+ return format;
 }

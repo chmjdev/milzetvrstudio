@@ -13,13 +13,15 @@ A content-free source fork of VR Studio for authoring client-owned VR scenarios.
 - Render the package in a browser with Three.js; WebXR feature detection and session entry are implemented but headset playback has not been accepted.
 - Native C# package reader and phase engine compile and pass shared fixture/corruption/gate tests using Unity's bundled Mono. They also load the exact package exported by the browser.
 
+- Unity Play Mode preview loads the exact browser-exported package, renders the plate and four markers, handles camera-ray selection and host-gated phase events, and starts decoded PCM audio. See Unity/README.md and the separate visual-verification receipt.
+
 ## Still outstanding
 
-Native Unity scene rendering, headset input/acceptance, 180/360 projection, general asset library/composer, voice recording, provider generation/resume, and client onsite content acceptance. The C# reader test is not Unity visual playback or device acceptance. The fixture's short WAV is an audio loading cue, not spoken instruction; prompt read-aloud uses the browser speech facility.
+Headset input/acceptance, 180/360 projection, general asset library/composer, voice recording, provider generation/resume, and client onsite content acceptance. Unity Play Mode visual verification is now available separately; the pure C# reader test still does not prove rendering. No headset/device acceptance is claimed. The fixture's short WAV is an audio loading cue, not spoken instruction; prompt read-aloud uses the browser speech facility.
 
 ## Local checks
 
-Node >=24. `npm ci`, `npm test`, `npm run audit:content`, `npm run build`, `npm run test:browser`, `npm run test:native`.
+Node >=24. `npm ci`, `npm test`, `npm run audit:content`, `npm run build`, `npm run test:browser`, `npm run test:native`, `npm run test:unity`.
 
 `npm run dev` serves an ephemeral loopback preview. It is not a registered estate service or deployment. No fixed port or remote domain is assigned.
 

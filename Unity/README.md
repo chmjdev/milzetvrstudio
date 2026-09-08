@@ -1,7 +1,17 @@
-# Native package target
+# Native Unity package preview
 
-`Assets/Milzet/Runtime/PackageReader.cs` implements the portable package reader and host-gated phase session without engine dependencies. It is ready for a Unity rendering adapter; it is not yet that adapter.
+Open this folder in Unity 6000.3.22f1. Use **Milzet → Open package preview**, select a browser-exported `.milzet-package.json`, and the editor enters Play Mode with the imported plate, hotspot controls and test-host panel. No client media or scene is bundled. The preview builds its objects in memory.
 
-`npm run test:native` compiles it using the installed Unity editor's Mono compiler, opens shared positive/negative fixtures, verifies media hashes and four hotspots, rejects gate bypass and checks evidence/completion. If the browser-exported fixture exists, the same test opens those exact bytes too.
+The flat plate is 4m × 2.4m. Package normalized anchors use top-left origin. Unity reflects browser Z: camera (0,1.5,-1), plate (0,1.5,2), hotspot plane z=1.93; X and Y are unchanged. This preserves orientation and labels.
 
-No Unity scene, player build or headset acceptance has been completed. Next: render the imported flat plate/hotspots in a clean Unity project, play narration, attach host events with session/revision IDs, and compare against WebXR. Do not claim visual/native playback from the pure C# test.
+Click visible markers or the hotspot buttons. Phase advance requires every authored hotspot and any host release. Test-host simulation is explicit; a real host can supply the `Authorize` callback and subscribe to `HostEventEmitted`. Events include session sequence, package ID and revision. The PCM WAV decoder supports mono/stereo 16-bit PCM at 8–96 kHz, matching browser validation.
+
+## Checks
+
+`npm run test:native` checks the engine-independent reader/session. `npm run test:unity` runs an isolated local Unity Play Mode verification with graphics enabled. First run `npm run test:browser` to generate the exact browser fixture in Artifacts. The Unity check has an 8 GiB disk preflight, retains caches and has a four-minute process timeout.
+
+The Play Mode check loads that exact package, verifies the image dimensions, selects four actual sphere colliders with camera rays, rejects a host-gate bypass and invalid replacement package, renders to PNG, verifies visible marker pixels, completes the authored subset, records evidence/completion events and confirms decoded nonzero samples and AudioSource playback state.
+
+Evidence: `Artifacts/UnityVisual/native-trench.png`, `native-verification.json`, `native-host-events.json`, `native-audio-samples.json` and `editor.log`.
+
+This verifies local Unity Play Mode rendering and audio-engine start. It does not establish audible device output, headset input, headset comfort/performance, standalone builds, 180/360 support or client-content acceptance. No headset deployment occurs.

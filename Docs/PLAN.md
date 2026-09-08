@@ -84,7 +84,7 @@ Keep reusable rendering independent of anatomy lessons and of CareerWIL. Preserv
 - Foundation: complete, local clean-content fork created.
 - Authoring: empty drafts, flat-media replacement, package backups and explicit phase editing implemented; general composer and provider integration pending.
 - Browser: flat-plate scene/hotspot preview and test-host handoff verified; immersive device acceptance pending.
-- Native: C# package reader/session verified against the browser export; Unity visual playback pending.
+- Native: Unity Play Mode rendering, ray selection, host events and audio-engine start verified against the browser export; headset acceptance pending.
 - Client content: procedural fixtures only; onsite media and client acceptance pending.
 
 The current implementation sequence brings the minimal playable contract alongside media import before the general composer. Phase subsets use explicit transitions and external release gates. Asset-inclusive package backups precede onsite acceptance; resumable provider jobs follow with provider integration.
