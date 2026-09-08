@@ -1,0 +1,27 @@
+{
+  "source": "vrstudio",
+  "commit": "f6fdfefb6f9fe169fce00b3f032c5acd9d81a2c6",
+  "method": "allowlisted clean source snapshot; no inherited Git asset history",
+  "files": [
+    {
+      "source": "LICENSE.txt",
+      "destination": "LICENSE.txt",
+      "sha256": "2d4c3d00d67067461412a2d9a2f3f8b7b9cda62b3db501e4b6844ccf35c949aa"
+    },
+    {
+      "source": "Web/lib/utils.ts",
+      "destination": "Web/lib/utils.ts",
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+    },
+    {
+      "source": "Tools/LessonStudio/LESSON_PACKAGE.md",
+      "destination": "Docs/upstream-lesson-package.md",
+      "sha256": "808fb3aa6ceb6b6d81c9dfa0bde6ac8d194b38c133ebb8919e1ea134b6326e31"
+    },
+    {
+      "source": "ProjectSettings/ProjectVersion.txt",
+      "destination": "Unity/ProjectSettings/ProjectVersion.txt",
+      "sha256": "4c5c83b324e4beafbe03132a68b0e9d87e93d6a11e687f6cb5c0fc514219e154"
+    }
+  ]
+}

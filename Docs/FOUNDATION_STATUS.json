@@ -1,0 +1,25 @@
+{
+  "milestone": "empty-authoring-foundation",
+  "checks": [
+    "draft validation tests",
+    "no bundled teaching media",
+    "TypeScript check",
+    "production build",
+    "browser startup/create/reload/export/import",
+    "375px overflow check"
+  ],
+  "implemented": [
+    "empty local draft creation",
+    "local persistence",
+    "empty draft import/export"
+  ],
+  "pending": [
+    "asset import",
+    "3D composer",
+    "generation providers",
+    "WebXR runtime",
+    "Unity runtime"
+  ],
+  "sourceChanges": "none; committed allowlist only",
+  "remote": null
+}

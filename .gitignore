@@ -1,0 +1,11 @@
+node_modules/
+dist/
+Library/
+Temp/
+Logs/
+UserSettings/
+Artifacts/
+ClientProjects/
+.env*
+*.tsbuildinfo
+.DS_Store
