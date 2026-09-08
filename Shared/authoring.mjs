@@ -12,7 +12,7 @@ export async function createImageScenario(title, bytes, mime) {
 
 export async function applyComposition(envelope, draft) {
   const { manifest } = await openPackage(JSON.stringify(envelope));
-  return sealPackage({ ...manifest, title: draft.title, hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
+  return sealPackage({ ...manifest, title: draft.title, plate: structuredClone(draft.plate), hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
 }
 
 export async function addNarration(envelope, bytes) {

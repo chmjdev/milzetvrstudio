@@ -141,6 +141,24 @@ try {
   await page.setViewportSize({width:375,height:812});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth),false);
   await page.screenshot({path:'Artifacts/composer-phone.png',fullPage:true});
+  for(const projection of ['equirect180','equirect360']) {
+    const panorama=await page.evaluate(kind=>{const c=document.createElement('canvas');c.width=kind==='equirect180'?512:1024;c.height=512;const x=c.getContext('2d');x.fillStyle='#cc3333';x.fillRect(0,0,c.width,c.height);for(const [a,b,color] of [[.125,.375,'#cccc33'],[.375,.625,'#3366cc'],[.625,.875,'#33cc66']]){x.fillStyle=color;x.fillRect(c.width*a,0,c.width*(b-a),c.height);}return c.toDataURL('image/png').split(',')[1];},projection);
+    await page.getByLabel('Create scenario from image',{exact:true}).setInputFiles({name:projection+'.png',mimeType:'image/png',buffer:Buffer.from(panorama,'base64')});
+    await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+    await page.getByLabel('Source projection',{exact:true}).selectOption(projection);
+    await page.getByLabel('Vertical position').fill('0.65');
+    await page.getByRole('button',{name:'Apply composition',exact:true}).click();
+    await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+    const exported=page.waitForEvent('download');await page.getByRole('button',{name:'Export package + media'}).click();const file=await exported;
+    await file.saveAs('Artifacts/'+projection+'-browser.milzet-package.json');
+    const envelope=JSON.parse(await readFile(await file.path(),'utf8'));assert.equal(envelope.formatVersion,2);
+    assert.equal(JSON.parse(envelope.manifest).plate.projection,projection);
+    await page.setViewportSize({width:1440,height:1000});
+    await page.locator('.scene-view').screenshot({path:'Artifacts/'+projection+'-front.png'});
+    const rect=await page.locator('.scene-view canvas').boundingBox();await page.mouse.move(rect.x+rect.width*.8,rect.y+rect.height*.5);await page.mouse.down();await page.mouse.move(rect.x+rect.width*.2,rect.y+rect.height*.5,{steps:15});await page.mouse.up();
+    await page.locator('.scene-view').screenshot({path:'Artifacts/'+projection+'-turned.png'});
+    await page.reload();await page.getByLabel('Source projection',{exact:true}).waitFor();assert.equal(await page.getByLabel('Source projection',{exact:true}).inputValue(),projection);
+  }
   assert.deepEqual(errors, []);
   console.log('PASS: startup, create, reload, export, safe invalid import, valid import, desktop and 375px layout; zero browser errors; playable media backup/recovery/import and host gate/events passed.');
 } finally { await browser?.close(); await server.close(); }

@@ -1,3 +1,4 @@
+import { projections,validateProjection } from './projection.mjs';
 const idPattern = /^[a-zA-Z0-9-]{1,80}$/;
 export const MAX_PACKAGE_BYTES = 24000000;
 export function check(ok, message) { if (!ok) throw Error(message); }
@@ -18,7 +19,7 @@ export function validateManifest(m) {
     check(a.path.endsWith(a.mime === 'image/png' ? '.png' : a.mime === 'image/jpeg' ? '.jpg' : '.wav'),'Asset extension mismatch.');
   }
   exact(m.plate,['assetId','projection']);
-  check(m.plate.projection === 'flat' && m.assets.some(a=>a.id===m.plate.assetId && a.mime.startsWith('image/')),'This player requires a flat image plate.');
+  check(projections.includes(m.plate.projection) && m.assets.some(a=>a.id===m.plate.assetId && a.mime.startsWith('image/')),'Unsupported image projection.');
   check(Array.isArray(m.hotspots) && m.hotspots.length > 0 && m.hotspots.length <= 32,'Invalid hotspot count.');
   const hotspots = new Set();
   for(const h of m.hotspots) {
@@ -46,15 +47,16 @@ export function validateManifest(m) {
 export async function sealPackage(manifest, files) {
   validateManifest(manifest);
   const text = JSON.stringify(manifest);
-  const envelope = {formatVersion:1,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
+  const envelope = {formatVersion:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
   await openPackage(JSON.stringify(envelope)); return envelope;
 }
 export async function openPackage(text) {
   check(typeof text==='string' && text.length <= MAX_PACKAGE_BYTES,'Package exceeds the 24 MB limit.');
   const e=JSON.parse(text); exact(e,['formatVersion','kind','manifest','manifestSha256','files']);
-  check(e.formatVersion===1 && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
+  check([1,2].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
   check(await sha256(new TextEncoder().encode(e.manifest))===e.manifestSha256,'Manifest checksum mismatch.');
   const manifest=validateManifest(JSON.parse(e.manifest));
+  check(e.formatVersion!==1 || manifest.plate.projection==='flat','Immersive projection requires package version 2.');
   check(Array.isArray(e.files) && e.files.length===manifest.assets.length,'Missing or extra package assets.');
   const bytes = new Map();
   for(const file of e.files) {
@@ -66,6 +68,7 @@ export async function openPackage(text) {
     if(a.mime==='audio/wav')validateWave(data);
     bytes.set(a.id,data);
   }
+  const plate=manifest.assets.find(a=>a.id===manifest.plate.assetId);validateProjection(bytes.get(plate.id),plate.mime,manifest.plate.projection);
   return {envelope:e,manifest,bytes};
 }
 export async function replaceAsset(envelope, assetId, bytes, mime) {

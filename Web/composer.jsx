@@ -39,7 +39,7 @@ export function Composer({ loaded, busy, apply }) {
   return <details className="composer" open><summary>Compose scenario</summary><p>{dirty ? 'Unapplied changes: apply to update the preview, recovery copy and export.' : 'Select a hotspot, then click the image to place it. Apply changes before exporting.'}</p>
     <fieldset disabled={busy}>
       <label>Scenario title<input value={draft.title} maxLength={120} onChange={e => edit(m => { m.title = e.target.value; })}/></label>
-      <div className="editor">
+      <label>Source projection<select aria-label="Source projection" value={draft.plate.projection} onChange={e=>edit(m=>{m.plate.projection=e.target.value;})}><option value="flat">Flat photo</option><option value="equirect180">180° mono equirectangular (1:1)</option><option value="equirect360">360° mono equirectangular (2:1)</option></select></label><p>Choose the actual source projection. An ordinary photo or phone panorama does not contain full spherical coverage. Unsupported stereo/fisheye sources need conversion before import.</p><div className="editor">
         <div><div className="composition-plate" onClick={e => { if (!hotspot) return; const r = e.currentTarget.getBoundingClientRect(); changeHotspot({ x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)) }); }}>
           <img src={url || undefined} alt="Scenario placement image"/>
           {draft.hotspots.map((h, i) => <button type="button" key={h.id} aria-label={'Edit hotspot ' + (i + 1)} aria-pressed={chosen === h.id} style={{ left: `${h.x * 100}%`, top: `${h.y * 100}%` }} onClick={e => { e.stopPropagation(); setChosen(h.id); }}>{i + 1}</button>)}

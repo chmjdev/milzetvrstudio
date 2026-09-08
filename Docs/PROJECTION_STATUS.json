@@ -1,0 +1,27 @@
+{
+  "status": "verified locally",
+  "packageVersion": 2,
+  "projections": [
+    "flat",
+    "equirect180",
+    "equirect360"
+  ],
+  "tests": 20,
+  "browser": "creation/export/recovery/drag preview passed",
+  "unity": {
+    "passed": true,
+    "playMode": true,
+    "projections": [
+      "equirect180",
+      "equirect360"
+    ],
+    "frontRearRightColors": true,
+    "raySelection": true,
+    "headset": "not tested"
+  },
+  "limits": [
+    "Mono equirectangular still images only; 180 requires 1:1 and 360 requires 2:1",
+    "Source coverage is author-declared; no missing views are generated",
+    "Video, stereo and headset acceptance remain pending"
+  ]
+}

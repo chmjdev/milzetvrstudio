@@ -34,9 +34,9 @@ public static class PackageReader {
  }
  public static LoadedPackage Open(string text) {
   Require(text!=null && text.Length<=24000000,"Package exceeds 24 MB.");var e=Read<Envelope>(text);
-  Require(e.formatVersion==1 && e.kind=="milzet-playable" && e.manifest!=null,"Unsupported playable package.");
+  Require((e.formatVersion==1 || e.formatVersion==2) && e.kind=="milzet-playable" && e.manifest!=null,"Unsupported playable package.");
   Require(Hash(Encoding.UTF8.GetBytes(e.manifest))==e.manifestSha256,"Manifest checksum mismatch.");Shape(text,e.manifest);
-  var m=Read<Manifest>(e.manifest);Validate(m);
+  var m=Read<Manifest>(e.manifest);Validate(m);Require(e.formatVersion!=1 || m.plate.projection=="flat","Immersive projection requires package version 2.");
   Require(e.files!=null && e.files.Length==m.assets.Length,"Missing or extra assets.");var data=new Dictionary<string,byte[]>();
   foreach(var f in e.files) {
    var a=m.assets.FirstOrDefault(x=>x.path==f.path);Require(a!=null && !data.ContainsKey(a.id),"Unknown or duplicate file.");
@@ -44,6 +44,7 @@ public static class PackageReader {
    var bytes=Convert.FromBase64String(f.base64);Require(bytes.Length==a.bytes && Hash(bytes)==a.sha256,"Asset checksum mismatch.");
    Require(a.mime=="image/png" ? bytes.Length>=4 && bytes[0]==137 && bytes[1]==80 && bytes[2]==78 && bytes[3]==71 : a.mime=="image/jpeg" ? bytes.Length>=2 && bytes[0]==255 && bytes[1]==216 : bytes.Length>=12 && Encoding.ASCII.GetString(bytes,0,4)=="RIFF" && Encoding.ASCII.GetString(bytes,8,4)=="WAVE","Media signature mismatch.");if(a.mime=="audio/wav")PcmWave.Decode(bytes);data.Add(a.id,bytes);
   }
+  var plate=m.assets.First(a=>a.id==m.plate.assetId);Projection.ValidateImage(data[plate.id],plate.mime,m.plate.projection);
   return new LoadedPackage{Manifest=m,Revision=e.manifestSha256,Assets=data};
  }
  static void Validate(Manifest m) {
@@ -54,7 +55,7 @@ public static class PackageReader {
    Require(new[]{"image/png","image/jpeg","audio/wav"}.Contains(a.mime) && a.bytes>0 && a.bytes<=12000000 && a.sha256!=null && Regex.IsMatch(a.sha256,"^[a-f0-9]{64}$"),"Invalid asset metadata.");
    Require(a.path.EndsWith(a.mime=="image/png"?".png":a.mime=="image/jpeg"?".jpg":".wav"),"Extension mismatch.");
   }
-  Require(m.plate!=null && m.plate.projection=="flat" && m.assets.Any(a=>a.id==m.plate.assetId && a.mime.StartsWith("image/")),"Flat image plate required.");
+  Require(m.plate!=null && new[]{"flat","equirect180","equirect360"}.Contains(m.plate.projection) && m.assets.Any(a=>a.id==m.plate.assetId && a.mime.StartsWith("image/")),"Unsupported image projection.");
   Require(m.hotspots!=null && m.hotspots.Length>0 && m.hotspots.Length<=32,"Invalid hotspot count.");var hotspots=new HashSet<string>();
   foreach(var h in m.hotspots) {
    Require(h!=null && Id(h.id) && hotspots.Add(h.id),"Invalid hotspot ID.");Require(!String.IsNullOrEmpty(h.label) && h.label.Length<=80 && h.text!=null && h.text.Length<=2000,"Invalid hotspot text.");

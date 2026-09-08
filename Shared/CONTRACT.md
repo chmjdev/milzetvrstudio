@@ -19,3 +19,9 @@ The local test-host callback receives unique event IDs, package ID, revision has
 Recovery stores the entire envelope and asset bytes in IndexedDB transactionally. Backups export that same envelope. Sessions intentionally restart on recovery. Real progress is external. Files/hashes and phase validation are checked by both JS and the native C# reader; shared negative fixtures test corruption and unsupported content.
 
 No teacher assets, credentials, executable rules or CareerWIL business records belong here. Rubrics/answer keys are not part of v1. The fixture remains conspicuously marked when media is replaced; marking reviewed client content requires a later authoring workflow.
+
+## Immersive image extension (version 2)
+
+Flat packages remain version 1. `equirect180` and `equirect360` projection require envelope version 2, rejected by older readers. All other manifest fields remain unchanged. These are mono equirectangular still images: 1:1 aspect for 180°, 2:1 for 360°, maximum 8192 pixels per side. Ordinary photos, cropped panoramas, fisheye and stereo sources cannot be relabelled as full spherical captures.
+
+UV origin is top-left; x increases right, y increases downward. Image centre faces forward, at eye height 1.5m. Longitude is `(x-.5)*coverage`; latitude is `(.5-y)*pi`. Surface radius is 5m; hotspots use 4.8m. The web forward axis is -Z, Unity +Z. The 180° rear hemisphere is empty. Browser drag and native look sliders support desktop inspection; device acceptance remains separate.

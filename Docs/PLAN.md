@@ -201,3 +201,7 @@ The clean local repository and foundation build exist. The playable increment ad
 ### Local visual authoring increment — 8 September 2026
 
 The flat-image composer now creates packages directly from imported images, edits hotspot anchors/prompts/evidence/narration, and authors four-phase subsets with host gates. Applied edits are validated and recovered with their media. The browser-authored package is also checked by the native C# reader/session. See `COMPOSER_STATUS.json` for verification and limits. This increment does not complete the general 3D composer or 180/360 playback.
+
+### Immersive images — 8 September 2026
+
+Mono 180°/360° image authoring and playback now pass browser export/recovery and actual Unity Play Mode colour-orientation, coverage, ray and completion checks. See `PROJECTION_STATUS.json`. Both accept the same version-2 package. Video, stereo, device acceptance and 3D composition remain separate unfinished work.
