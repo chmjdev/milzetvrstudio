@@ -5,8 +5,8 @@ export function newHotspot(id, x = .5, y = .5) {
 }
 
 export async function createImageScenario(title, bytes, mime) {
-  check(['image/png', 'image/jpeg'].includes(mime), 'Choose a PNG or JPEG image.');
-  const asset = { id: 'plate', path: mime === 'image/png' ? 'assets/plate.png' : 'assets/plate.jpg', mime, bytes: bytes.length, sha256: await sha256(bytes) };
+  check(['image/png', 'image/jpeg','video/mp4'].includes(mime), 'Choose a PNG, JPEG or MP4 source.');
+  const asset = { id: 'plate', path: mime === 'image/png' ? 'assets/plate.png' : mime==='video/mp4'?'assets/plate.mp4':'assets/plate.jpg', mime, bytes: bytes.length, sha256: await sha256(bytes) };
   return sealPackage({ id: crypto.randomUUID(), title: title.trim(), fixture: false, entryPhase: 'induct', assets: [asset], plate: { assetId: 'plate', projection: 'flat' }, hotspots: [newHotspot('point-1')], phases: [{ id: 'induct', hotspotIds: ['point-1'], next: '', gate: 'none' }] }, [{ path: asset.path, base64: toBase64(bytes) }]);
 }
 

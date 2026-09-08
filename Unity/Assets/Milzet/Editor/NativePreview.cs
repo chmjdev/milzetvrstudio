@@ -32,7 +32,7 @@ public static class NativePreview {
    player.OpenFile(path);player.Select("point-1");player.PlaySelectedAudio();PackageReader.Require(player.Narration.clip!=null && player.Narration.isPlaying,"Audio engine did not start playback.");
    File.WriteAllText(Path.Combine(output,"native-audio-samples.json"),"{\"samples\":"+data.Length+",\"frequency\":"+frequency+",\"peak\":"+data.Max(v=>Math.Abs(v)).ToString(System.Globalization.CultureInfo.InvariantCulture)+"}");
    File.WriteAllText(Path.Combine(output,"native-verification.json"),"{\"passed\":true,\"packageSha256\":\""+PackageReader.Hash(File.ReadAllBytes(path))+"\",\"revision\":\""+revision+"\",\"hotspots\":4,\"render\":\"native-trench.png\",\"raySelection\":true,\"hostGate\":true,\"completionEvent\":true,\"decodedAudio\":true,\"playMode\":true,\"audioEnginePlaying\":true,\"audibleOutput\":\"not verified\",\"headset\":\"not tested\"}");
-   UnityEngine.Object.DestroyImmediate(go);ProjectionVerification.Run(Path.GetDirectoryName(path),output);Debug.Log("MILZET_NATIVE_VISUAL_PASS");EditorApplication.Exit(0);
+   UnityEngine.Object.DestroyImmediate(go);ProjectionVerification.Run(Path.GetDirectoryName(path),output);Debug.Log("MILZET_NATIVE_VISUAL_PASS");VideoVerification.StartCheck(Path.GetDirectoryName(path),output);
   }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}
  }
  static void Render(PackagePlayer player,string path) {

@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import { createServer } from 'vite';
 import { mkdir, readFile } from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 const server = await createServer({ server: { host: '127.0.0.1', port: 0 } });
 let browser;
@@ -180,6 +181,18 @@ try {
     await page.locator('.scene-view').screenshot({path:'Artifacts/'+projection+'-turned.png'});
     await page.reload();await page.getByLabel('Source projection',{exact:true}).waitFor();assert.equal(await page.getByLabel('Source projection',{exact:true}).inputValue(),projection);
   }
+  execFileSync('/opt/homebrew/bin/ffmpeg',['-v','error','-y','-f','lavfi','-i','color=c=blue:s=640x320:r=24:d=3','-c:v','libx264','-pix_fmt','yuv420p','-movflags','+faststart','Artifacts/test-clip.mp4']);
+  await page.getByLabel('Create scenario from video',{exact:true}).setInputFiles({name:'test-clip.mp4',mimeType:'video/mp4',buffer:await readFile('Artifacts/test-clip.mp4')});
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  await page.getByLabel('Source projection',{exact:true}).selectOption('equirect360');
+  await page.getByRole('button',{name:'Apply composition',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Package and all media saved'}).waitFor();
+  await page.getByRole('button',{name:'Play / pause clip',exact:true}).click();
+  await page.waitForFunction(()=>Number(document.querySelector('[aria-label="Clip time"]').value)>.3);
+  await page.getByRole('button',{name:'Play / pause clip',exact:true}).click();
+  await page.locator('.scene-view').screenshot({path:'Artifacts/video-browser.png'});
+  const videoExport=page.waitForEvent('download');await page.getByRole('button',{name:'Export package + media'}).click();const videoFile=await videoExport;await videoFile.saveAs('Artifacts/video-browser.milzet-package.json');
+  assert.equal(JSON.parse(await readFile(await videoFile.path(),'utf8')).formatVersion,3);
   assert.deepEqual(errors, []);
   console.log('PASS: startup, create, reload, export, safe invalid import, valid import, desktop and 375px layout; zero browser errors; playable media backup/recovery/import and host gate/events passed.');
 } finally { await browser?.close(); await server.close(); }

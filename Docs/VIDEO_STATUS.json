@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "playMode": true,
+  "decodedFrame": true,
+  "playbackAdvanced": true,
+  "seek": true,
+  "projection": "equirect360",
+  "headset": "not tested",
+  "nodeTests": 23,
+  "browser": "decoded frame, playback time advancement, pause and package export passed",
+  "limits": [
+    "H.264 MP4, one video track, 12 MB media and 4096 pixels per side",
+    "Playback codec support is platform dependent",
+    "Embedded audio is not part of this silent test; headset acceptance pending"
+  ]
+}

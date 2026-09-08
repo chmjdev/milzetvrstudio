@@ -205,3 +205,7 @@ The flat-image composer now creates packages directly from imported images, edit
 ### Immersive images — 8 September 2026
 
 Mono 180°/360° image authoring and playback now pass browser export/recovery and actual Unity Play Mode colour-orientation, coverage, ray and completion checks. See `PROJECTION_STATUS.json`. Both accept the same version-2 package. Video, stereo, device acceptance and 3D composition remain separate unfinished work.
+
+### MP4 clips — 8 September 2026
+
+Shared version-3 H.264 MP4 packages now pass browser playback/export and Unity Play Mode decode, advancement and seek checks. See `VIDEO_STATUS.json`. Source library/revision/provenance and prepared generation jobs are implemented; read-only provider authentication is verified, while real generation still requires authorization and output review.

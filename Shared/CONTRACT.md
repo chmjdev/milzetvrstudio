@@ -25,3 +25,7 @@ No teacher assets, credentials, executable rules or CareerWIL business records b
 Flat packages remain version 1. `equirect180` and `equirect360` projection require envelope version 2, rejected by older readers. All other manifest fields remain unchanged. These are mono equirectangular still images: 1:1 aspect for 180°, 2:1 for 360°, maximum 8192 pixels per side. Ordinary photos, cropped panoramas, fisheye and stereo sources cannot be relabelled as full spherical captures.
 
 UV origin is top-left; x increases right, y increases downward. Image centre faces forward, at eye height 1.5m. Longitude is `(x-.5)*coverage`; latitude is `(.5-y)*pi`. Surface radius is 5m; hotspots use 4.8m. The web forward axis is -Z, Unity +Z. The 180° rear hemisphere is empty. Browser drag and native look sliders support desktop inspection; device acceptance remains separate.
+
+## MP4 extension (version 3)
+
+Packages containing `video/mp4` assets use version 3. MP4 paths end in `.mp4`; the plate can reference that asset with flat, equirect180 or equirect360 projection. Both readers inspect MP4 boxes for one H.264 video sample entry and verify encoded dimensions, including mono projection aspect. Clip limit: 12 MB and 4096 pixels per side. Codec decoding is verified separately from structural validation. The browser and native player expose play/pause/seek. Unity prepares a clip and decodes a frame before replacing the current scene; media is cached in its temporary application folder. No scripts are loaded from media.

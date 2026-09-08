@@ -1,3 +1,4 @@
+import {validateVideo} from './video.mjs';
 import { projections,validateProjection } from './projection.mjs';
 const idPattern = /^[a-zA-Z0-9-]{1,80}$/;
 export const MAX_PACKAGE_BYTES = 24000000;
@@ -14,12 +15,12 @@ export function validateManifest(m) {
   for (const a of m.assets) {
     exact(a,['id','path','mime','bytes','sha256']);
     check(typeof a.id === 'string' && idPattern.test(a.id) && !ids.has(a.id),'Duplicate or invalid asset ID.'); ids.add(a.id);
-    check(/^assets\/[a-zA-Z0-9-]+\.(png|jpg|wav)$/.test(a.path) && !paths.has(a.path),'Unsafe or duplicate asset path.'); paths.add(a.path);
-    check(['image/png','image/jpeg','audio/wav'].includes(a.mime) && Number.isInteger(a.bytes) && a.bytes > 0 && a.bytes <= 12000000 && /^[a-f0-9]{64}$/.test(a.sha256),'Invalid asset metadata.');
-    check(a.path.endsWith(a.mime === 'image/png' ? '.png' : a.mime === 'image/jpeg' ? '.jpg' : '.wav'),'Asset extension mismatch.');
+    check(/^assets\/[a-zA-Z0-9-]+\.(png|jpg|wav|mp4)$/.test(a.path) && !paths.has(a.path),'Unsafe or duplicate asset path.'); paths.add(a.path);
+    check(['image/png','image/jpeg','audio/wav','video/mp4'].includes(a.mime) && Number.isInteger(a.bytes) && a.bytes > 0 && a.bytes <= 12000000 && /^[a-f0-9]{64}$/.test(a.sha256),'Invalid asset metadata.');
+    check(a.path.endsWith(a.mime === 'image/png' ? '.png' : a.mime === 'image/jpeg' ? '.jpg' : a.mime==='video/mp4'?'.mp4':'.wav'),'Asset extension mismatch.');
   }
   exact(m.plate,['assetId','projection']);
-  check(projections.includes(m.plate.projection) && m.assets.some(a=>a.id===m.plate.assetId && a.mime.startsWith('image/')),'Unsupported image projection.');
+  check(projections.includes(m.plate.projection) && m.assets.some(a=>a.id===m.plate.assetId && (a.mime.startsWith('image/') || a.mime==='video/mp4')),'Unsupported image projection.');
   check(Array.isArray(m.hotspots) && m.hotspots.length > 0 && m.hotspots.length <= 32,'Invalid hotspot count.');
   const hotspots = new Set();
   for(const h of m.hotspots) {
@@ -47,15 +48,16 @@ export function validateManifest(m) {
 export async function sealPackage(manifest, files) {
   validateManifest(manifest);
   const text = JSON.stringify(manifest);
-  const envelope = {formatVersion:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
+  const envelope = {formatVersion:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
   await openPackage(JSON.stringify(envelope)); return envelope;
 }
 export async function openPackage(text) {
   check(typeof text==='string' && text.length <= MAX_PACKAGE_BYTES,'Package exceeds the 24 MB limit.');
   const e=JSON.parse(text); exact(e,['formatVersion','kind','manifest','manifestSha256','files']);
-  check([1,2].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
+  check([1,2,3].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
   check(await sha256(new TextEncoder().encode(e.manifest))===e.manifestSha256,'Manifest checksum mismatch.');
   const manifest=validateManifest(JSON.parse(e.manifest));
+  check(e.formatVersion===3 || !manifest.assets.some(a=>a.mime==='video/mp4'),'Video requires package version 3.');
   check(e.formatVersion!==1 || manifest.plate.projection==='flat','Immersive projection requires package version 2.');
   check(Array.isArray(e.files) && e.files.length===manifest.assets.length,'Missing or extra package assets.');
   const bytes = new Map();
@@ -64,16 +66,16 @@ export async function openPackage(text) {
     const a=manifest.assets.find(a=>a.path===file.path);check(a && !bytes.has(a.id),'Unknown or duplicate package file.');
     const data=fromBase64(file.base64);
     check(data.length===a.bytes && await sha256(data)===a.sha256,'Asset checksum mismatch.');
-    check(a.mime==='image/png' ? data[0]===137 && data[1]===80 && data[2]===78 && data[3]===71 : a.mime==='image/jpeg' ? data[0]===255 && data[1]===216 : new TextDecoder().decode(data.slice(0,4))==='RIFF' && new TextDecoder().decode(data.slice(8,12))==='WAVE','Media signature mismatch.');
-    if(a.mime==='audio/wav')validateWave(data);
+    check(a.mime==='image/png' ? data[0]===137 && data[1]===80 && data[2]===78 && data[3]===71 : a.mime==='image/jpeg' ? data[0]===255 && data[1]===216 : a.mime==='video/mp4'?new TextDecoder().decode(data.slice(4,8))==='ftyp':new TextDecoder().decode(data.slice(0,4))==='RIFF' && new TextDecoder().decode(data.slice(8,12))==='WAVE','Media signature mismatch.');
+    if(a.mime==='audio/wav')validateWave(data);if(a.mime==='video/mp4')validateVideo(data);
     bytes.set(a.id,data);
   }
-  const plate=manifest.assets.find(a=>a.id===manifest.plate.assetId);validateProjection(bytes.get(plate.id),plate.mime,manifest.plate.projection);
+  const plate=manifest.assets.find(a=>a.id===manifest.plate.assetId);if(plate.mime==='video/mp4')validateVideo(bytes.get(plate.id),manifest.plate.projection);else validateProjection(bytes.get(plate.id),plate.mime,manifest.plate.projection);
   return {envelope:e,manifest,bytes};
 }
 export async function replaceAsset(envelope, assetId, bytes, mime) {
   const m=JSON.parse(envelope.manifest);const a=m.assets.find(a=>a.id===assetId);check(a,'Unknown asset.');
-  a.mime=mime;a.path=`assets/${assetId}.${mime==='image/png'?'png':mime==='image/jpeg'?'jpg':'wav'}`;a.bytes=bytes.length;a.sha256=await sha256(bytes);
+  a.mime=mime;a.path=`assets/${assetId}.${mime==='image/png'?'png':mime==='image/jpeg'?'jpg':mime==='video/mp4'?'mp4':'wav'}`;a.bytes=bytes.length;a.sha256=await sha256(bytes);
   const previous=JSON.parse(envelope.manifest).assets.find(a=>a.id===assetId).path;
   const files=envelope.files.filter(f=>f.path!==previous);files.push({path:a.path,base64:toBase64(bytes)});
   return sealPackage(m,files);
