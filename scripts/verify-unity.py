@@ -8,7 +8,9 @@ if shutil.disk_usage(root).free<8*1024**3:raise SystemExit('At least 8 GiB free 
 output=root/'Artifacts/UnityVisual';output.mkdir(parents=True,exist_ok=True)
 env=os.environ.copy();env['MILZETVRSTUDIO_TEST_PACKAGE']=str(fixture);env['MILZETVRSTUDIO_TEST_OUTPUT']=str(output)
 started=time.time()
-result=subprocess.run([str(unity),'-batchmode','-projectPath',str(root/'Unity'),'-executeMethod','Milzet.Editor.NativePreview.Verify','-logFile',str(output/'editor.log')],env=env,timeout=240)
+result=subprocess.run([str(unity),'-batchmode','-buildTarget','StandaloneOSX','-projectPath',str(root/'Unity'),'-executeMethod','Milzet.Editor.NativePreview.Verify','-logFile',str(output/'editor.log')],env=env,timeout=360)
 if result.returncode:raise SystemExit(result.returncode)
-if not (output/'native-verification.json').is_file() or (output/'native-verification.json').stat().st_mtime<started:raise SystemExit('Unity exited without verification receipt.')
+for receipt in ['native','reference','projection','video','model','activity','experience','presentation','xr-controls','startup']:
+    path=output/(receipt+'-verification.json')
+    if not path.is_file() or path.stat().st_mtime<started:raise SystemExit('Unity exited without fresh '+receipt+' verification receipt.')
 print((output/'native-verification.json').read_text())

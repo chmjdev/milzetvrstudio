@@ -1,0 +1,13 @@
+import {check} from './package.mjs';
+import {pilotTypes} from './context.mjs';
+export function checkPilotStructure(type,manifests){
+ check(pilotTypes.includes(type) && type!=='' && Array.isArray(manifests) && manifests.length>0,'Choose a pilot workflow and at least one saved scene.');
+ const requirements=[],test=(label,passed)=>requirements.push({label,passed:!!passed}),assets=manifests.flatMap(m=>m.assets),activities=manifests.flatMap(m=>m.activities||[]),phases=new Set(manifests.flatMap(m=>m.phases.map(p=>p.id))),has180=manifests.some(m=>m.plate.projection==='equirect180');
+ test('Client source citation',manifests.every(m=>m.context?.sourceCitation.trim()));
+ if(type==='Trench and fibre duct'){test('180° source',has180);test('Four inspection hotspots',manifests.some(m=>m.hotspots.length>=4));test('Induct, Shadow and Prove phases',['induct','shadow','prove'].every(p=>phases.has(p)));test('PPE acknowledgement slot',activities.some(a=>a.phase==='induct' && a.kind==='acknowledgement'));test('External observation/evidence request',activities.some(a=>a.phase==='prove' && a.kind==='observation'));}
+ if(type==='Toolbox talk / permit board'){test('Induct and Shadow phases',phases.has('induct') && phases.has('shadow'));test('90-second narrated demonstration',manifests.some(m=>{const d=m.presentation?.demonstration;return d && d.phase==='shadow' && d.duration===90 && assets.some(a=>a.id===d.narrationAssetId && a.mime==='audio/wav');}));}
+ if(type==='Daily site log'){test('Walkthrough video plate',manifests.some(m=>m.assets.some(a=>a.id===m.plate.assetId && a.mime==='video/mp4')));test('Site-log response field',activities.some(a=>a.kind==='field'));test('Observation/evidence request',activities.some(a=>a.kind==='observation'));}
+ if(type==='Virtual assessment'){test('External stream/session reference',manifests.some(m=>m.context?.externalStreamRef.trim()));test('Prove phase',phases.has('prove'));test('Observation/evidence request',activities.some(a=>a.phase==='prove' && a.kind==='observation'));}
+ if(type==='First-aid switch test'){test('Six distinct still-image scenes',new Set(manifests.filter(m=>m.plate.projection==='flat' && m.assets.some(a=>a.id===m.plate.assetId && a.mime.startsWith('image/'))).map(m=>m.id)).size>=6);test('180° scene',has180);test('Induct and Prove phases',phases.has('induct') && phases.has('prove'));test('Three Prove quiz items',activities.filter(a=>a.phase==='prove' && a.kind==='quiz').length>=3);}
+ return {pilot:type,requirements,complete:requirements.every(r=>r.passed),acceptance:'Structure only. Client content, instructions, narration, physical playback and external host integration require review.'};
+}

@@ -8,7 +8,7 @@ export function validateActivities(m){
   if(!Array.isArray(a.choices) || a.choices.length>8 || a.choices.some(c=>typeof c!=='string' || !c.trim() || c.length>200) || new Set(a.choices).size!==a.choices.length || (a.kind==='quiz'?a.choices.length<2:a.choices.length!==0))throw Error('Quizzes need 2–8 distinct choices.');
   if(typeof a.hint!=='string' || a.hint.length>1000 || !Number.isInteger(a.maxHints) || a.maxHints<0 || a.maxHints>3 || (a.phase==='prove' && (a.hint!=='' || a.maxHints!==0)))throw Error('Invalid hint budget; Prove cannot contain hints.');
   if(!Number.isFinite(a.startTime) || a.startTime<0 || a.startTime>3600 || !Number.isFinite(a.endTime) || a.endTime<0 || a.endTime>3600 || a.endTime!==0 && a.endTime<=a.startTime)throw Error('Invalid activity time window.');
-  if((a.startTime>0 || a.endTime>0) && !m.assets.some(x=>x.id===m.plate.assetId && x.mime==='video/mp4'))throw Error('Timed activities require a clip.');
+  if(a.startTime>0 || a.endTime>0){const d=m.presentation?.demonstration;if(d?.phase===a.phase){if(a.startTime>d.duration || a.endTime>d.duration)throw Error('Activity exceeds demonstration duration.');}else if(!m.assets.some(x=>x.id===m.plate.assetId && x.mime==='video/mp4'))throw Error('Timed activities require a clip or a demonstration in this phase.');}
  }
 }
 export function activityResponse(manifest,phase,done,id,response,time){

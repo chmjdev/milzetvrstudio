@@ -7,3 +7,9 @@
 .source-library fieldset{border:0;padding:0;min-width:0}.source-items{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.source-items article{padding:14px;border:1px solid #ccd8d0;overflow-wrap:anywhere}.source-items small{font-size:10px}.source-library .package-actions{align-items:center}
 
 .composition-plate video{width:100%;display:block}.clip-controls{display:flex;gap:10px;align-items:center}.clip-controls input{flex:1}
+
+.experience-editor fieldset{border:0;padding:0;min-width:0}.experience-editor li{min-width:0;overflow-wrap:anywhere;margin-bottom:20px}.experience-editor input[type=checkbox]{width:auto}.experience-editor button{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+
+.template-editor fieldset{border:0;padding:0;min-width:0}.template-editor button{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+
+.project-backup fieldset{min-width:0;border:0;padding:0;display:flex;gap:12px;flex-wrap:wrap}.project-backup{margin:20px 0;padding:18px;border:1px solid #cbd5cf;border-radius:12px}

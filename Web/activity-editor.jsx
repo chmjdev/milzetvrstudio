@@ -1,4 +1,5 @@
 import React from 'react';
+import {removeTargetReferences} from '../Shared/references.mjs';
 import {activityKinds} from '../Shared/activities.mjs';
 export function ActivityEditor({draft,edit}){
  function update(id,fields){edit(m=>Object.assign(m.activities.find(a=>a.id===id),fields));}
@@ -8,6 +9,6 @@ export function ActivityEditor({draft,edit}){
  <label>Source or module citation<input aria-label={'Activity '+(i+1)+' citation'} value={a.citation} maxLength={500} onChange={e=>update(a.id,{citation:e.target.value})}/></label>
  {a.phase!=='prove' && <div className="composition-phases"><label>Hint<input aria-label={'Activity '+(i+1)+' hint'} value={a.hint} maxLength={1000} onChange={e=>update(a.id,{hint:e.target.value})}/></label><label>Hint budget<input aria-label={'Activity '+(i+1)+' hint budget'} type="number" min="0" max="3" value={a.maxHints} onChange={e=>update(a.id,{maxHints:Number(e.target.value)})}/></label></div>}
  <div className="composition-phases"><label>Clip start (seconds)<input aria-label={'Activity '+(i+1)+' start'} type="number" min="0" max="3600" value={a.startTime} onChange={e=>update(a.id,{startTime:Number(e.target.value)})}/></label><label>Clip end (0 = no end)<input aria-label={'Activity '+(i+1)+' end'} type="number" min="0" max="3600" value={a.endTime} onChange={e=>update(a.id,{endTime:Number(e.target.value)})}/></label></div>
- <div className="package-actions"><button disabled={i===0} onClick={()=>edit(m=>{[m.activities[i-1],m.activities[i]]=[m.activities[i],m.activities[i-1]];})}>Move activity up</button><button onClick={()=>edit(m=>{m.activities=m.activities.filter(x=>x.id!==a.id);})}>Remove activity</button></div></details>)}
+ <div className="package-actions"><button disabled={i===0} onClick={()=>edit(m=>{[m.activities[i-1],m.activities[i]]=[m.activities[i],m.activities[i-1]];})}>Move activity up</button><button onClick={()=>edit(m=>{m.activities=m.activities.filter(x=>x.id!==a.id);removeTargetReferences(m,'activity',a.id);})}>Remove activity</button></div></details>)}
  </section>;
 }

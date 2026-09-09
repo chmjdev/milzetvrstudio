@@ -21,7 +21,14 @@ public static class ModelVerification {
   PackageReader.Require(player.Loaded.Manifest.context.occupationRef=="Client supplied reference","Context reference mismatch.");
   foreach(var phase in player.Loaded.Manifest.phases){foreach(var id in phase.hotspotIds)player.Select(id);foreach(var activity in player.Loaded.Manifest.activities.Where(a=>a.phase==phase.id))player.Session.Respond(activity.id,activity.kind=="quiz"?activity.choices.Last():"acknowledged");player.SimulatedHostRelease=true;player.Advance();}
   PackageReader.Require(player.Session.Complete && player.Events.Any(e=>e.type=="activity.responded" && e.response=="Request review"),"Native activity event payload missing.");File.WriteAllText(Path.Combine(output,"activity-verification.json"),"{\"passed\":true,\"playMode\":true,\"context\":true,\"responsePayload\":true,\"hostProgression\":true}");
-  Debug.Log("MILZET_MODEL_PASS");EditorApplication.Exit(0);
+  player.OpenFile(Path.Combine(directory,"experience-browser.milzet-experience.json"));while(player.ExperienceLoading)yield return null;
+  PackageReader.Require(player.Experience!=null && player.Experience.Packages.Count==2 && player.Loaded.Manifest.provenance[0].owner=="Test client","Experience/provenance import failed.");
+  bool sceneBlocked=false;try{player.AdvanceExperience();}catch(InvalidDataException){sceneBlocked=true;}PackageReader.Require(sceneBlocked,"Incomplete scene bypass.");
+  player.Select(player.Loaded.Manifest.hotspots[0].id);player.Advance();sceneBlocked=false;try{player.AdvanceExperience();}catch(InvalidDataException){sceneBlocked=true;}PackageReader.Require(sceneBlocked,"Experience host gate bypass.");
+  player.SimulatedSceneRelease=true;player.AdvanceExperience();while(player.ExperienceLoading)yield return null;PackageReader.Require(player.Loaded.Manifest.title=="Experience second","Second scene not loaded.");player.Select(player.Loaded.Manifest.hotspots[0].id);player.Advance();player.AdvanceExperience();
+  PackageReader.Require(player.Journey.Complete && player.ExperienceEvents.Count(e=>e.type=="experience.completed")==1,"Experience completion event failed.");
+  File.WriteAllText(Path.Combine(output,"experience-verification.json"),"{\"passed\":true,\"playMode\":true,\"sceneCount\":2,\"hostGate\":true,\"completion\":true,\"publicProvenance\":true}");
+  Debug.Log("MILZET_MODEL_PASS");UnityEngine.Object.DestroyImmediate(player.gameObject);PresentationVerification.StartCheck(directory,output);
  }
 }
 }

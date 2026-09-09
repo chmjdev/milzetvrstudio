@@ -25,7 +25,7 @@ public sealed partial class PackagePlayer {
   player.Pause();
   if(player.frame<0 || failed!=null){Message="Video failed to produce a frame.";target.Release();DestroyImmediate(target);DestroyImmediate(temporary);DiscardPreparedModels();VideoLoading=false;yield break;}
   preparedVideo=player;
-  try {Open(text);}catch(Exception e){Message=e.Message;target.Release();DestroyImmediate(target);DestroyImmediate(temporary);preparedVideo=null;}
+  try {OpenScene(text);}catch(Exception e){Message=e.Message;target.Release();DestroyImmediate(target);DestroyImmediate(temporary);preparedVideo=null;}
   VideoLoading=false;
  }
 }

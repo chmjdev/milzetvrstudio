@@ -15,3 +15,7 @@ test('activity order, hint budgets and response events preserve host boundary',a
 test('clip activity windows reject early/late responses',()=>{
  const m={activities:[{...activity,startTime:5,endTime:10}]};assert.throws(()=>activityResponse(m,'induct',new Set(),'a','yes',4),/time window/);assert.throws(()=>activityResponse(m,'induct',new Set(),'a','yes',11),/time window/);assert.equal(activityResponse(m,'induct',new Set(),'a','yes',7).id,'a');
 });
+
+test('timed still-image activities require a matching bounded demonstration',async()=>{
+ const base=await createImageScenario('Still demonstration',new Uint8Array([137,80,78,71]),'image/png'),draft=JSON.parse(base.manifest);draft.activities=[{...activity,startTime:1,endTime:2}];await assert.rejects(applyComposition(base,draft),/clip or a demonstration/);draft.presentation={overlays:[],demonstration:{phase:'induct',duration:3,narrationAssetId:'',path:[],cues:[]}};const result=await applyComposition(base,draft);assert.equal(result.formatVersion,8);draft.activities[0].endTime=4;await assert.rejects(applyComposition(base,draft),/duration/);
+});

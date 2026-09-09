@@ -24,7 +24,7 @@ public static class ActivityContract {
    PackageReader.Require(a.choices!=null && a.choices.Length<=8 && a.choices.All(c=>!String.IsNullOrWhiteSpace(c) && c.Length<=200) && a.choices.Distinct().Count()==a.choices.Length && (a.kind=="quiz"?a.choices.Length>=2:a.choices.Length==0),"Invalid choices.");
    PackageReader.Require(a.hint!=null && a.hint.Length<=1000 && a.maxHints>=0 && a.maxHints<=3 && (a.phase!="prove" || a.hint=="" && a.maxHints==0),"Invalid hint budget; Prove cannot contain hints.");
    PackageReader.Require(!Double.IsNaN(a.startTime) && !Double.IsNaN(a.endTime) && a.startTime>=0 && a.startTime<=3600 && a.endTime>=0 && a.endTime<=3600 && (a.endTime==0 || a.endTime>a.startTime),"Invalid activity time.");
-   PackageReader.Require(a.startTime==0 && a.endTime==0 || m.assets.Any(x=>x.id==m.plate.assetId && x.mime=="video/mp4"),"Timed activity requires clip.");
+   if(a.startTime>0 || a.endTime>0){var d=m.presentation?.demonstration;if(d!=null && d.phase==a.phase)PackageReader.Require(a.startTime<=d.duration && a.endTime<=d.duration,"Activity exceeds demonstration duration.");else PackageReader.Require(m.assets.Any(x=>x.id==m.plate.assetId && x.mime=="video/mp4"),"Timed activity requires a clip or a demonstration in this phase.");}
   }
  }
 }

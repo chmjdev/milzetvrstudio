@@ -1,3 +1,6 @@
+import {validateReferences} from './references.mjs';
+import {validatePresentation} from './presentation.mjs';
+import {validateProvenance} from './provenance.mjs';
 import {validateContext} from './context.mjs';
 import {validateActivities,activityResponse} from './activities.mjs';
 import {validateGlb,validateObjects} from './models.mjs';
@@ -9,9 +12,14 @@ export function check(ok, message) { if (!ok) throw Error(message); }
 function exact(obj, keys) { check(obj && typeof obj === 'object' && !Array.isArray(obj) && Object.keys(obj).sort().join('|') === keys.slice().sort().join('|'), 'Unexpected object fields.'); }
 export async function sha256(bytes) { return [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))].map(x => x.toString(16).padStart(2,'0')).join(''); }
 export function toBase64(bytes) { let text = ''; for (let i = 0; i < bytes.length; i += 8192) text += String.fromCharCode(...bytes.subarray(i, i + 8192)); return btoa(text); }
-export function fromBase64(text) { check(typeof text === 'string' && text.length <= MAX_PACKAGE_BYTES && /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(text), 'Invalid asset encoding.'); return Uint8Array.from(atob(text), c => c.charCodeAt(0)); }
+export function fromBase64(text) {
+ check(typeof text === 'string' && text.length <= MAX_PACKAGE_BYTES && text.length % 4 === 0, 'Invalid asset encoding.');
+ const padding = text.endsWith('==') ? 2 : text.endsWith('=') ? 1 : 0;
+ check(!/[^A-Za-z0-9+/]/.test(text.slice(0, text.length - padding)), 'Invalid asset encoding.');
+ return Uint8Array.from(atob(text), c => c.charCodeAt(0));
+}
 export function validateManifest(m) {
-  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases',...(m.objects===undefined?[]:['objects']),...(m.activities===undefined?[]:['activities']),...(m.context===undefined?[]:['context'])]);
+  exact(m,['id','title','fixture','entryPhase','assets','plate','hotspots','phases',...(m.references===undefined?[]:['references']),...(m.objects===undefined?[]:['objects']),...(m.activities===undefined?[]:['activities']),...(m.context===undefined?[]:['context']),...(m.provenance===undefined?[]:['provenance']),...(m.presentation===undefined?[]:['presentation'])]);
   check(typeof m.id === 'string' && idPattern.test(m.id) && typeof m.title === 'string' && m.title.trim().length > 0 && m.title.length <= 120 && typeof m.fixture === 'boolean','Invalid package identity.');
   check(Array.isArray(m.assets) && m.assets.length >= 1 && m.assets.length <= 8,'Invalid asset count.');
   const ids = new Set(), paths = new Set();
@@ -46,21 +54,24 @@ export function validateManifest(m) {
   const visited = new Set(); let current = m.entryPhase;
   while(current) { check(!visited.has(current),'Cyclic phase transitions.'); visited.add(current); current=m.phases.find(p=>p.id===current).next; }
   check(visited.size===phases.size,'Unreachable phase.');
-  validateObjects(m);validateActivities(m);validateContext(m);return m;
+  validateReferences(m);validateObjects(m);validateActivities(m);validateContext(m);validateProvenance(m);validatePresentation(m);return m;
 }
 export async function sealPackage(manifest, files) {
   validateManifest(manifest);
   const text = JSON.stringify(manifest);
-  const envelope = {formatVersion:manifest.context!==undefined?6:manifest.activities!==undefined?5:manifest.objects!==undefined?4:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
+  const envelope = {formatVersion:manifest.references!==undefined?9:manifest.presentation!==undefined?8:manifest.provenance!==undefined?7:manifest.context!==undefined?6:manifest.activities!==undefined?5:manifest.objects!==undefined?4:manifest.assets.some(a=>a.mime==='video/mp4')?3:manifest.plate.projection==='flat'?1:2,kind:'milzet-playable',manifest:text,manifestSha256:await sha256(new TextEncoder().encode(text)),files};
   await openPackage(JSON.stringify(envelope)); return envelope;
 }
 export async function openPackage(text) {
   check(typeof text==='string' && text.length <= MAX_PACKAGE_BYTES,'Package exceeds the 24 MB limit.');
   const e=JSON.parse(text); exact(e,['formatVersion','kind','manifest','manifestSha256','files']);
-  check([1,2,3,4,5,6].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
+  check([1,2,3,4,5,6,7,8,9].includes(e.formatVersion) && e.kind==='milzet-playable' && typeof e.manifest==='string','Unsupported playable package.');
   check(await sha256(new TextEncoder().encode(e.manifest))===e.manifestSha256,'Manifest checksum mismatch.');
   const manifest=validateManifest(JSON.parse(e.manifest));
-  check(e.formatVersion===6 || manifest.context===undefined,'Context requires package version 6.');
+  check(e.formatVersion>=9 || manifest.references===undefined,'References require package version 9.');
+  check(e.formatVersion>=8 || manifest.presentation===undefined,'Presentation requires package version 8.');
+  check(e.formatVersion>=7 || manifest.provenance===undefined,'Provenance requires package version 7.');
+  check(e.formatVersion>=6 || manifest.context===undefined,'Context requires package version 6.');
   check(e.formatVersion>=5 || manifest.activities===undefined,'Activities require package version 5.');
   check(e.formatVersion>=4 || manifest.objects===undefined && !manifest.assets.some(a=>a.mime==='model/gltf-binary'),'Models require package version 4.');
   check(e.formatVersion>=3 || !manifest.assets.some(a=>a.mime==='video/mp4'),'Video requires package version 3.');
@@ -82,6 +93,7 @@ export async function openPackage(text) {
 export async function replaceAsset(envelope, assetId, bytes, mime) {
   const m=JSON.parse(envelope.manifest);const a=m.assets.find(a=>a.id===assetId);check(a,'Unknown asset.');
   a.mime=mime;a.path=`assets/${assetId}.${mime==='image/png'?'png':mime==='image/jpeg'?'jpg':mime==='video/mp4'?'mp4':'wav'}`;a.bytes=bytes.length;a.sha256=await sha256(bytes);
+  if(m.provenance)m.provenance=m.provenance.filter(p=>p.assetId!==assetId || p.sha256===a.sha256);
   const previous=JSON.parse(envelope.manifest).assets.find(a=>a.id===assetId).path;
   const files=envelope.files.filter(f=>f.path!==previous);files.push({path:a.path,base64:toBase64(bytes)});
   return sealPackage(m,files);

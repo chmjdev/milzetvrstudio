@@ -1,0 +1,7 @@
+using System;
+using System.IO;
+using System.Linq;
+using Milzet.Content;
+class ExperienceSmoke {
+ static int Main(string[] args){int accepted=0;foreach(var file in Directory.GetFiles(args[0],"*.json")){bool invalid=Path.GetFileName(file).StartsWith("invalid-");LoadedExperience loaded=null;try{loaded=ExperienceReader.Open(File.ReadAllText(file));}catch(Exception){if(!invalid)throw;}if(invalid){if(loaded!=null)throw new Exception("Invalid experience accepted: "+file);continue;}PackageReader.Require(loaded.Packages.Count==2,"Two scene fixture required.");var progress=new ExperienceProgress(loaded);bool blocked=false;try{progress.Next(false,(a,b)=>true);}catch(InvalidDataException){blocked=true;}PackageReader.Require(blocked,"Scene completion bypass.");blocked=false;try{progress.Next(true,(a,b)=>false);}catch(InvalidDataException){blocked=true;}PackageReader.Require(blocked,"Scene host bypass.");var next=progress.Next(true,(a,b)=>true);PackageReader.Require(progress.SceneId==loaded.Manifest.entryScene,"Transition committed before load.");progress.Commit(next);PackageReader.Require(progress.SceneId==loaded.Manifest.scenes.Last().id,"Scene order mismatch.");progress.Commit(progress.Next(true,(a,b)=>false));PackageReader.Require(progress.Complete,"Experience incomplete.");accepted++;}PackageReader.Require(accepted==1,"Expected one valid experience.");Console.WriteLine("PASS: native two-scene reader, child validation, completion and host gates.");return 0;}
+}

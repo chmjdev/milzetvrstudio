@@ -3,7 +3,37 @@
   "provider": "elevenlabs",
   "prompt": "This is a generated test narration for Milzet VR Studio. Inspect the marker, review the prompt, and continue when the local test host releases the next phase. This is not client training content.",
   "voiceId": "JBFqnCBsd6RMkjVDRZzb",
-  "status": "prepared",
-  "remoteId": "",
-  "createdAt": "2026-09-08"
+  "status": "succeeded",
+  "remoteId": "W7949z9f5fBCK39QjHzk",
+  "createdAt": "2026-09-08",
+  "submissionRoute": "mcp__elevenlabs__text_to_speech",
+  "requestPayload": {
+    "text": "This is a generated test narration for Milzet VR Studio. Inspect the marker, review the prompt, and continue when the local test host releases the next phase. This is not client training content.",
+    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+    "model_id": "eleven_multilingual_v2",
+    "output_format": "pcm_24000"
+  },
+  "output": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Generation/60414313-7fb4-4b3e-9a5b-31c0dc3b4d2d.wav",
+  "outputSha256": "2305c9613f485e10e89642be6efc9b205e23e190f5fefff518c3cf790d550205",
+  "receiptFile": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Generation/elevenlabs-mcp-receipt.json",
+  "rawOutput": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Generation/tts_This__20260909_120948.mp3",
+  "audio": {
+    "format": "PCM signed 16-bit mono 24000 Hz",
+    "seconds": 12.817416666666666,
+    "peak": 17039,
+    "rms": 2198.710450403872
+  },
+  "formatNote": "MCP saved requested raw PCM with .mp3 extension; wrapped original bytes as WAV without regeneration.",
+  "receipt": {
+    "history_item_id": "710MVSAHmOI5ycQLg7lC",
+    "request_id": "W7949z9f5fBCK39QjHzk",
+    "voice_id": "JBFqnCBsd6RMkjVDRZzb",
+    "voice_name": "George - Warm, Captivating Storyteller",
+    "model_id": "eleven_multilingual_v2",
+    "date_unix": 1788948591,
+    "character_count_change_from": 53009,
+    "character_count_change_to": 53127,
+    "text": "This is a generated test narration for Milzet VR Studio. Inspect the marker, review the prompt, and continue when the local test host releases the next phase. This is not client training content."
+  },
+  "credits": 118
 }

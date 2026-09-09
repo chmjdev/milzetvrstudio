@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createProject, parseProject, templates } from '../Shared/project.mjs';
 import { cn } from './lib/utils';
 import './style.css';
+import {ProjectBackup} from './project-backup';
+import {ProjectSwitcher} from './project-switcher';
+import {readField,writeField,restoreWorkspace} from './workspace-store.mjs';
 import { Playable } from './playable';
 const storageKey = 'milzetvrstudio.draft.v1';
 function initial() {
@@ -12,12 +15,14 @@ function initial() {
 function App() {
   const [loaded] = useState(initial);
   const [project, setProject] = useState<any>(loaded.project);
+  const [projectReady, setProjectReady] = useState(false);
   const [message, setMessage] = useState(loaded.message);
   const [title, setTitle] = useState('');
   const [template, setTemplate] = useState('Site');
   const [phase, setPhase] = useState('induct');
-  function save(value: any) {
-    try { localStorage.setItem(storageKey, JSON.stringify(value)); setProject(value); setMessage('Draft saved on this browser. Export a backup to keep it.'); }
+  useEffect(()=>{readField('project').then(value=>{if(value){parseProject(JSON.stringify(value));setProject(value);}else setProject(null);}).catch(error=>setMessage(error.message)).finally(()=>setProjectReady(true));},[]);
+  async function save(value: any, fresh=false) {
+    try { if(fresh){await restoreWorkspace({project:value,library:null,scene:null,experience:null});window.location.reload();return;}await writeField('project',value); setProject(value); setMessage('Draft saved on this browser. Export a backup to keep it.'); }
     catch { setMessage('Unable to save locally. Your current draft is still open; export a backup.'); }
   }
   function exportDraft() {
@@ -29,12 +34,12 @@ function App() {
   return <div className="shell">
     <aside><a className="brand" href="/">m<span>Milzet<br/><small>VR STUDIO</small></span></a><div className="nav-label">WORKSPACE</div><div className="nav-item">◇ Content authoring</div><div className="aside-bottom">Your environment.<br/>Your expertise.<br/><strong>Your content.</strong></div></aside>
     <main><header><div><span className="eyebrow">INTERACTIVE / MILZET</span><h1>Content workspace</h1></div><span className="badge">Drafts + scenario composer</span></header>
-      <section className="intro"><div><h2>Build from your world.</h2><p>Start with an empty project. Capture and generate client content onsite.</p></div><label className="button secondary">Open draft<input aria-label="Open draft" type="file" accept=".json" hidden onChange={async e => { const f = e.target.files?.[0]; if (!f) return; try { if(f.size > 1000000) throw Error('Draft exceeds the 1 MB limit.'); const v = parseProject(await f.text()); save(v); } catch(error) { setMessage((error as Error).message); } e.target.value = ''; }}/></label></section>
-      {!project ? <section className="create-card"><div className="empty-icon">◇</div><h2>Your first scenario starts here</h2><p>No lessons or teaching models are bundled.</p><form onSubmit={e => { e.preventDefault(); try { save(createProject(title, template, crypto.randomUUID())); } catch(error) { setMessage((error as Error).message); } }}><label>Project title<input value={title} onChange={e => setTitle(e.target.value)} maxLength={120} placeholder="e.g. Site induction" required/></label><label>Environment template<select value={template} onChange={e => setTemplate(e.target.value)}>{templates.map(t => <option key={t}>{t}</option>)}</select></label><button className="primary">Create empty project ↗</button></form></section> : <>
+      <section className="intro"><div><h2>Build from your world.</h2><p>Start with an empty project. Capture and generate client content onsite.</p></div><label className="button secondary">Open draft<input aria-label="Open draft" disabled={!projectReady} type="file" accept=".json" hidden onChange={async e => { const f = e.target.files?.[0]; if (!f) return; try { if(f.size > 1000000) throw Error('Draft exceeds the 1 MB limit.'); const v = parseProject(await f.text()); await save(v,project?.id!==v.id); } catch(error) { setMessage((error as Error).message); } e.target.value = ''; }}/></label></section>
+      {!project ? <section className="create-card"><div className="empty-icon">◇</div><h2>Your first scenario starts here</h2><p>No lessons or teaching models are bundled.</p><form onSubmit={e => { e.preventDefault(); try { save(createProject(title, template, crypto.randomUUID()),true); } catch(error) { setMessage((error as Error).message); } }}><label>Project title<input value={title} onChange={e => setTitle(e.target.value)} maxLength={120} placeholder="e.g. Site induction" required/></label><label>Environment template<select value={template} onChange={e => setTemplate(e.target.value)}>{templates.map(t => <option key={t}>{t}</option>)}</select></label><button disabled={!projectReady} className="primary">Create empty project ↗</button></form></section> : <>
       <section className="project-head"><div><span className="eyebrow">{project.template} / DRAFT</span><h2>{project.title}</h2></div><button className="secondary" onClick={exportDraft}>Export draft ↓</button></section>
-      <div className="editor"><section className="canvas"><div className="grid-plane"/><div className="canvas-empty"><span>＋</span><h3>Scene is empty</h3><p>Create a playable image scenario in the composer below. This separate draft holds project metadata.</p></div><span className="canvas-label">EMPTY AUTHORING PROJECT · 0 ASSETS</span></section><section className="inspector"><h3>Content phases</h3>{project.phases.map((p: any, i: number) => <button key={p.id} className={cn('phase', phase === p.id && 'selected')} onClick={() => setPhase(p.id)}><span>0{i + 1}</span>{p.id}<small>0 steps</small></button>)}<p className="hint">Phase structure is ready. Step editing is not yet available.</p><h3>Delivery targets</h3><div className="target">WebXR <small>Planned</small></div><div className="target">Native Unity <small>Planned</small></div></section></div>
+      <div className="editor"><section className="canvas"><div className="grid-plane"/><div className="canvas-empty"><span>＋</span><h3>Scene is empty</h3><p>Create a playable image scenario in the composer below. This separate draft holds project metadata.</p></div><span className="canvas-label">EMPTY AUTHORING PROJECT · 0 ASSETS</span></section><section className="inspector"><h3>Content phases</h3>{project.phases.map((p: any, i: number) => <button key={p.id} className={cn('phase', phase === p.id && 'selected')} onClick={() => setPhase(p.id)}><span>0{i + 1}</span>{p.id}<small>0 steps</small></button>)}<p className="hint">Phase structure is ready. Edit playable phases and steps in the scenario composer below.</p><h3>Delivery targets</h3><div className="target">WebXR <small>Local preview</small></div><div className="target">Native Unity <small>Local preview</small></div></section></div>
       </>}
-      <Playable/><p role="status" className="status">{message}</p><footer><span>Client content stays separate from the application.</span><span>Milzet VR Studio · 0.1</span></footer>
+      <ProjectSwitcher/><ProjectBackup/><Playable/><p role="status" className="status">{message}</p><footer><span>Client content stays separate from the application.</span><span>Milzet VR Studio · 0.1</span></footer>
     </main>
   </div>;
 }

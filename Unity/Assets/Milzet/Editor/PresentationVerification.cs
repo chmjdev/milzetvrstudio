@@ -1,0 +1,25 @@
+using System;
+using System.Collections;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+using TMPro;
+using Milzet.Content;
+namespace Milzet.Editor {
+public static class PresentationVerification {
+ public static void StartCheck(string directory,string output){var player=new GameObject("Presentation verification").AddComponent<PackagePlayer>();player.StartCoroutine(Guard(Check(player,directory,output)));}
+ static IEnumerator Guard(IEnumerator task){while(true){bool more;try{more=task.MoveNext();}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);yield break;}if(!more)yield break;yield return task.Current;}}
+ static IEnumerator Check(PackagePlayer player,string directory,string output){
+  player.OpenFile(Path.Combine(directory,"presentation-browser.milzet-package.json"));PackageReader.Require(player.Loaded!=null && player.OverlayObjects.Count==1 && player.DemoPlayback!=null,"Presentation import failed.");
+  var overlay=player.OverlayObjects.Values.First();PackageReader.Require(!overlay.activeSelf && overlay.GetComponent<Canvas>().renderMode==RenderMode.WorldSpace && overlay.transform.localScale==Vector3.one*.001f,"Initial overlay visibility or physical scale invalid.");
+  var text=overlay.GetComponentsInChildren<TMP_Text>(true).First(t=>t.name=="Client reference");PackageReader.Require(text.font!=null && text.fontSize==30 && !text.enableAutoSizing && text.transform.localScale==Vector3.one && text.transform.localPosition.z==0,"Native overlay font or layout invalid.");
+  player.ToggleDemonstration();PackageReader.Require(player.DemoNarration.isPlaying,"Narration did not start.");float limit=Time.realtimeSinceStartup+10;while(player.DemoPlayback.Playing && Time.realtimeSinceStartup<limit)yield return null;
+  PackageReader.Require(Math.Abs(player.DemoPlayback.Time-1)<.001 && !player.DemoNarration.isPlaying && Math.Abs(player.DemoNarration.time-1)<.16,"Pause cue failed to synchronize narration.");PackageReader.Require(overlay.activeSelf && player.DemoHighlight=="point-1" && player.GuideCursor.transform.parent.name=="Movable lesson display" && Math.Abs(player.GuideCursor.transform.localPosition.z+.04f)<.001 && !player.GuideLine.useWorldSpace,"Overlay, highlight or guide position mismatch.");
+  yield return null;var target=new RenderTexture(1200,720,24);target.Create();var image=new Texture2D(1200,720,TextureFormat.RGB24,false);var previous=RenderTexture.active;player.ViewCamera.aspect=1200f/720;player.ViewCamera.targetTexture=target;player.ViewCamera.Render();RenderTexture.active=target;image.ReadPixels(new Rect(0,0,1200,720),0,0);image.Apply();PackageReader.Require(text.textInfo.characterCount>20 && text.textInfo.meshInfo.Any(m=>m.vertexCount>0),"TMP text did not produce geometry.");File.WriteAllBytes(Path.Combine(output,"presentation-native.png"),image.EncodeToPNG());player.ViewCamera.targetTexture=null;RenderTexture.active=previous;target.Release();UnityEngine.Object.DestroyImmediate(target);UnityEngine.Object.DestroyImmediate(image);
+  player.ToggleDemonstration();limit=Time.realtimeSinceStartup+10;while(player.DemoPlayback.Playing && Time.realtimeSinceStartup<limit)yield return null;PackageReader.Require(Math.Abs(player.DemoPlayback.Time-3)<.001 && !overlay.activeSelf && !player.DemoNarration.isPlaying,"Demonstration terminal state failed.");player.SeekDemonstration(.5);player.ToggleDemonstration();while(player.DemoPlayback.Playing)yield return null;PackageReader.Require(Math.Abs(player.DemoPlayback.Time-1)<.001,"Seek did not rearm cue.");
+  var card=player.Loaded.Manifest.presentation.overlays[0];card.text=String.Join("\n",Enumerable.Range(0,30).Select(i=>"Reference detail "+i+": retain the full supplied document."));foreach(Transform child in overlay.transform.Cast<Transform>().ToArray())if(child.name!="Background")UnityEngine.Object.DestroyImmediate(child.gameObject);typeof(PackagePlayer).GetMethod("BuildReferenceCard",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(player,new object[]{(RectTransform)overlay.transform,card});player.SeekDemonstration(1);text=overlay.GetComponentsInChildren<TMP_Text>().First(t=>t.name=="Client reference");text.ForceMeshUpdate();PackageReader.Require(text.textInfo.pageCount>1 && text.pageToDisplay==1,"Long reference did not paginate.");var more=overlay.transform.Find("Reference read more");PackageReader.Require(more!=null && player.SelectRay(new Ray(more.position-more.forward*.2f,more.forward)) && text.pageToDisplay==2,"Reference Read more ray did not advance page.");
+  File.WriteAllText(Path.Combine(output,"presentation-verification.json"),"{\"passed\":true,\"playMode\":true,\"overlayImageAndText\":true,\"timedVisibility\":true,\"guidePosition\":true,\"highlight\":true,\"narrationPauseSync\":true,\"seek\":true,\"audibleOutput\":\"not verified\",\"headset\":\"not tested\"}");Debug.Log("MILZET_PRESENTATION_PASS");UnityEngine.Object.DestroyImmediate(player.gameObject);XRVerification.StartCheck(directory,output);
+ }
+}
+}

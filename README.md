@@ -1,40 +1,53 @@
 # Milzet VR Studio
 
-A content-free source fork of VR Studio for authoring client-owned VR scenarios. CareerWIL remains external.
+A content-free fork of VR Studio for authoring client-owned workplace VR scenarios. CareerWIL remains external. No inherited teaching models, avatars or lesson media are shipped.
 
-## Implemented and checked
+## Current state
 
-- Empty drafts remain separate from playable packages.
-- Create an explicitly labelled procedural trench test package on demand: flat image plate, four hotspots, text prompts and a WAV test cue.
-- Import PNG/JPEG plates and WAV narration; export all asset bytes with the manifest in one portable JSON package.
-- Check SHA-256 hashes, version, paths, references and phase transitions before opening.
-- Recover package media from IndexedDB after reload. Export backups for independent archival; browser storage is not permanent.
-- Author phase subsets and explicit transitions. Preview with a local test-host release gate and evidence/completion events.
-- Render the package in a browser with Three.js; WebXR feature detection and session entry are implemented but headset playback has not been accepted.
-- Native C# package reader and phase engine compile and pass shared fixture/corruption/gate tests using Unity's bundled Mono. They also load the exact package exported by the browser.
+Implementation continues from baseline commit `797613c`. The suite has 41 passing Node tests, passing Chrome desktop/375px workflows, native C# checks and eight Unity verification stages, including visible controls and simulated headset/controller input. Local Mac and Android builds have succeeded. The built Mac app passes media and multi-scene checks; the corrected Android APK passes signature and XR configuration checks. See the acceptance matrix for precise limits.
 
-- Unity Play Mode preview loads the exact browser-exported package, renders the plate and four markers, handles camera-ray selection and host-gated phase events, and starts decoded PCM audio. See Unity/README.md and the separate visual-verification receipt.
+This is a working local authoring prototype. The complete plan is not finished. [Acceptance and compatibility](Docs/ACCEPTANCE.md) records the remaining implementation, generation, headset and onsite requirements. Historical milestone JSON files describe their original increments; [VERIFICATION_STATUS.json](Docs/VERIFICATION_STATUS.json) records this verification run.
 
-## Still outstanding
+## Available workflow
 
-Headset input/acceptance, 180/360 projection, general asset library/composer, voice recording, provider generation/resume, and client onsite content acceptance. Unity Play Mode visual verification is now available separately; the pure C# reader test still does not prove rendering. No headset/device acceptance is claimed. The fixture's short WAV is an audio loading cue, not spoken instruction; prompt read-aloud uses the browser speech facility.
+- Keep separate local client projects, switch without mixing their content, and restore complete authoring backups. Older tabs cannot save into a different active project.
+- Create empty project metadata or start a playable scenario from a PNG/JPEG image or H.264 MP4 clip.
+- Select flat, genuine mono equirectangular 180-degree or 360-degree projection. Source aspect and media structure are validated.
+- Place up to 32 hotspots and import static embedded GLB objects, with transforms, parenting, visibility and hotspot links.
+- Author Induct, Shadow, Perform and Prove subsets, ordered activities, quiz choices, evidence prompts, hint budgets and host release gates.
+- Compose portable multi-scene experiences with completion/release gates. Reuse custom templates or eight distinct blank environment layouts.
+- Place client text/image overlays, author guide paths and timed highlights, and synchronize narration with pause/seek cues.
+- Prepare separate image and H.264 video delivery copies while retaining originals and checksums.
+- Check the required structure of the five pilot workflows without treating those checks as client acceptance.
+- Import WAV narration or record local PCM narration. Preserve original sources, rights/credit information and revisions in source-library backups.
+- Prepare Meshy preview/refinement and ElevenLabs narration requests; the local worker persists submissions, receipts and uncertain states. Real paid-output acceptance remains pending.
+- Preview and export a self-contained, versioned package. Restore media from IndexedDB or a package backup; native Unity consumes the browser export.
+- Keep private rubrics in the authoring library. They are excluded from playable exports. The receiving host owns grading, evidence, identity and durable progress.
+
+Read the [onsite authoring guide](Docs/ONSITE_AUTHORING.md), [source and generation workflow](Docs/SOURCE_WORKFLOW.md), [package contract](Shared/CONTRACT.md) and [Unity preview instructions](Unity/README.md).
 
 ## Local checks
 
-Node >=24. `npm ci`, `npm test`, `npm run audit:content`, `npm run build`, `npm run test:browser`, `npm run test:native`, `npm run test:unity`.
+Use Node >=24. After `npm ci`, run:
 
-`npm run dev` serves an ephemeral loopback preview. It is not a registered estate service or deployment. No fixed port or remote domain is assigned.
+```
+npm test
+python3 -B tests/generation_worker_test.py
+python3 -B tests/video_derivative_test.py
+npm run build
+npm run build:webxr
+npm run test:browser
+npm run test:native
+npm run test:unity
+npm run audit:content
+```
 
-Use “Create trench test fixture” in the package lab, inspect hotspots, simulate the host gate, then export. Import rejects corrupt packages without replacing the current recovery copy. Empty-draft storage and package recovery use separate stores. A recovered package starts a new preview attempt; real worker progress belongs to the host.
+Browser tests create procedural fixtures in `Artifacts`; native and Unity checks consume them. Unity requires the installed editor documented in `Unity/ProjectSettings/ProjectVersion.txt`, graphics support and at least 8 GiB free disk space. Build output has a bundle-size advisory; headset performance is unmeasured.
 
-## Provenance and scope
+`npm run dev` serves an ephemeral loopback preview, with no deployment or registered domain. Browser storage belongs to that origin: export source and package backups before changing ports or browsers.
 
-`UPSTREAM.json` records the source baseline and copied hashes. No old teaching assets or their Git history are included. Test media is generated only on demand; client data is separate. No paid generation, remote publication, external media uploads or headset deployment occurred.
+## Content and delivery boundary
 
-## Author a flat-image scenario
+`UPSTREAM.json` records the copied source baseline and hashes. Test media is procedural and created on demand. Keep client-owned originals, generated files and private authoring backups outside shipped application content. Apply composition edits before exporting or switching packages.
 
-Choose **Create scenario from image** to import a local PNG/JPEG into a new package. In **Compose scenario**, name the scenario, select numbered hotspots, and click the image to position them. Edit labels, prompts, evidence requests and numeric coordinates. Add or delete hotspots, enable the required phases and choose each phase's hotspots and host release rules.
-
-Choose **Apply composition** to validate and save the changes to package recovery. Each enabled phase must have a hotspot. A rejected edit leaves the saved package intact. Apply before exporting, importing media or opening another package; editor changes are not autosaved. **Export package + media** produces the self-contained package consumed by both players.
-
-**Import WAV narration** adds narration to image-only packages or replaces the existing narration. Select it for each hotspot in the composer and apply. PNG/JPEG and 16-bit PCM WAV limits remain unchanged. Text prompts display when a hotspot is inspected; this increment does not add timed overlays, 3D objects, video or immersive projection.
+WebXR includes in-world inspection, activities, typed responses, playback and scene progression. Unity includes a tracked camera/controller rig and physically sized world controls. Browser rays, native rendered controls and simulated device bindings are verified; physical headset interaction remains unaccepted. The five client pilot packs still require onsite content and client review. No paid generation, remote publication or headset deployment occurred in this verification run.

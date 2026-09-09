@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import {PresentationEditor} from './presentation-editor';
+import { ReferenceEditor } from './reference-editor';
+import {removeTargetReferences} from '../Shared/references.mjs';
 import { ContextEditor } from './context-editor';
 import { ActivityEditor } from './activity-editor';
 import { applyComposition, newHotspot } from '../Shared/authoring.mjs';
@@ -27,7 +30,7 @@ export function Composer({ loaded, busy, apply }) {
     edit(m => { m.hotspots.push(newHotspot(id)); m.phases[0].hotspotIds.push(id); }); setChosen(id);
   }
   function remove() {
-    edit(m => { m.hotspots = m.hotspots.filter(h => h.id !== chosen); for (const p of m.phases) p.hotspotIds = p.hotspotIds.filter(id => id !== chosen); });
+    edit(m => { m.hotspots = m.hotspots.filter(h => h.id !== chosen); removeTargetReferences(m,'hotspot',chosen); for (const p of m.phases) p.hotspotIds = p.hotspotIds.filter(id => id !== chosen); });
     setChosen(draft.hotspots.find(h => h.id !== chosen)?.id);
   }
   function phaseEnabled(id, enabled) {
@@ -63,7 +66,7 @@ export function Composer({ loaded, busy, apply }) {
           {phase && <>{draft.hotspots.map(h => <label className="check-row" key={h.id}><input type="checkbox" aria-label={id + ': ' + h.label} checked={phase.hotspotIds.includes(h.id)} onChange={e => edit(m => { const p = m.phases.find(p => p.id === id); p.hotspotIds = e.target.checked ? [...p.hotspotIds, h.id] : p.hotspotIds.filter(key => key !== h.id); })}/>{h.label}</label>)}{phase.next && <label className="check-row"><input type="checkbox" aria-label={'Host release after ' + id} checked={phase.gate === 'host'} onChange={e => edit(m => { m.phases.find(p => p.id === id).gate = e.target.checked ? 'host' : 'none'; })}/>Host release before {phase.next}</label>}</>}
         </div>;
       })}</div>
-      <ContextEditor draft={draft} edit={edit}/><ActivityEditor draft={draft} edit={edit}/><button className="primary" disabled={!dirty} onClick={() => apply(async () => applyComposition(loaded.envelope, draft))}>Apply composition</button>
+      <PresentationEditor draft={draft} edit={edit}/><ContextEditor draft={draft} edit={edit}/><ActivityEditor draft={draft} edit={edit}/><ReferenceEditor draft={draft} edit={edit}/><button className="primary" disabled={!dirty} onClick={() => apply(async () => applyComposition(loaded.envelope, draft))}>Apply composition</button>
     </fieldset>
   </details>;
 }

@@ -1,3 +1,3 @@
-function database(){return new Promise((resolve,reject)=>{const r=indexedDB.open('milzetvrstudio.sources',1);r.onupgradeneeded=()=>r.result.createObjectStore('library');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
-export async function readLibrary(){const db=await database();try{return await new Promise((resolve,reject)=>{const r=db.transaction('library').objectStore('library').get('current');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}finally{db.close();}}
-export async function writeLibrary(value){const db=await database();try{await new Promise((resolve,reject)=>{const tx=db.transaction('library','readwrite');tx.objectStore('library').put(value,'current');tx.oncomplete=()=>resolve();tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('Library save aborted.'));});}finally{db.close();}}
+import {readField,writeField} from './workspace-store.mjs';
+export const readLibrary=()=>readField('library');
+export const writeLibrary=value=>writeField('library',value);

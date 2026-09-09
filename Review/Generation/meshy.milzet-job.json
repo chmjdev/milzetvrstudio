@@ -3,7 +3,28 @@
   "provider": "meshy",
   "prompt": "A realistic unbranded orange traffic cone with a square black rubber base and a white reflective band. One freestanding object, real-world proportions, clean PBR surfaces. No text, logos, people or background. For a content-authoring test only.",
   "voiceId": "",
-  "status": "prepared",
-  "remoteId": "",
-  "createdAt": "2026-09-08"
+  "status": "succeeded",
+  "remoteId": "01a085a5-09d3-7448-bf04-1e0417869e7b",
+  "createdAt": "2026-09-08",
+  "requestPayload": {
+    "mode": "preview",
+    "prompt": "A realistic unbranded orange traffic cone with a square black rubber base and a white reflective band. One freestanding object, real-world proportions, clean PBR surfaces. No text, logos, people or background. For a content-authoring test only.",
+    "ai_model": "meshy-6",
+    "should_remesh": true,
+    "topology": "triangle",
+    "target_polycount": 30000,
+    "target_formats": [
+      "glb"
+    ]
+  },
+  "requestSha256": "b6853b31a6eb174865a6140566b4f91d63f2c580ca19a932fa4cb496ddf15fce",
+  "providerStatus": "SUCCEEDED",
+  "progress": 100,
+  "receiptFile": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Generation/8183ea78-4256-4dee-b16c-79645742a642.provider-receipt.json",
+  "modelUrls": {
+    "glb": "https://assets.meshy.ai/beae83a3-2a5d-46a4-9172-850164fb1bc0/tasks/01a085a5-09d3-7448-bf04-1e0417869e7b/output/model.glb?Expires=4942512000&Signature=PVhVcFMRu3C8eRASquGhgx-LIeI-CDneeKSGYA4FO7uEQ2s1ugCtcA2CENmv8IEgHpORKs4CCuLIFrEQpGYhv1KZQJGueAPj153-V2AkKIY10S6D-8jIO~pVck-MRFlGp9SuD5n~27wTrE4MJhGlYEBSXQ4ydfpwmBijZ~VkfdB9W9Yfmjw04~iB2sd8MFhMAblKXWFD6D88zdp1yzAEuIXnsYBMNLxCgQHGauC4i7nY33Hl0RDUDPXCx02txYDT07Z1BoJXWbrd0MDtO0tjVkIVx9Bb98x-Zv20GxRoDl7jTwoGZGsoeuGUne7UQ7obrMkYh3HgguccwMhGyVTLCA__&Key-Pair-Id=K1VGYTHIYLM9UM"
+  },
+  "credits": 20,
+  "output": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Generation/8183ea78-4256-4dee-b16c-79645742a642.glb",
+  "outputSha256": "5beb30bcab079a62b69c75679f118d4d699f4dc6767a838380942fc4b3c91a93"
 }

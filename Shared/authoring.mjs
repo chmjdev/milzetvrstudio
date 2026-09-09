@@ -12,7 +12,7 @@ export async function createImageScenario(title, bytes, mime) {
 
 export async function applyComposition(envelope, draft) {
   const { manifest } = await openPackage(JSON.stringify(envelope));
-  return sealPackage({ ...manifest, ...(draft.objects===undefined?{}:{objects:structuredClone(draft.objects)}),...(draft.activities===undefined?{}:{activities:structuredClone(draft.activities)}),...(draft.context===undefined?{}:{context:structuredClone(draft.context)}), title: draft.title, plate: structuredClone(draft.plate), hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
+  return sealPackage({ ...manifest, ...(draft.references===undefined?{}:{references:structuredClone(draft.references)}), ...(draft.presentation===undefined?{}:{presentation:structuredClone(draft.presentation)}), ...(draft.objects===undefined?{}:{objects:structuredClone(draft.objects)}),...(draft.activities===undefined?{}:{activities:structuredClone(draft.activities)}),...(draft.context===undefined?{}:{context:structuredClone(draft.context)}), title: draft.title, plate: structuredClone(draft.plate), hotspots: structuredClone(draft.hotspots), phases: structuredClone(draft.phases), entryPhase: draft.phases[0]?.id }, envelope.files);
 }
 
 export async function addNarration(envelope, bytes) {
@@ -30,4 +30,10 @@ export async function addModel(envelope,name,bytes){
  manifest.assets.push(asset);manifest.objects=manifest.objects||[];
  manifest.objects.push({id:'object-'+crypto.randomUUID(),label:name.slice(0,80),assetId:id,parentId:'',position:[0,1.5,-1],rotation:[0,0,0],scale:[1,1,1],visible:true,hotspotId:''});
  return sealPackage(manifest,[...envelope.files,{path:asset.path,base64:toBase64(bytes)}]);
+}
+
+export async function addOverlayImage(envelope,bytes,mime){
+ const {manifest}=await openPackage(JSON.stringify(envelope));check(['image/png','image/jpeg'].includes(mime),'Choose a PNG or JPEG overlay image.');
+ const id='overlay-'+crypto.randomUUID(),asset={id,path:`assets/${id}.${mime==='image/png'?'png':'jpg'}`,mime,bytes:bytes.length,sha256:await sha256(bytes)};
+ manifest.assets.push(asset);return sealPackage(manifest,[...envelope.files,{path:asset.path,base64:toBase64(bytes)}]);
 }

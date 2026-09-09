@@ -1,0 +1,6 @@
+using System;
+using System.IO;
+using Milzet.Content;
+class PresentationSmoke {
+ static int Main(string[] args){int accepted=0,rejected=0;foreach(var file in Directory.GetFiles(args[0],"*.json")){bool invalid=Path.GetFileName(file).StartsWith("invalid-");try{var loaded=PackageReader.Open(File.ReadAllText(file));if(invalid)throw new Exception("Invalid presentation accepted: "+file);var p=new DemonstrationPlayback(loaded.Manifest.presentation.demonstration);p.Play();PackageReader.Require(p.Tick(.5).id=="first" && p.Time==0 && !p.Playing,"Initial pause cue failed.");p.Play();PackageReader.Require(p.Tick(3).id=="pause" && p.Time==1,"Crossed pause cue failed.");p.Play();p.Tick(.5);PackageReader.Require(p.Time==1.5,"Resume repeated pause.");PackageReader.Require(PresentationContract.Position(loaded.Manifest.presentation.demonstration,1)[0]==-.5,"Guide interpolation failed.");p.Seek(.5);p.Play();PackageReader.Require(p.Tick(2).id=="pause","Seek did not rearm later cue.");accepted++;}catch(InvalidDataException){if(!invalid)throw;rejected++;}}PackageReader.Require(accepted==1 && rejected==10,"Presentation fixture count mismatch.");Console.WriteLine("PASS: native presentation validation, cue timing and guide interpolation.");return 0;}
+}

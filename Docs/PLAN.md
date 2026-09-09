@@ -1,6 +1,6 @@
 # milzetvrstudio content-generation fork plan
 
-Revised 8 September 2026 after scope confirmation. Fork name, location, delivery targets and generation direction are recorded below. The content-free fork was created at commit 8ca1b0e. The first playable-package increment is now implemented and undergoing final verification; see MILZET_IMPLEMENTATION_STATUS.md for current evidence.
+Revised 8 September 2026 after scope confirmation. Fork name, location, delivery targets and generation direction are recorded below. The content-free fork was created at commit 8ca1b0e. Multiple local authoring and playback increments are implemented. The 8 September 2026 verification rerun passed; see ACCEPTANCE.md and VERIFICATION_STATUS.json for current evidence and remaining gaps. The full plan is not complete.
 
 ## Objective
 
@@ -81,13 +81,14 @@ Keep reusable rendering independent of anatomy lessons and of CareerWIL. Preserv
 
 ## Current acceptance tracking
 
-- Foundation: complete, local clean-content fork created.
-- Authoring: empty drafts, flat-media replacement, package backups and explicit phase editing implemented; visual flat-image hotspot and phase composer implemented; 3D/immersive composition and provider integration pending.
-- Browser: flat-plate scene/hotspot preview and test-host handoff verified; immersive device acceptance pending.
-- Native: Unity Play Mode rendering, ray selection, host events and audio-engine start verified against the browser export; headset acceptance pending.
-- Client content: procedural fixtures only; onsite media and client acceptance pending.
+Current evidence is in [ACCEPTANCE.md](ACCEPTANCE.md), with the target matrix, limits and unimplemented requirements. Historical milestone JSON records retain their original scope.
 
-The current implementation sequence brings the minimal playable contract alongside media import before the general composer. Phase subsets use explicit transitions and external release gates. Asset-inclusive package backups precede onsite acceptance; resumable provider jobs follow with provider integration.
+- Foundation: clean-content fork complete; no inherited teaching media ships.
+- Local authoring: one image/video plate, panorama projection, GLB transforms/parenting, hotspots, activities, references, narration recording, source backups and revisions implemented and tested. Environment and custom templates, multi-scene experiences, overlays, demonstration paths, synchronized narration, derivatives, complete backups and isolated client workspaces are now implemented. Actual client content remains open.
+- Generation: resumable local Meshy/ElevenLabs worker and receipt flow implemented; six mocked worker tests pass. Actual paid outputs remain unaccepted and the prepared test requires approval.
+- Browser: full desktop/375px suite passed with zero page errors; production and WebXR builds passed. In-world controls and desktop ray checks pass; headset acceptance remains incomplete.
+- Native: fresh browser packages passed C# and Unity Play Mode visual/media/activity checks. Tracked camera/controller code and world controls pass simulated input and rendering checks. Local viewer builds exist; physical headset acceptance remains unfinished.
+- Client content: procedural fixtures only. All five onsite packs and receiving-team acceptance remain pending.
 
 ## Delivery milestones
 
@@ -178,11 +179,11 @@ Acceptance: an author can independently create, preview, export and reopen a new
 
 ## Remaining implementation prerequisites
 
-1. Select the reviewed source baseline and perform the clean-content audit; local name and destination are already decided.
-2. Verify installed generation tools, authentication, service limits and any missing plugin requirements. Use existing provider access; report a concrete blocked capability if a service or installation is unavailable.
-3. Define one package contract for the reference player, WebXR and Unity, including asset and interaction compatibility tests.
-4. Agree onsite capture/generation procedures and client review of demonstrations and assessment material. Store client projects separately and retain generation provenance and applicable provider terms.
-5. Establish a supported-device matrix and measured runtime budgets. Do not mark either playback target complete based only on compilation.
+1. Approve and complete the exact prepared generation test in `Review/Generation/`, including real output review and package playback. Authentication and mocked tests do not establish output quality.
+2. Complete the local template, multi-plate, demonstration and integrated project-authoring gaps listed in `ACCEPTANCE.md`.
+3. Finish immersive interaction and native XR implementation, then review the concrete headset test/deployment scope. Establish measured device budgets.
+4. Agree onsite capture/generation and client review procedures. Use `ONSITE_AUTHORING.md`; keep private authoring backups and originals separate from worker packages.
+5. Validate the package/host contract with the receiving CareerWIL team when available. Its business workflows remain outside this fork.
 
 Catalogue inconsistencies in the PDF must remain visible: missing credits, alternate/malformed IDs, and the Built environment template conflict on page 12. Proposed construction default is Site, matching the pilot. Preserve externally supplied references without silently treating them as verified registry data.
 
