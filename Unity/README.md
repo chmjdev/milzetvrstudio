@@ -2,7 +2,7 @@
 
 Open this folder in Unity 6000.3.22f1. Use **Milzet > Open package preview**, select a browser-exported `.milzet-package.json`, and the editor enters Play Mode. No client media or scene is bundled; the preview builds objects in memory.
 
-The player supports flat PNG/JPEG, mono equirectangular 180/360 imagery, validated H.264 MP4, static embedded GLBs, PCM WAV, hotspots, activities, source credits, multi-scene experiences, placed overlays and timed demonstrations. Versions 1-8 share the contract described in `../Shared/CONTRACT.md`.
+The player supports flat PNG/JPEG, mono equirectangular 180/360 imagery, validated H.264 MP4, static embedded GLBs, PCM WAV, hotspots, activities, source credits, multi-scene experiences, placed overlays and timed demonstrations. Versions 1-9 share the contract described in `../Shared/CONTRACT.md`, including structured references, site validity bounds, and host kill-switch revocation.
 
 The flat plate is 4m by 2.4m, with normalized top-left anchors. Unity reflects browser Z: camera (0,1.5,-1), plate (0,1.5,2), hotspot plane z=1.93. Panoramic orientation and model transforms have separate Play Mode checks.
 
@@ -10,7 +10,7 @@ Click markers or hotspot buttons, respond to activities, play/seek clips and adv
 
 ## Verification
 
-First run `npm test` and `npm run test:browser` from the repository root. `npm run test:native` checks the engine-independent C# reader/session against shared negative fixtures and fresh browser exports. `npm run test:unity` runs the local Unity Play Mode checks with graphics, an 8 GiB disk preflight and a four-minute timeout.
+First run `npm test` and `npm run test:browser` from the repository root. `npm run test:native` runs nine C# test suites (including `ReaderSmoke` revocation checks and `AssessorSmoke` rubric grading) against shared negative fixtures and fresh browser exports. `npm run test:unity` runs the local Unity Play Mode checks with graphics, an 8 GiB disk preflight and a four-minute timeout.
 
 The 8 September 2026 rerun passed image/marker rendering, ray selection, invalid replacement rejection, host gates/events, PCM decode and audio-engine start, 180/360 orientation, video frame decoding/playback/seek, GLB transform/material/selection, and activity/context/event parity. Fresh JSON receipts and rendered images are under `Artifacts/UnityVisual` at the repository root.
 

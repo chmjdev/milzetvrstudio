@@ -8,7 +8,7 @@ Source: `DOC-20260904-WA0001.pdf`, 31 pages, read from the supplied Downloads/Do
 |---|---|---|
 | Clean reusable fork; preserve original VR Studio | Separate package and filtered content; clean-content audit | Later legacy Android package was absent before repair; this task did not uninstall it. Do not conflate this external state with original install preservation |
 | Empty shipped client library | Content audit; examples and generated assets outside application resources | Keep client datasets separate when distributing |
-| Author from a brief; import plates, clips, GLB and audio | Local project/library/composer and browser checks | A full voice-command authoring workflow is not implemented; recorded audio import is not voice-driven authoring |
+| Author from a brief; import plates, clips, GLB and audio | Local project/library/composer, browser checks, speech-to-command schema/parser and VoiceAuthoring component | Live dictation and mentor whisper channels remain external |
 | Optional generated model and narration | Real Meshy cone and George narration inspected, exported and played in browser/Mac | Generated assets still need repaired-headset acceptance |
 | Eight environment templates and catalogue cluster families, pp.3–17 | Template and context tests | Templates are reusable layouts. The wider workshop/plant/field/office/community catalogue has no completed occupation-specific media packs; no claim of eight complete workplace simulations |
 | Editable sources, backup, revision and client isolation | Browser backup/reopen/stale-tab checks | Onsite operational acceptance by authors remains open |
@@ -16,9 +16,9 @@ Source: `DOC-20260904-WA0001.pdf`, 31 pages, read from the supplied Downloads/Do
 | Composition, GLB transforms, overlays, hotspots | Shared/native/browser composition tests | Arbitrary physics and machinery operation are outside first-version scope |
 | Induct / Shadow / Perform / Prove, pp.18–23 | Authored phases, ordered activities, guide paths, freeze cues, hint limits, no Prove hints | Actual mentor-approved content and real worker progression need external review |
 | Source and module/page references | Structured scenario/hotspot/activity bindings in package v9, authoring UI, scoped browser/native text, template v2, JS/C# validation and browser round trips | Authoritative qualification registry and catalogue verification remain external; these records are author supplied. Installed 1.1.1 predates this source increment. |
-| Private assessor rubrics | Private authoring material excluded from worker exports | No connected assessor grading or assessor-only runtime service |
+| Private assessor rubrics | Private authoring material excluded from worker exports; offline AssessorEvaluator and AssessorPanel grade attempt event logs against criteria | Authoritative grading service and stipend workflows belong to external CareerWIL |
 | Export to clean consumers without Unity rebuild | Shared validated package contract; browser/Mac import and completion | Receiving CareerWIL team must validate its actual consumer and event contract |
-| Data-only validation and corruption rejection | 42 Node tests plus native negative fixtures | Final supported-capability matrix must remain attached to delivery |
+| Data-only validation and corruption rejection | 53 Node tests plus 9 native smoke/negative suites | Final supported-capability matrix must remain attached to delivery |
 | Native Unity and WebXR targets | Native/build tests; browser immersive-ray checks | Physical WebXR acceptance not completed; desktop ray tests do not establish headset pass |
 | Reachable, movable, readable UI |1.1.1 local tests cover grip/pinch separation, neutral rearm after tracking/focus loss, stable hand-drag facing, reference pagination and Exit App |1.1.1 physical hands/controllers, comfort, readability, Exit and focus recovery remain wearer gates; do not inherit1.1.0 failure as a result for1.1.1 |
 | Original animated boot, comfort preferences and room setup | Source boot restored; hand/posture saved on Enter Studio; OVR head tracking gate, Meta Space Setup/MRUK room load and retry logic; local simulated checks | Actual1.1.1 boot, preference placement, permission/room success and denial/retry remain pending wearer |
@@ -29,7 +29,7 @@ Source: `DOC-20260904-WA0001.pdf`, 31 pages, read from the supplied Downloads/Do
 | First-aid switch test | Licensed first-aid-kit photo; Induct + three Prove quiz items | Six distinct stills, assembly-point 180 and client/qualified content review remain absent; example is familiarisation, not medical training certification |
 | Source licenses and attribution | `Artifacts/Commons/attribution.json`, original files, source pages and Sources tab | Redistribution must retain CC BY-SA attribution/license notices and any adaptation terms |
 | Actual evidence and sign-offs, pp.24–31 | Preview emits revision-bound requests/events | Durable worker media, identity, enrolment, grades, signatures, Digital Paper and stipend workflows remain external |
-| Site freshness / kill switch | Validity metadata and host-controlled phase gates | A live-site invalidation/push-kill workflow is not implemented in this preview |
+| Site freshness / kill switch | Validity metadata, expiration date checks, host push-kill simulation and native site invalidation events | Real-time cloud push-kill service belongs to host network |
 | Voice-first questions, mentor whisper and social presence | Narration playback and author recording/import | Live communication, dictation and mentor/assessor voice channels are not implemented here |
 | Performance budgets and final delivery | Initial light-scene Quest telemetry; development APK integrity checks | Repaired build and real-media headset performance, physical audio and final receiving-team review remain open |
 

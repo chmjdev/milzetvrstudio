@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir,writeFile } from 'node:fs/promises';
 import { trenchFixture } from '../Shared/fixture.mjs';
 import { openPackage,sealPackage,sha256,createSession,toBase64,fromBase64 } from '../Shared/package.mjs';
+import { evaluateFreshness } from '../Shared/freshness.mjs';
 const png=Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lZkAAAAASUVORK5CYII=','base64'));
 async function reseal(e,m){e.manifest=JSON.stringify(m);e.manifestSha256=await sha256(new TextEncoder().encode(e.manifest));return e;}
 const mutations={
@@ -19,7 +20,13 @@ const mutations={
 };
 test('portable package retains media and explicit authored subset',async()=>{const e=await trenchFixture(png);const opened=await openPackage(JSON.stringify(e));assert.equal(opened.bytes.size,2);assert.equal(opened.manifest.hotspots.length,4);assert.deepEqual(opened.manifest.phases.map(p=>p.id),['induct','prove']);await mkdir('Artifacts/contracts',{recursive:true});await writeFile('Artifacts/contracts/valid-trench.json',JSON.stringify(e));});
 for(const [name,mutate] of Object.entries(mutations))test('reject '+name,async()=>{const e=await mutate(await trenchFixture(png));await assert.rejects(openPackage(JSON.stringify(e)));await mkdir('Artifacts/contracts',{recursive:true});await writeFile('Artifacts/contracts/invalid-'+name+'.json',JSON.stringify(e));});
-test('host gate and terminal completion prevent bypass and duplicates',async()=>{const e=await trenchFixture(png);const m=JSON.parse(e.manifest);const events=[];let grant=false;const s=createSession(m,e.manifestSha256,{sessionId:'test',emit:e=>events.push(e),authorize:async()=>grant});await assert.rejects(s.advance());for(const h of m.hotspots)s.select(h.id);await assert.rejects(s.advance(),/Host release/);assert.equal(s.phase,'induct');grant=true;await s.advance();s.select('point-4');await s.advance();assert.equal(s.complete,true);await assert.rejects(s.advance());assert.equal(events.filter(e=>e.type==='scenario.completed').length,1);assert.ok(events.some(e=>e.type==='evidence.requested'));assert.ok(events.every(e=>e.revision===e.manifestSha256 || e.revision.length===64));assert.equal(new Set(events.map(e=>e.eventId)).size,events.length);});
+test('host gate and terminal completion prevent bypass and duplicates',async()=>{const e=await trenchFixture(png);const m=JSON.parse(e.manifest);const events=[];let grant=false;const s=createSession(m,e.manifestSha256,{sessionId:'test',emit:e=>events.push(e),authorize:async()=>grant});await assert.rejects(s.advance());for(const h of m.hotspots)s.select(h.id);await assert.rejects(s.advance(),/Host release/);assert.equal(s.phase,'induct');grant=true;await s.advance();s.select('point-4');await s.advance();assert.equal(s.complete,true);await assert.rejects(s.advance());assert.equal(events.filter(e=>e.type==='scenario.completed').length,1);assert.ok(events.some(e=>e.type==='evidence.requested'));assert.ok(events.every(e=>e.revision===e.manifestSha256 || e.revision.length===64));assert.equal(new Set(events.map(e=>e.eventId)).size,events.length);
+const revEvents=[];const revSession=createSession(m,e.manifestSha256,{sessionId:'rev',emit:e=>revEvents.push(e)});revSession.revoke('Safety breach');assert.equal(revSession.revoked,true);assert.equal(revSession.revocationReason,'Safety breach');assert.ok(revEvents.some(e=>e.type==='site.invalidated'));assert.ok(revEvents.some(e=>e.type==='scenario.revoked'));assert.throws(()=>revSession.select('point-1'),/revoked/);
+assert.equal(evaluateFreshness({validFrom:'2026-01-01',validUntil:'2026-12-31'},'2026-06-01').valid,true);
+assert.equal(evaluateFreshness({validFrom:'2026-09-01'},'2026-08-01').valid,false);
+assert.equal(evaluateFreshness({validUntil:'2026-05-01'},'2026-08-01').valid,false);
+});
+
 test('concurrent host release cannot advance twice',async()=>{const e=await trenchFixture(png);const m=JSON.parse(e.manifest);let release;const events=[];const s=createSession(m,e.manifestSha256,{sessionId:'race',emit:e=>events.push(e),authorize:()=>new Promise(resolve=>{release=resolve;})});for(const h of m.hotspots)s.select(h.id);const pending=s.advance();await assert.rejects(s.advance(),/progress/);release(true);await pending;assert.equal(events.filter(e=>e.type==='phase.completed').length,1);});
 test('large embedded assets decode without regex stack overflow and reject malformed padding',()=>{
  const bytes=Uint8Array.from({length:6000000},(_,i)=>i%251);

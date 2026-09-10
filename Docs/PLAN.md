@@ -84,10 +84,10 @@ Keep reusable rendering independent of anatomy lessons and of CareerWIL. Preserv
 Current evidence is in [ACCEPTANCE.md](ACCEPTANCE.md), with the target matrix, limits and unimplemented requirements. Historical milestone JSON records retain their original scope.
 
 - Foundation: clean-content fork complete; no inherited teaching media ships.
-- Local authoring: one image/video plate, panorama projection, GLB transforms/parenting, hotspots, activities, references, narration recording, source backups and revisions implemented and tested. Environment and custom templates, multi-scene experiences, overlays, demonstration paths, synchronized narration, derivatives, complete backups and isolated client workspaces are now implemented. Actual client content remains open.
+- Local authoring: one image/video plate, panorama projection, GLB transforms/parenting, hotspots, activities, references, narration recording, source backups and revisions implemented and tested. Environment and custom templates, multi-scene experiences, overlays, demonstration paths, synchronized narration, derivatives, complete backups, isolated client workspaces, voice-driven authoring, site freshness/revocation gates, and offline assessor mode rubric evaluation are now implemented. Actual client content remains open.
 - Generation: resumable local Meshy/ElevenLabs worker and receipt flow implemented; six mocked worker tests pass. Actual paid outputs remain unaccepted and the prepared test requires approval.
 - Browser: full desktop/375px suite passed with zero page errors; production and WebXR builds passed. In-world controls and desktop ray checks pass; headset acceptance remains incomplete.
-- Native: fresh browser packages passed C# and Unity Play Mode visual/media/activity checks. Tracked camera/controller code and world controls pass simulated input and rendering checks. Local viewer builds exist; physical headset acceptance remains unfinished.
+- Native: fresh browser packages passed C# and Unity Play Mode visual/media/activity checks. 9 native test suites pass (including ReaderSmoke revocation checks and AssessorSmoke rubric grading). Tracked camera/controller code and world controls pass simulated input and rendering checks. Local viewer builds exist; physical headset acceptance remains unfinished.
 - Client content: procedural fixtures only. All five onsite packs and receiving-team acceptance remain pending.
 
 ## Delivery milestones

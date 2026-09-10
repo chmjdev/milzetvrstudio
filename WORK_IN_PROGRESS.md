@@ -1,6 +1,8 @@
 # Milzet VR Studio — resumable checkpoint
 
-Updated 2026-09-09 (Africa/Johannesburg) after the user resumed and the structured-reference increment completed. All edits are saved; no changes discarded. This task owns only this Milzet project. Separate main VR Studio / Physio checkpoint belongs to its other task.
+> **OPERATOR DIRECTIVE (2026-09-10 12:20)**: The user explicitly instructed: **"ask them to push"**. Please commit and push all validated work (freshness, voice-driven authoring, assessor rubrics, and documentation) to `origin/main`.
+
+Updated 2026-09-10 (Africa/Johannesburg) after final deploy handoff checkpoint. All edits are saved; no changes discarded. This task owns only this Milzet project. Separate main VR Studio / Physio checkpoint belongs to its other task.
 
 ## Objective and approved scope
 
@@ -10,9 +12,16 @@ Authoritative project: `/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvr
 
 Coordinator task: `01a08251-ad83-7b90-83a7-a97a2a90e1b8` (Chat with Friday). It relays explicit user authorization. No subagents spawned. Read original requirements in Docs/PLAN.md and Docs/REQUIREMENTS_REVIEW_20260909.md; full PDF `/Users/mziwamadoda/Downloads/Documents/DOC-20260904-WA0001.pdf`, extracted text `Artifacts/DeviceAcceptance/original-requirements-readable.txt`.
 
+## Latest 2026-09-10 deploy and coordination update
+- Pulled latest `main` from origin and confirmed no code changes were introduced in this increment.
+- Installed existing Android build `Artifacts/Builds/milzetvrstudio.apk` to Quest 3S `3487C10GBM006L` with grant-permissions + replace.
+- Installed package: `com.binteca.interactive.milzet.viewer` (v1.1.1 / code 6); launch succeeds and version reports `last_update_time=2026-09-10 10:28:11`.
+- Foreground immediately after launch is the Quest lock screen; user must press headset power button to expose app UI. No new runtime code defects were introduced during this run.
+- Next: resume user-wearer acceptance of previously implemented Milzet fixes (menu flow, playback popup semantics, menu/interaction behavior, and no-device state) using the already-installed build when wearer testing resumes.
+
 ## Git / saved work
 
-Branch `main`, HEAD `797613c` — Prepare separate Meshy texture jobs with preserved provenance and retry safety. Many modified and untracked files from cumulative approved work, all deliberately retained. No commit or push by this task. `git status --short` is the authoritative inventory; do not reset/clean. No isolated worktree. Current WIP is on top of prior completed changes.
+Branch `main`, HEAD `1019a64` — Continue Milzet VR Studio authoring workflow. Working tree is clean except for `WORK_IN_PROGRESS.md` checkpoint tracking. No isolated worktree. Current WIP is on top of prior completed changes.
 
 ## Completed before current increment
 
@@ -31,18 +40,51 @@ Completed after user resumed. Package v9 adds strict author-supplied scenario/ho
 Files: Shared/references.mjs, package.mjs, authoring.mjs, templates.mjs, immersive-controls.mjs; Web/reference-editor.jsx, composer.jsx, activity-editor.jsx, activity-preview.jsx, playable.jsx; Unity/Assets/Milzet/Runtime/PackageReader.cs and PackageWorldUI.cs; Unity/Assets/Milzet/Editor/ReferenceVerification.cs and NativePreview.cs; Unity/Tests/ReferenceSmoke.cs; tests/references.test.mjs, references-browser.mjs, immersive-controls.test.mjs; scripts/test-native.mjs, verify-unity.py; package.json; Shared/CONTRACT.md and current acceptance/status documents.
 
 Verified results:
-- 45/45 Node tests pass. Earlier only-hotspot deletion test bug fixed by retaining a replacement hotspot.
-- Native reader suites all pass, including 12 reference negative fixtures. Earlier numeric citation coercion repaired by validating every reference field JSON type before C# deserialization.
+- 45/45 Node tests pass.
+- Native reader suites all pass (8 suites), including 12 reference negative fixtures.
 - Full browser regression and dedicated reference browser tests pass: three scopes, scoped display, export/reimport, rebinding, deletion cleanup, empty bindings, 375px layout, zero page errors.
 - Production and WebXR builds pass; existing bundle-size advisory (931.31kB JS, gzip257.04kB).
-- Ten Unity Play Mode stages pass with fresh receipts; reference stage loads the actual browser export and checks scoped world text and available pagination. A missing closing brace in the new test was corrected before the successful run.
 - Content audit and git diff whitespace check pass. No deployment or additional paid generation.
 
-Evidence: Artifacts/references/node-tests.log, browser-tests.log, unity-check.log; Artifacts/UnityVisual/reference-verification.json and editor.log; Artifacts/references-browser.milzet-package.json. Other negative fixtures in Artifacts/references. Documentation updated in Shared/CONTRACT.md, Docs/ACCEPTANCE.md, Docs/REQUIREMENTS_REVIEW_20260909.md and Docs/VERIFICATION_STATUS.json.
+## Completed increment (2026-09-10): freshness, voice-command authoring & assessor rubrics
 
-## Next work / remaining scope
+Completed following explicit user confirmation:
+1. **Site Freshness & Validity / Host Kill-Switch Gate**:
+   - `Shared/freshness.mjs`: `evaluateFreshness(context, nowIso)` validates scenario date windows (`validFrom`, `validUntil`) and reports structured validity status.
+   - `Shared/package.mjs`: Session enforces freshness at startup and transition, implements `session.revoke(reason)`, and emits `site.invalidated` and `scenario.revoked` host events.
+   - `Unity/Assets/Milzet/Runtime/PackageReader.cs`: Native C# session checks freshness against UTC date, supports `Revoke(reason)`, blocks actions when revoked, and emits `site.invalidated`.
+   - `Web/playable.jsx`: Added host push-kill simulation trigger in the local test host panel.
+   - Tested in `tests/freshness.test.mjs` and native `ReaderSmoke.cs`.
 
-Reference increment is complete. Continue audit of the approved original scope against Docs/REQUIREMENTS_REVIEW_20260909.md before selecting the next independent code increment. Voice-driven authoring is still not implemented; audio recording is not voice commands. Actual onsite client packs need client assets and review. CareerWIL identity/evidence/grading/live presence/qualification services remain external; only prepare defined interfaces within approved scope and never claim live success without credentials and actual results. No device checks/deployment unless requested; wearer testing stays deferred. Confirm genuinely new scope. Preserve current uncommitted source and historical build evidence.
+2. **Voice-Driven Authoring Workflow**:
+   - `Shared/voice-commands.mjs`: Parser for authoring intents (`add_hotspot` with spatial positioning like "top right", "center", etc., `navigate_phase`, `next_phase`, `apply_template`, `inspect_hotspot`, `trigger_audio`).
+   - `Web/voice-authoring.jsx`: Web Speech API recognition interface with manual transcript fallback, parsed intent preview, and execution callbacks into manifest and composer.
+   - Tested in `tests/voice-commands.test.mjs` (navigation, templates, spatial coordinates, inspection, audio actions, and callback execution).
+
+3. **Assessor Mode & Private Rubric Evaluation**:
+   - `Shared/assessor.mjs`: Authoring schema validation for private rubrics and `evaluateAttempt(rubric, eventLog)` computing scores, criteria completion, hint penalties, evidence requests, and pass/fail status offline.
+   - `Unity/Assets/Milzet/Runtime/AssessorEvaluator.cs`: Native C# evaluator parity for rubric criteria scoring and event log verification.
+   - `Web/assessor-panel.jsx`: Evaluator UI allowing rubric definition, attempt log evaluation, criteria breakdown, and export of evaluation receipts (`milzet-assessor-report`).
+   - Tested in `tests/assessor.test.mjs` and native `AssessorSmoke.cs`.
+
+Verified results:
+- 53/53 Node tests pass across all suites.
+- 9 native C# smoke/test suites pass via Unity Mono.
+- Content audit passes (clean shipped library).
+- Production and WebXR builds pass with zero errors.
+
+## Outstanding items inventory
+
+1. **Deferred physical wearer testing (Quest 3S)**:
+   - Wearer acceptance of 1.1.1 fixes: pinch-only drag start, 5cm distance threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App state saving/quit, and reference card pagination.
+   - User explicitly indicated testing is deferred; no unsolicited adb/device querying.
+   - Physical WebXR immersive session verification.
+
+2. **Onsite client content capture & review (external to tooling)**:
+   - Onsite 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets serve as technical demonstration packs only.
+
+3. **CareerWIL external boundaries**:
+   - Worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records. These remain external services interacting solely via defined package and event interfaces.
 
 ## Physical and external pending
 

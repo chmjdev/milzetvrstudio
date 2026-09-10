@@ -6,9 +6,10 @@ Current 9 September status: **not ready for final client acceptance**. Physical1
 
 | Target | Result and limit |
 |---|---|
-| Shared contracts | 45 Node tests including structured reference contracts and templates; six worker transport tests and one video-derivative test passed in recovery validation |
+| Shared contracts | 53 Node tests including site freshness/revocation gates, voice-driven authoring, assessor rubric evaluation, structured reference contracts and templates; six worker transport tests and one video-derivative test passed in recovery validation |
 | Browser | Existing authoring/backup/375px checks pass; five new Commons examples render, play and complete 14 activities with zero page errors |
 | Production / WebXR builds | Pass; bundle-size advisory remains |
+| Native C# engines | 9 native test suites pass (including ReaderSmoke revocation checks and AssessorSmoke rubric grading) |
 | Unity Play Mode | Ten fresh stages pass including scoped reference UI and simulated controller/hand grab and release, independent reference/display drag, saved panel pose, sizing and hotspot alignment |
 | Built Mac player | 1.1.1 ARM64: five Commons packages and 14 activities pass rendering/playback/completion; actual generated cone/narration pass rendering, audio advancement and completion |
 | Android | 1.1.1/code6 installed and hash verified; permissions, native libraries, 11 packages and sibling apps preserved. Physical 1.1.1 acceptance pending. |
@@ -17,6 +18,9 @@ Current 9 September status: **not ready for final client acceptance**. Physical1
 
 ## Available authoring and playback
 
+- Voice-driven authoring enables hands-free scene assembly, phase navigation, template application, audio preview and spatial hotspot placement via parsed natural language commands or manual fallback.
+- Assessor mode and private rubric evaluation engines evaluate recorded attempt event logs offline against customizable criteria and hint penalties, exporting structured `milzet-assessor-report` receipts without leaking rubrics into runtime packages.
+- Site freshness evaluation enforces `validFrom` and `validUntil` time bounds on scenario initialization and transitions; host kill-switch revocation (`site.invalidated`, `scenario.revoked`) locks sessions upon emergency invalidation.
 - Structured author-supplied occupation, KM/PM/WM module and source/page references bind to scenarios, hotspots and activities. Package v9 and template v2 preserve bindings; both readers reject invalid targets/types. Browser authoring, export/reimport, deletion cleanup and template replacement are tested. Installed 1.1.1 predates this source change.
 - Separate local client workspaces preserve their own sources, scene, experience and private notes. Switching is atomic; stale tabs cannot save into a different active workspace. Complete authoring restore retains the prior saved workspace.
 - PNG/JPEG and H.264 MP4 plates support flat and genuine mono equirectangular 180/360 projection. Embedded static GLBs support transforms, hierarchy, visibility and hotspot links. Source projection and media structure are validated.

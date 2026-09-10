@@ -69,3 +69,28 @@ Optional `references` is an array of at most 128 author-supplied records. Each r
 These records do not verify an occupation, qualification, source document or module. They carry plain author text; readers do not fetch URLs or execute instructions. Existing context and activity citation fields remain supported. Reference-bearing packages require envelope version 9; versions 1–8 remain readable without this field. Authoring target deletion removes its bindings; an explicit empty array clears all bindings. References are included in the manifest checksum, recovery and export.
 
 The browser and native consumer display scenario references in their scenario/menu or playback context, hotspot references under Inspect, and activity references with the pending task. Immersive text pagination preserves access to long references. Scene templates containing references use template version 2; existing template version 1 remains supported. Applying a template replaces the target composition and its bindings together, so old references cannot point into the replacement scene.
+
+## Site freshness and revocation gates
+
+`context.validFrom` and `context.validUntil` ISO-8601 strings define author-supplied scenario validity windows. Runtime readers evaluate site freshness upon session initialization and phase transitions. Sessions opened before `validFrom` or after `validUntil` are rejected as expired or not yet active.
+
+Active sessions may be revoked immediately by host push-kill action via `session.revoke(reason)` or native `Revoke(reason)`. Revocation locks further hotspot selection, activity submission and phase transitions, and emits `site.invalidated` and `scenario.revoked` host events with timestamp and reason. Revocation state is sticky for the lifetime of that session.
+
+## Voice-driven authoring workflow
+
+Voice-driven authoring provides natural language intent parsing (`parseVoiceCommand`) for hands-free scene assembly in editor environments. Recognized intents:
+- `add_hotspot`: parses label and spatial descriptors (`center`, `top left`, `top right`, `bottom left`, `bottom right`, `top`, `bottom`, `left`, `right`) into normalized `[0,1]` plate coordinates.
+- `navigate_phase`: switches editor focus to the specified phase name (`induct`, `shadow`, `perform`, `prove`).
+- `next_phase`: advances sequentially to the next authored phase.
+- `apply_template`: selects a scene template by title or index.
+- `inspect_hotspot`: focuses a specific hotspot anchor by label.
+- `trigger_audio`: plays or stops preview narration for the current phase or selected hotspot.
+
+Command execution delegates to authoring callback hooks. Voice input operates entirely client-side using browser speech recognition or text fallback without cloud processing or credentials.
+
+## Assessor mode and private rubric evaluation
+
+Private rubrics use schema `milzet-rubric` v1: `id`, `title`, `passingScore`, and `criteria` array. Each criterion specifies `id`, `label`, `maxScore`, `phase`, `requiredEvents` (e.g. `hotspot.selected`, `activity.responded`), optional `targetHotspotId`, `targetActivityId`, and `penaltyPerHint`. Rubrics remain private to local authoring/assessment environments and are excluded from exported playable packages.
+
+The offline evaluator (`evaluateAttempt`) cross-references private rubric criteria against recorded runtime session event logs. It computes points earned, hint penalty deductions, criteria completion statuses, and overall pass/fail outcome, exporting an immutable `milzet-assessor-report` JSON artifact. Native Unity environments provide identical assessment evaluation via `AssessorEvaluator.cs`.
+

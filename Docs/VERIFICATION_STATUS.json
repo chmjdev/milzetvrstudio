@@ -1,16 +1,16 @@
 {
-  "verifiedOn": "2026-09-09T16:27:13.863277+00:00",
-  "applicationCommit": "797613c",
+  "verifiedOn": "2026-09-10T09:38:00.000000+00:00",
+  "applicationCommit": "1019a64",
   "workingTree": true,
-  "overall": "Structured reference bindings completed and locally verified in source (package v9/template v2). Installed native app remains 1.1.1/code6 and predates these changes; physical acceptance remains deferred.",
+  "overall": "Site freshness/push-kill gates, voice-command authoring workflow, and assessor rubric evaluation completed and locally verified in source. Installed native app remains 1.1.1/code6 and predates these changes; physical acceptance remains deferred.",
   "checks": {
-    "nodeTests": 45,
+    "nodeTests": 53,
     "workerTests": 6,
     "videoDerivativeTests": 1,
     "browser": "Full regression plus reference authoring for all three scopes, export/reimport, rebind/delete cleanup and 375px layout passed; zero page errors.",
-    "productionBuild": "passed; JS 931.31 kB / gzip 257.04 kB; bundle-size advisory",
+    "productionBuild": "passed; JS 943.13 kB / gzip 260.40 kB; bundle-size advisory",
     "webxrBuild": "passed; no physical immersive session",
-    "nativeReader": "Existing suites and format9 reference suite passed, including 12 invalid fixtures and strict JSON string types.",
+    "nativeReader": "9 smoke and verification suites passed in native C#, including freshness revocation and AssessorSmoke.",
     "unityPlayMode": "Ten fresh stages passed: prior nine plus reference browser export/scoped native UI/pagination. No physical headset verification.",
     "macStandalone": "Actual rebuilt1.1.1 ARM64 player passes five Commons packages/14activities/video and generated cone/audio advancement/completion.",
     "android": "Installed1.1.1/code6 base.apk matches verified signed artifact. All11 package listings, original data_dir/first-install retained; Studio61 and Physio1 info unchanged.",
@@ -19,7 +19,10 @@
     "generatedConsumers": "Actual Meshy GLB and George WAV pass browser playback/export/reopen and rebuilt 1.1.0 ARM64 Mac rendering/audio advancement/completion; no new generation.",
     "commonsExamples": "Browser checks passed previously; rebuilt1.1.1 Mac passes five packages/14activities/video.",
     "startupRestoration": "passed locally; real device Space Setup, permissions, tracking and room placement pending",
-    "structuredReferences": "Complete in source: scenario/hotspot/activity bindings, package9/template2, scoped browser/native displays, strict validation, target cleanup and template replacement."
+    "structuredReferences": "Complete in source: scenario/hotspot/activity bindings, package9/template2, scoped browser/native displays, strict validation, target cleanup and template replacement.",
+    "freshnessAndRevocation": "Passed in JS and C#; validity date windows enforced, host push-kill simulation and site.invalidated events verified.",
+    "voiceAuthoring": "Passed; speech command schema, spatial coordinates, phase navigation, and manifest execution verified.",
+    "assessorEvaluation": "Passed in JS and C#; private rubric evaluation, criteria weights, hint penalties, and report export verified."
   },
   "artifacts": {
     "mac": "Artifacts/Builds/milzetvrstudio.app",

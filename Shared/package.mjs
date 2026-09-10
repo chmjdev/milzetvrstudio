@@ -1,3 +1,4 @@
+import {evaluateFreshness} from './freshness.mjs';
 import {validateReferences} from './references.mjs';
 import {validatePresentation} from './presentation.mjs';
 import {validateProvenance} from './provenance.mjs';
@@ -99,14 +100,24 @@ export async function replaceAsset(envelope, assetId, bytes, mime) {
   return sealPackage(m,files);
 }
 export function createSession(manifest, revision, host) {
-  let phase=manifest.entryPhase;const seen=new Set();let complete=false;let seq=0;let advancing=false;const responses=new Set(),hints=new Map();
+  const currentDate = () => (host && host.now) ? host.now : new Date().toISOString().slice(0, 10);
+  const checkFreshness = () => {
+    if (manifest && manifest.context) {
+      const res = evaluateFreshness(manifest.context, currentDate());
+      if (!res.valid) throw Error(res.reason);
+    }
+  };
+  checkFreshness();
+  let phase=manifest.entryPhase;const seen=new Set();let complete=false;let seq=0;let advancing=false;let revoked=false;let revocationReason='';const responses=new Set(),hints=new Map();
   const emit=(type,hotspotId='',details={})=>host.emit({...details,eventId:host.sessionId+':'+(++seq),packageId:manifest.id,revision,phase,type,hotspotId});
   return {
     get phase(){return phase;}, get complete(){return complete;}, get visited(){return [...seen];},get completedActivities(){return [...responses];},
-    respond(id,response,time=0){check(!complete,'Session is complete.');const a=activityResponse(manifest,phase,responses,id,response,time);responses.add(id);emit('activity.responded','',{activityId:id,response});if(a.kind==='observation')emit('evidence.requested','',{activityId:id,response:''});},
-    hint(id){check(!complete,'Session is complete.');const a=(manifest.activities||[]).find(a=>a.id===id && a.phase===phase);const count=hints.get(id)||0;check(a && a.phase!=='prove' && a.hint && count<a.maxHints,'No hint available.');hints.set(id,count+1);emit('hint.used','',{activityId:id,response:String(count+1)});return a.hint;},
-    select(id){check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.includes(id),'Hotspot is not in the active phase.');seen.add(id);emit('hotspot.selected',id);if(manifest.hotspots.find(h=>h.id===id).evidence)emit('evidence.requested',id);},
-    async advance(){check(!advancing,'Transition already in progress.');advancing=true;try{check(!complete,'Session is complete.');const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.every(id=>seen.has(id)),'Visit every hotspot before continuing.');check((manifest.activities||[]).filter(a=>a.phase===phase).every(a=>responses.has(a.id)),'Complete every activity before continuing.');if(p.next){check(p.gate!=='host' || await host.authorize({packageId:manifest.id,revision,from:phase,to:p.next}),'Host release is required.');emit('phase.completed');phase=p.next;seen.clear();emit('phase.started');}else{complete=true;emit('scenario.completed');}}finally{advancing=false;}}
+    get revoked(){return revoked;}, get revocationReason(){return revocationReason;},
+    revoke(reason='Revoked by host'){if(revoked)return;revoked=true;revocationReason=String(reason);emit('site.invalidated','',{reason:revocationReason});emit('scenario.revoked','',{reason:revocationReason});},
+    respond(id,response,time=0){check(!revoked,'Scenario has been revoked by host.');check(!complete,'Session is complete.');checkFreshness();const a=activityResponse(manifest,phase,responses,id,response,time);responses.add(id);emit('activity.responded','',{activityId:id,response});if(a.kind==='observation')emit('evidence.requested','',{activityId:id,response:''});},
+    hint(id){check(!revoked,'Scenario has been revoked by host.');check(!complete,'Session is complete.');checkFreshness();const a=(manifest.activities||[]).find(a=>a.id===id && a.phase===phase);const count=hints.get(id)||0;check(a && a.phase!=='prove' && a.hint && count<a.maxHints,'No hint available.');hints.set(id,count+1);emit('hint.used','',{activityId:id,response:String(count+1)});return a.hint;},
+    select(id){check(!revoked,'Scenario has been revoked by host.');check(!complete,'Session is complete.');checkFreshness();const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.includes(id),'Hotspot is not in the active phase.');seen.add(id);emit('hotspot.selected',id);if(manifest.hotspots.find(h=>h.id===id).evidence)emit('evidence.requested',id);},
+    async advance(){check(!revoked,'Scenario has been revoked by host.');check(!advancing,'Transition already in progress.');advancing=true;try{check(!revoked,'Scenario has been revoked by host.');check(!complete,'Session is complete.');checkFreshness();const p=manifest.phases.find(p=>p.id===phase);check(p.hotspotIds.every(id=>seen.has(id)),'Visit every hotspot before continuing.');check((manifest.activities||[]).filter(a=>a.phase===phase).every(a=>responses.has(a.id)),'Complete every activity before continuing.');if(p.next){check(p.gate!=='host' || await host.authorize({packageId:manifest.id,revision,from:phase,to:p.next}),'Host release is required.');emit('phase.completed');phase=p.next;seen.clear();emit('phase.started');}else{complete=true;emit('scenario.completed');}}finally{advancing=false;}}
   };
 }
 

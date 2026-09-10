@@ -29,3 +29,6 @@ run(['Artifacts/presentation-smoke.exe','Artifacts/presentation']);
 
 run([compiler,'-nologo','-out:Artifacts/reference-smoke.exe','-r:System.Runtime.Serialization.dll','-r:System.Xml.Linq.dll','Unity/Assets/Milzet/Runtime/PackageReader.cs','Unity/Assets/Milzet/Runtime/PresentationContract.cs','Unity/Assets/Milzet/Runtime/PcmWave.cs','Unity/Assets/Milzet/Runtime/Projection.cs','Unity/Assets/Milzet/Runtime/Mp4Video.cs','Unity/Assets/Milzet/Runtime/ModelContract.cs','Unity/Assets/Milzet/Runtime/ActivityContract.cs','Unity/Assets/Milzet/Runtime/ScenarioContext.cs','Unity/Tests/ReferenceSmoke.cs']);
 run(['Artifacts/reference-smoke.exe','Artifacts/references']);
+
+run([compiler,'-nologo','-out:Artifacts/assessor-smoke.exe','-r:System.Runtime.Serialization.dll','-r:System.Xml.Linq.dll','Unity/Assets/Milzet/Runtime/PackageReader.cs','Unity/Assets/Milzet/Runtime/PresentationContract.cs','Unity/Assets/Milzet/Runtime/PcmWave.cs','Unity/Assets/Milzet/Runtime/Projection.cs','Unity/Assets/Milzet/Runtime/Mp4Video.cs','Unity/Assets/Milzet/Runtime/ModelContract.cs','Unity/Assets/Milzet/Runtime/ActivityContract.cs','Unity/Assets/Milzet/Runtime/ScenarioContext.cs','Unity/Assets/Milzet/Runtime/AssessorEvaluator.cs','Unity/Tests/AssessorSmoke.cs']);
+run(['Artifacts/assessor-smoke.exe']);
