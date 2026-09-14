@@ -28,6 +28,7 @@ public static class BuildViewer {
  public static void HotspotRepair(){PlayerSettings.bundleVersion="1.0.3";PlayerSettings.Android.bundleVersionCode=4;Android();}
  public static void StartupRepair(){StartupBuild("1.1.0",5);}
  public static void InteractionRepair(){StartupBuild("1.1.1",6);}
+ public static void FreshnessRelease(){StartupBuild("1.2.0",7);}
  static void StartupBuild(string version,int code){PlayerSettings.colorSpace=ColorSpace.Linear;PlayerSettings.SetArchitecture(NamedBuildTarget.Standalone,1);var settings=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);settings.FindProperty("microphoneUsageDescription").stringValue="Microphone access is reserved for user-initiated voice input.";settings.ApplyModifiedPropertiesWithoutUndo();PlayerSettings.bundleVersion=version;PlayerSettings.Android.bundleVersionCode=code;if(EditorUserBuildSettings.activeBuildTarget==BuildTarget.Android)Android();else Mac();}
  public static void Mac(){EditorUserBuildSettings.SetPlatformSettings(BuildPipeline.GetBuildTargetName(BuildTarget.StandaloneOSX),"Architecture","arm64");Build(BuildTarget.StandaloneOSX,"milzetvrstudio.app");}
  public static void Android(){ConfigureAndroid();Build(BuildTarget.Android,"milzetvrstudio.apk");}
