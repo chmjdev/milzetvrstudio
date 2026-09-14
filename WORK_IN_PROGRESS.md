@@ -1,8 +1,6 @@
 # Milzet VR Studio — resumable checkpoint
 
-> **OPERATOR DIRECTIVE (2026-09-10 12:20)**: The user explicitly instructed: **"ask them to push"**. Please commit and push all validated work (freshness, voice-driven authoring, assessor rubrics, and documentation) to `origin/main`.
-
-Updated 2026-09-10 (Africa/Johannesburg) after final deploy handoff checkpoint. All edits are saved; no changes discarded. This task owns only this Milzet project. Separate main VR Studio / Physio checkpoint belongs to its other task.
+Updated 2026-09-15 (Africa/Johannesburg): checkpoint refreshed; the 2026-09-10 push directive is satisfied (`main` == `origin/main` at `4f549d4`). All edits are saved; no changes discarded. This task owns only this Milzet project. Separate main VR Studio / Physio checkpoint belongs to its other task.
 
 ## Objective and approved scope
 
@@ -21,7 +19,7 @@ Coordinator task: `01a08251-ad83-7b90-83a7-a97a2a90e1b8` (Chat with Friday). It 
 
 ## Git / saved work
 
-Branch `main`, HEAD `1019a64` — Continue Milzet VR Studio authoring workflow. Working tree is clean except for `WORK_IN_PROGRESS.md` checkpoint tracking. No isolated worktree. Current WIP is on top of prior completed changes.
+Branch `main`, HEAD `4f549d4` — feat: implement site freshness gates, voice authoring, assessor rubrics, and update project docs. Pushed to `origin/main`; working tree clean. No isolated worktree. Current WIP is on top of prior completed changes.
 
 ## Completed before current increment
 
@@ -74,6 +72,8 @@ Verified results:
 - Production and WebXR builds pass with zero errors.
 
 ## Outstanding items inventory
+
+0. **Installed Quest build is behind `main`**: the installed 1.1.1 / code 6 predates the freshness, voice-authoring and assessor work (format 9). Testing those on-device needs a new build and install, which is a deployment step requiring explicit authorization.
 
 1. **Deferred physical wearer testing (Quest 3S)**:
    - Wearer acceptance of 1.1.1 fixes: pinch-only drag start, 5cm distance threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App state saving/quit, and reference card pagination.
