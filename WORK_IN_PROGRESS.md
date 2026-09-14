@@ -73,7 +73,7 @@ Verified results:
 
 ## Outstanding items inventory
 
-0. **Installed Quest build is behind `main`**: the installed 1.1.1 / code 6 predates the freshness, voice-authoring and assessor work (format 9). Testing those on-device needs a new build and install, which is a deployment step requiring explicit authorization.
+0. **Installed 2026-09-15**: 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`) installed to Quest 3S `3487C10GBM006L` via metavr and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. No prior Milzet package was present on the device at install time (the 1.1.1 recorded on 2026-09-10 was absent; cause not determined). Wearer acceptance of all 1.1.1 fixes plus the format 9 features is pending on this build. USB note: a Chrome WebUSB permission was auto-claiming the headset and blocking ADB; remove it at chrome://settings/content/usbDevices.
 
 1. **Deferred physical wearer testing (Quest 3S)**:
    - Wearer acceptance of 1.1.1 fixes: pinch-only drag start, 5cm distance threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App state saving/quit, and reference card pagination.
