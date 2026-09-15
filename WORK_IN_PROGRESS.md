@@ -90,9 +90,7 @@ Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` c
 
 5. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
 
-6. **Repo hygiene** — `Unity/.utmp/` compiler intermediates are tracked and churn on every build; candidate for `.gitignore` + `git rm --cached`. Needs a decision, not done.
-
-7. **Workstation USB note** — a Chrome WebUSB permission auto-claims the Quest on connect and blocks ADB (no debugging prompt appears). Remove the Quest 3S entry at `chrome://settings/content/usbDevices`, or quit Chrome before device work.
+6. **Workstation USB note** — a Chrome WebUSB permission auto-claims the Quest on connect and blocks ADB (no debugging prompt appears). Remove the Quest 3S entry at `chrome://settings/content/usbDevices`, or quit Chrome before device work.
 
 ## Physical and external pending
 
