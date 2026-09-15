@@ -90,8 +90,6 @@ Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` c
 
 5. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
 
-6. **Workstation USB note** — a Chrome WebUSB permission auto-claims the Quest on connect and blocks ADB (no debugging prompt appears). Remove the Quest 3S entry at `chrome://settings/content/usbDevices`, or quit Chrome before device work.
-
 ## Physical and external pending
 
 User explicitly will test later: stop requesting headset input or checking device. Last observed Quest app PID25090 alive but system SensorLock/Guardian focused: “Press the power button to enable cameras and microphones.” Controllers connected inactive, tracking NONE. This is not a new 1.1.1 failure. User-recorded 1.1.0 menu rotation issue reviewed; repaired in code, still requires wearer acceptance. Actual Bluetooth unpairing was not demonstrated (later both controllers active tracked with same ids). Do not reset/re-pair devices.
