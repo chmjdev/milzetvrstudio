@@ -82,13 +82,11 @@ Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` c
    - Physical WebXR immersive session verification (browser consumer).
    - Testing is user-driven; no unsolicited device querying.
 
-2. **Device state anomaly to explain** — at install time the headset held no Milzet package, and none of the sibling Studio 2.4.0 / Physio 1.0.0 packages recorded here on 2026-09-10. Uninstall vs. reset not determined. If the 11 lesson package files on the device mattered, check whether they survived; do not assume.
+2. **Voice authoring on device** — `Web/voice-authoring.jsx` is browser-only (Web Speech API with manual fallback). No native voice path exists and none is scoped; confirm with the user before adding one.
 
-3. **Voice authoring on device** — `Web/voice-authoring.jsx` is browser-only (Web Speech API with manual fallback). No native voice path exists and none is scoped; confirm with the user before adding one.
+3. **Onsite client content capture** (external to tooling): 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets are technical demonstration packs only.
 
-4. **Onsite client content capture** (external to tooling): 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets are technical demonstration packs only.
-
-5. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
+4. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
 
 ## Physical and external pending
 
