@@ -75,8 +75,8 @@ Verified results:
 
 Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` carries viewer 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`), installed via metavr 2026-09-15 01:40:35 and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. Tests at that commit: 53/53 Node, content audit clean, 9/9 native C# suites. `Artifacts/DeviceAcceptance/` logs, receipts and screenshots are tracked since `82571a7`; APKs and recordings stay local.
 
-1. **Wearer acceptance on build 1.2.0 (Quest 3S)** — nothing has been physically accepted on any build yet:
-   - 1.1.1 interaction fixes: pinch-only drag start, 5cm drag threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App save-and-quit, reference card pagination.
+1. **Wearer acceptance on build 1.2.0 (Quest 3S)** — controls accepted 2026-09-15; remaining:
+   - Content playback of the 11 re-pushed packages (verify each loads; Exit App save-and-quit and reference card pagination not yet individually confirmed).
    - Format 9 features first on-device in 1.2.0: site freshness / host kill-switch (`site.invalidated`, `scenario.revoked`), assessor rubric evaluation.
    - Real Toolbox talk movie playback (earlier Play example was a still-image presentation, not a video failure).
    - Physical WebXR immersive session verification (browser consumer).

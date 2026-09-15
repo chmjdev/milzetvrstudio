@@ -12,5 +12,26 @@
   "tool": "metavr (hzdb) app install --grant-permissions",
   "priorInstall": "none present on device at install time; 1.1.1/code 6 recorded 2026-09-10 was absent",
   "launched": true,
-  "wearerAcceptance": "pending"
+  "wearerAcceptance": {
+    "controls": "accepted by wearer 2026-09-15 (hand/controller interaction working)",
+    "content": "pending \u2014 library was empty after clean install; 11 packages pushed 2026-09-15 and app relaunched"
+  },
+  "packagesPushed": {
+    "destination": "/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/",
+    "files": {
+      "01-presentation.json": "Artifacts/presentation-browser.milzet-package.json",
+      "02-panorama180.json": "Artifacts/equirect180-browser.milzet-package.json",
+      "03-panorama360.json": "Artifacts/equirect360-browser.milzet-package.json",
+      "04-video.json": "Artifacts/phase-video-browser.milzet-package.json",
+      "05-experience.json": "Artifacts/experience-browser.milzet-experience.json",
+      "06-generated.json": "Artifacts/Generation/generated-acceptance.milzet-package.json",
+      "07-Trench-observation.json": "Artifacts/Commons/07-Trench-observation.json",
+      "08-Toolbox-talk.json": "Artifacts/Commons/08-Toolbox-talk.json",
+      "09-Daily-site-log.json": "Artifacts/Commons/09-Daily-site-log.json",
+      "10-Assessment-observation.json": "Artifacts/Commons/10-Assessment-observation.json",
+      "11-First-aid-familiarisation.json": "Artifacts/Commons/11-First-aid-familiarisation.json"
+    },
+    "tool": "metavr files push",
+    "verifiedListing": 11
+  }
 }
