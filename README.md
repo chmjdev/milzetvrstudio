@@ -44,7 +44,7 @@ npm run test:unity
 npm run audit:content
 ```
 
-Browser tests create procedural fixtures in `Artifacts`; native and Unity checks consume them. Unity requires the installed editor documented in `Unity/ProjectSettings/ProjectVersion.txt`, graphics support and at least 8 GiB free disk space. Build output has a bundle-size advisory; headset performance is unmeasured.
+Browser tests create procedural fixtures in `Artifacts`; native and Unity checks consume them. `node scripts/build-commons-360.mjs` rebuilds the seven licensed 360°/180° Commons demonstration packs (`Artifacts/Commons/12`–`18`) from the retained originals recorded in `Artifacts/Commons/360/originals.json`; originals and packs stay outside git. Unity requires the installed editor documented in `Unity/ProjectSettings/ProjectVersion.txt`, graphics support and at least 8 GiB free disk space. Build output has a bundle-size advisory; headset performance is unmeasured.
 
 `npm run dev` serves an ephemeral loopback preview, with no deployment or registered domain. Browser storage belongs to that origin: export source and package backups before changing ports or browsers.
 

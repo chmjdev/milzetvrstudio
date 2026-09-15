@@ -33,5 +33,20 @@
     },
     "tool": "metavr files push",
     "verifiedListing": 11
+  },
+  "packagesPushed360": {
+    "pushedAt": "2026-09-15",
+    "builder": "scripts/build-commons-360.mjs",
+    "destination": "/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/",
+    "files": [
+      "12-Site-Entrance.json",
+      "13-Site-Interior.json",
+      "14-Control-Centre.json",
+      "15-Turbine-Hall.json",
+      "16-Seminar-Room.json",
+      "17-Safety-Lab.json",
+      "18-Assembly-Point.json"
+    ],
+    "sources": "Artifacts/Commons/360/originals.json (7 Wikimedia Commons originals, SHA-1 verified against API metadata)"
   }
 }
