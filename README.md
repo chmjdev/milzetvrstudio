@@ -6,7 +6,7 @@ A content-free fork of VR Studio for authoring client-owned workplace VR scenari
 
 Implementation continues from baseline commit `1019a64`. The suite has 53 passing Node tests, passing Chrome desktop/375px workflows, native C# checks across nine smoke/verification stages (including freshness revocation and AssessorSmoke), and visible controls with simulated headset/controller input. Local Mac and Android builds have succeeded. The built Mac app passes media and multi-scene checks; the corrected Android APK (1.1.1/code 6) is installed on Quest 3S with physical wearer acceptance deferred. See the acceptance matrix for precise limits.
 
-This is a working local authoring prototype. The complete plan is not finished. [Acceptance and compatibility](Docs/ACCEPTANCE.md) records the remaining implementation, generation, headset and onsite requirements. Historical milestone JSON files describe their original increments; [VERIFICATION_STATUS.json](Docs/VERIFICATION_STATUS.json) records this verification run.
+This is a working local authoring prototype. The complete plan is not finished. [Acceptance and compatibility](Docs/ACCEPTANCE.md) records the remaining implementation, generation, headset and onsite requirements. [Walkable 3D environments](Docs/IMMERSIVE_ENVIRONMENTS_DESIGN.md) is a design for review, not implemented. Historical milestone JSON files describe their original increments; [VERIFICATION_STATUS.json](Docs/VERIFICATION_STATUS.json) records this verification run.
 
 ## Available workflow
 
@@ -26,7 +26,7 @@ This is a working local authoring prototype. The complete plan is not finished. 
 - Preview and export a self-contained, versioned package. Restore media from IndexedDB or a package backup; native Unity consumes the browser export.
 - Author private rubrics and evaluate worker attempt logs offline via the Assessor panel and native evaluator. Private rubrics remain excluded from playable exports. The receiving host owns grading, evidence, identity and durable progress.
 
-Read the [onsite authoring guide](Docs/ONSITE_AUTHORING.md), [source and generation workflow](Docs/SOURCE_WORKFLOW.md), [package contract](Shared/CONTRACT.md) and [Unity preview instructions](Unity/README.md).
+Read the [onsite capture brief](Docs/CAPTURE_BRIEF.md), [onsite authoring guide](Docs/ONSITE_AUTHORING.md), [source and generation workflow](Docs/SOURCE_WORKFLOW.md), [package contract](Shared/CONTRACT.md) and [Unity preview instructions](Unity/README.md).
 
 ## Local checks
 

@@ -73,7 +73,7 @@ Verified results:
 
 ## Outstanding items inventory (refreshed 2026-09-15)
 
-Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` carries viewer 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`), installed via metavr 2026-09-15 01:40:35 and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. Tests at that commit: 53/53 Node, content audit clean, 9/9 native C# suites. `Artifacts/DeviceAcceptance/` logs, receipts and screenshots are tracked since `82571a7`; APKs and recordings stay local.
+Current state: `main` == `origin/main` (see git log; last checkpoint 2026-09-15). Quest 3S `3487C10GBM006L` carries viewer 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`), installed via metavr 2026-09-15 01:40:35 and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. Tests at that commit: 53/53 Node, content audit clean, 9/9 native C# suites. `Artifacts/DeviceAcceptance/` logs, receipts and screenshots are tracked since `82571a7`; APKs and recordings stay local.
 
 1. **Wearer acceptance on build 1.2.0 (Quest 3S)** — controls accepted 2026-09-15; remaining:
    - Content playback of the 11 re-pushed packages (verify each loads; Exit App save-and-quit and reference card pagination not yet individually confirmed).
@@ -84,7 +84,10 @@ Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` c
 
 2. **Voice authoring on device** — `Web/voice-authoring.jsx` is browser-only (Web Speech API with manual fallback). No native voice path exists and none is scoped; confirm with the user before adding one.
 
-3. **Onsite client content capture** (external to tooling): 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets are technical demonstration packs only.
+3. **Immersion — decided 2026-09-15: "both, 360 first."** The wearer saw flat stills/video on the headset and asked for an immersive walk-in experience. The runtime already plays genuine 180/360 spheres with in-world hotspots; what is missing is immersive content.
+   - **360 first:** `Docs/CAPTURE_BRIEF.md` is the onsite shooting list per pilot scenario, grounded in the validator limits (180 = 1:1, 360 = 2:1 mono equirect, ≤8192 px stills / ≤4096 px H.264 clips, 12 MB per asset) and the requirements' "honest phone_180, not fake 360" contract. Schema gap noted there: `captured_at`, `capture_device`, `honest_fov` have no field in the scenario context yet.
+   - **Optional interim demo:** rebuild the Commons demo packs on genuine licensed 360°/180° equirect photos (Wikimedia Commons, same provenance practice as the flat ones) so the headset shows a real sphere before the site shoot. Needs the operator's go-ahead for downloads; not started.
+   - **3D environments:** `Docs/IMMERSIVE_ENVIRONMENTS_DESIGN.md` — new `environment` scene kind, xyz hotspots, authored walkable surface, teleport + snap turn from the First Hand sample, phased with the trench as the proving scenario. Awaiting the four decisions listed at its end; no build authorised. Note the requirements tension recorded there: "Phone AR is the product" vs. a headset-only walkable space.
 
 4. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
 
