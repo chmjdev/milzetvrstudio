@@ -1,8 +1,0 @@
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/CMakeFiles/edit_cache.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/CMakeFiles/rebuild_cache.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/GameActivity/CMakeFiles/game.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
-/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Unity/.utmp/Debug/t4l4j4y7/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir

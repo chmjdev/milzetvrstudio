@@ -16,3 +16,4 @@ Artifacts/*
 !Artifacts/DeviceAcceptance/
 Artifacts/DeviceAcceptance/*.apk
 Artifacts/DeviceAcceptance/*.mp4
+Unity/.utmp/
