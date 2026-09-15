@@ -1,0 +1,137 @@
+{
+  "recordedAtUtc": "2026-09-09T14:20:38.491Z",
+  "device": "3487C10GBM006L",
+  "versionName": "1.1.0",
+  "versionCode": 5,
+  "installedArtifactSha256": "79115f9238e7803f42c2b95b5e3e323167efef0fd1176d4bceeb427ffcfb68cd",
+  "physicalAcceptance": false,
+  "initialScreen": "System: Press the power button to enable cameras and microphones",
+  "checks": {
+    "AppsBefore": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"package\": \"com.binteca.interactive.milzet.viewer\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.binteca.interactive.physio.demo\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.crytek.climb2\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.facebook.arvr.quillplayer\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.fasttravelgames.solero\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.google.android.apps.youtube.vr.oculus\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.curio.ruler\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.curio.toybox\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.handseducationmodule\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.shell.env.footprint.haven2025\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.shell.env.vista.calming\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.accountscenter\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.facebook\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.igvr\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.samples.firsthand\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.vrprivacycheckup\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.spotify.horizon\",\n    \"is_system\": false\n  }\n]\n"
+        }
+      ],
+      "isError": false
+    },
+    "MilzetBefore": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.milzet.viewer\",\n  \"version_name\": \"1.0.2\",\n  \"version_code\": \"3\",\n  \"install_path\": \"/data/app/~~VIOgDW_EPvBbr--BxS2u8Q==/com.binteca.interactive.milzet.viewer-racjMf3ADYJCYjdBYvljOg==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-09 12:08:12\",\n  \"last_update_time\": \"2026-09-09 15:08:36\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.milzet.viewer\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "MilzetAfter": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.milzet.viewer\",\n  \"version_name\": \"1.1.0\",\n  \"version_code\": \"5\",\n  \"install_path\": \"/data/app/~~HYmuOZJZWSvJfc_bung4zg==/com.binteca.interactive.milzet.viewer-CC52Xhm7q7UMlvjTECwtOw==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-09 12:08:12\",\n  \"last_update_time\": \"2026-09-09 16:19:08\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.milzet.viewer\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "StudioBefore": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n  \"version_name\": \"2.4.0\",\n  \"version_code\": \"61\",\n  \"install_path\": \"/data/app/~~O4Y8Ff5PSpGZq35cy888bQ==/com.binteca.interactive.vrstudio.viewer-cl_fEsC2bwq4jNSuaMcS8g==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-08 21:25:01\",\n  \"last_update_time\": \"2026-09-09 16:15:12\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.vrstudio.viewer\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "StudioAfter": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n  \"version_name\": \"2.4.0\",\n  \"version_code\": \"61\",\n  \"install_path\": \"/data/app/~~O4Y8Ff5PSpGZq35cy888bQ==/com.binteca.interactive.vrstudio.viewer-cl_fEsC2bwq4jNSuaMcS8g==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-08 21:25:01\",\n  \"last_update_time\": \"2026-09-09 16:15:12\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.vrstudio.viewer\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "PhysioBefore": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.physio.demo\",\n  \"version_name\": \"1.0.0\",\n  \"version_code\": \"1\",\n  \"install_path\": \"/data/app/~~kTcOrIvYUO6RLqu3dL_MWA==/com.binteca.interactive.physio.demo-dkapymsdJdnjtsBoWpnwsQ==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-09 14:20:27\",\n  \"last_update_time\": \"2026-09-09 14:20:27\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.physio.demo\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "PhysioAfter": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"package\": \"com.binteca.interactive.physio.demo\",\n  \"version_name\": \"1.0.0\",\n  \"version_code\": \"1\",\n  \"install_path\": \"/data/app/~~kTcOrIvYUO6RLqu3dL_MWA==/com.binteca.interactive.physio.demo-dkapymsdJdnjtsBoWpnwsQ==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-09 14:20:27\",\n  \"last_update_time\": \"2026-09-09 14:20:27\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.physio.demo\"\n}\n"
+        }
+      ],
+      "isError": false
+    },
+    "PackagesBefore": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"name\": \"01-presentation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/01-presentation.json\",\n    \"is_directory\": false,\n    \"size\": 201592,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"02-panorama180.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/02-panorama180.json\",\n    \"is_directory\": false,\n    \"size\": 10320,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"03-panorama360.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/03-panorama360.json\",\n    \"is_directory\": false,\n    \"size\": 17385,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"04-video.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/04-video.json\",\n    \"is_directory\": false,\n    \"size\": 6491,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"05-experience.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/05-experience.json\",\n    \"is_directory\": false,\n    \"size\": 117839,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"06-generated.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/06-generated.json\",\n    \"is_directory\": false,\n    \"size\": 10579242,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"07-Trench-observation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/07-Trench-observation.json\",\n    \"is_directory\": false,\n    \"size\": 897195,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"08-Toolbox-talk.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/08-Toolbox-talk.json\",\n    \"is_directory\": false,\n    \"size\": 14718787,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"09-Daily-site-log.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/09-Daily-site-log.json\",\n    \"is_directory\": false,\n    \"size\": 8631871,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"10-Assessment-observation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/10-Assessment-observation.json\",\n    \"is_directory\": false,\n    \"size\": 8631434,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"11-First-aid-familiarisation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/11-First-aid-familiarisation.json\",\n    \"is_directory\": false,\n    \"size\": 10817396,\n    \"permissions\": \"-rw-r--r--\"\n  }\n]\n"
+        }
+      ],
+      "isError": false
+    },
+    "PackagesAfter": {
+      "content": [
+        {
+          "type": "text",
+          "text": "[\n  {\n    \"name\": \"01-presentation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/01-presentation.json\",\n    \"is_directory\": false,\n    \"size\": 201592,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"02-panorama180.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/02-panorama180.json\",\n    \"is_directory\": false,\n    \"size\": 10320,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"03-panorama360.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/03-panorama360.json\",\n    \"is_directory\": false,\n    \"size\": 17385,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"04-video.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/04-video.json\",\n    \"is_directory\": false,\n    \"size\": 6491,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"05-experience.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/05-experience.json\",\n    \"is_directory\": false,\n    \"size\": 117839,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"06-generated.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/06-generated.json\",\n    \"is_directory\": false,\n    \"size\": 10579242,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"07-Trench-observation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/07-Trench-observation.json\",\n    \"is_directory\": false,\n    \"size\": 897195,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"08-Toolbox-talk.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/08-Toolbox-talk.json\",\n    \"is_directory\": false,\n    \"size\": 14718787,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"09-Daily-site-log.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/09-Daily-site-log.json\",\n    \"is_directory\": false,\n    \"size\": 8631871,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"10-Assessment-observation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/10-Assessment-observation.json\",\n    \"is_directory\": false,\n    \"size\": 8631434,\n    \"permissions\": \"-rw-r--r--\"\n  },\n  {\n    \"name\": \"11-First-aid-familiarisation.json\",\n    \"path\": \"/sdcard/Android/data/com.binteca.interactive.milzet.viewer/files/Packages/11-First-aid-familiarisation.json\",\n    \"is_directory\": false,\n    \"size\": 10817396,\n    \"permissions\": \"-rw-r--r--\"\n  }\n]\n"
+        }
+      ],
+      "isError": false
+    },
+    "Install": {
+      "content": [
+        {
+          "type": "text",
+          "text": ""
+        }
+      ],
+      "isError": false
+    },
+    "InstalledHash": {
+      "content": [
+        {
+          "type": "text",
+          "text": "79115f9238e7803f42c2b95b5e3e323167efef0fd1176d4bceeb427ffcfb68cd  /data/app/~~HYmuOZJZWSvJfc_bung4zg==/com.binteca.interactive.milzet.viewer-CC52Xhm7q7UMlvjTECwtOw==/base.apk\n"
+        }
+      ],
+      "isError": false
+    },
+    "Launch": {
+      "content": [
+        {
+          "type": "text",
+          "text": ""
+        }
+      ],
+      "isError": false
+    },
+    "Pid": {
+      "content": [
+        {
+          "type": "text",
+          "text": "17448\n"
+        }
+      ],
+      "isError": false
+    },
+    "Logs": {
+      "content": [
+        {
+          "type": "text",
+          "text": "--------- beginning of main\n09-09 16:19:51.484 17448 17482 D Unity   : [Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Input...\n09-09 16:19:51.500 17448 17482 D Unity   : PlayerInitEngineGraphics OK\n09-09 16:19:51.511 17448 17482 W Unity   : Orientation Listener cannot detect orientation.\n09-09 16:19:51.511 17448 17482 I Unity   :     HasWindow = 1, HasFocus = 0\n09-09 16:19:51.511 17448 17482 I Unity   : Handle cmd APP_CMD_WINDOW_RESIZED(3)\n09-09 16:19:51.511 17448 17482 D Unity   : NativeWindow resized 3664x1920\n09-09 16:19:51.512 17448 17482 I Unity   : Handle cmd APP_CMD_WINDOW_REDRAW_NEEDED(4)\n09-09 16:19:51.512 17448 17482 I Unity   : Handle cmd APP_CMD_LOW_MEMORY(10)\n09-09 16:19:51.512 17448 17482 I Unity   : Handle cmd APP_CMD_RESUME(12)\n09-09 16:19:51.513 17448 17448 I Unity   : windowFocusChanged: true\n09-09 16:19:51.513 17448 17448 I Unity   : applyWindowUIChanges fullScreen = true, renderOutsideSafeArea = true\n09-09 16:19:51.513 17448 17448 I Unity   : resumeUnity\n09-09 16:19:51.513 17448 17448 I Unity   : windowFocusChanged: false\n09-09 16:19:51.514 17448 17482 D Unity   : InitializeOrResetSwapChain 3664x1920 hdr=0 samples=0\n09-09 16:19:51.514 17448 17448 I Unity   : applyWindowUIChanges fullScreen = true, renderOutsideSafeArea = true\n09-09 16:19:51.514 17448 17448 I Unity   : applyWindowUIChanges fullScreen = true, renderOutsideSafeArea = true\n09-09 16:19:51.516 17448 17448 I Unity   : onPause\n09-09 16:19:51.518 17448 17448 I Unity   : pauseUnity\n09-09 16:19:51.592 17448 17482 I Unity   : [MetaXRFeature] OnSessionCreate: 81\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.592 17448 17482 I Unity   : Meta.XR.MetaXRFeature:OnSessionCreate(UInt64)\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.OpenXR.Features.OpenXRFeature:ReceiveNativeEvent(NativeEvent, UInt64)\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.OpenXR.OpenXRLoaderBase:ReceiveNativeEvent(NativeEvent, UInt64)\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.OpenXR.OpenXRLoaderBase:Internal_CreateSessionIfNeeded()\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.OpenXR.OpenXRLoaderBase:StartInternal()\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.OpenXR.OpenXRLoaderBase:Start()\n09-09 16:19:51.592 17448 17482 I Unity   : UnityEngine.XR.Management.XRGeneralSettings:StartXRSDK()\n09-09 16:19:51.592 17448 17482 I Unity   : \n09-09 16:19:51.597 17448 17482 D Unity   : Failed to load native plugin: Unable to lookup library path for 'dl.so'.\n09-09 16:19:51.612 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.612 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.612 17448 17482 W Unity   : \n09-09 16:19:51.612 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.612 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.612 17448 17482 W Unity   : \n09-09 16:19:51.612 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.612 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.612 17448 17482 W Unity   : \n09-09 16:19:51.612 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.612 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.612 17448 17482 W Unity   : \n09-09 16:19:51.612 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.612 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.612 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.612 17448 17482 W Unity   : \n09-09 16:19:51.613 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.613 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.613 17448 17482 W Unity   : \n09-09 16:19:51.613 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.613 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.613 17448 17482 W Unity   : \n09-09 16:19:51.613 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.613 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.613 17448 17482 W Unity   : \n09-09 16:19:51.613 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.613 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.613 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.613 17448 17482 W Unity   : \n09-09 16:19:51.614 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.614 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.614 17448 17482 W Unity   : \n09-09 16:19:51.614 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.614 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.614 17448 17482 W Unity   : \n09-09 16:19:51.614 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.614 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.614 17448 17482 W Unity   : \n09-09 16:19:51.614 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.614 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.614 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.614 17448 17482 W Unity   : \n09-09 16:19:51.615 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.615 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.615 17448 17482 W Unity   : \n09-09 16:19:51.615 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.615 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.615 17448 17482 W Unity   : \n09-09 16:19:51.615 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.615 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.615 17448 17482 W Unity   : \n09-09 16:19:51.615 17448 17482 W Unity   : MRUK Shared: Unable to bind OpenXR function\n09-09 16:19:51.615 17448 17482 W Unity   : UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:OnSharedLibLog(MrukLogLevel, Char*, UInt32)\n09-09 16:19:51.615 17448 17482 W Unity   : Meta.XR.MRUtilityKit.MRUK:InitializeSharedLibrary()\n09-09 16:19:51.615 17448 17482 W Unity   : \n09-09 16:19:51.618 17448 17482 I Unity   : Handle cmd APP_CMD_GAINED_FOCUS(7)\n09-09 16:19:51.618 17448 17482 I Unity   : Handle cmd APP_CMD_LOST_FOCUS(8)\n09-09 16:19:51.618 17448 17482 I Unity   : Handle cmd APP_CMD_PAUSE(14)\n09-09 16:19:51.622 17448 17482 I Unity   : Handle cmd APP_CMD_TERM_WINDOW(2)\n09-09 16:19:51.633 17448 17482 D Unity   : Vulkan PSO: Pipeline cache has not changed skipping save handle[529f5940]\n09-09 16:19:51.633 17448 17482 D Unity   : Using NDK Choreographer.\n09-09 16:19:51.635 17448 17482 D Unity   : AndroidDisplayManagerVulkan::AttachWindow(0x0, 0)\n09-09 16:19:51.635 17448 17448 D Unity   : PersistentUnitySurface.preserveContent: com.unity3d.player.UnityPlayerGameActivity$GameActivitySurfaceView{8c4b384 VFE...... .F....I. 0,0-3664,1920 #7f080125 app:id/unitySurfaceView}\n09-09 16:19:51.635 17448 17448 D Unity   : PersistentUnitySurface.PlaceholderView.Copy: com.unity3d.player.UnityPlayerGameActivity$GameActivitySurfaceView{8c4b384 VFE...... .F....I. 0,0-3664,1920 #7f080125 app:id/unitySurfaceView} Width 3664  Height 1920\n09-09 16:19:51.638 17448 17904 D Unity   : PixelCopy finished: 3\n09-09 16:19:51.639 17448 17482 I Unity   : Handle cmd APP_CMD_STOP(15)\n09-09 16:19:51.640 17448 17482 I Unity   : Handle cmd APP_CMD_SAVE_STATE(13)\n09-09 16:19:51.642 17448 17482 I Unity   : Handle cmd APP_CMD_WINDOW_INSETS_CHANGED(17)\n09-09 16:19:51.647 17448 17482 I Unity   : Handle cmd APP_CMD_LOW_MEMORY(10)\n"
+        }
+      ],
+      "isError": false
+    }
+  }
+}

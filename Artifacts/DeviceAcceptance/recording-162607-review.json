@@ -1,0 +1,14 @@
+{
+  "file": "Artifacts/DeviceAcceptance/wearer-162607.mp4",
+  "bytes": 23455852,
+  "sha256": "e9af1a9e640a907c7debe459406d8b1fa434f90812ac4a385efa3b462fcc9f84",
+  "durationSeconds": 58.21507,
+  "review": "1-second sampled frames across full recording; decoder completed with duplicate timestamp muxer warnings",
+  "observations": [
+    "Back-facing/tilted Lessons panel throughout sampled sequence",
+    "System Home and quick controls visible over Milzet at intervals",
+    "Hand outlines and rays visible; no controller pairing dialog observed in sampled frames"
+  ],
+  "physicalAcceptance": "failed",
+  "bluetoothUnpairing": "not established"
+}

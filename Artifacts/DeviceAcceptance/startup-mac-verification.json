@@ -1,0 +1,35 @@
+{
+  "verifiedAtUtc": "2026-09-09T13:57:06.684950+00:00",
+  "build": {
+    "passed": true,
+    "target": "StandaloneOSX",
+    "bytes": 228495754,
+    "buildReportBytes": 228495754,
+    "builtAtUtc": "2026-09-09T13:53:23.4760100Z",
+    "unityVersion": "6000.3.22f1",
+    "developmentBuild": true,
+    "headset": "not deployed"
+  },
+  "architecture": "/Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/Artifacts/Builds/milzetvrstudio.app/Contents/MacOS/Milzet VR Studio: Mach-O 64-bit executable arm64",
+  "nativeRoomLibrary": "Artifacts/Builds/milzetvrstudio.app/Contents/Plugins/ARM64/libmrutilitykitshared.dylib",
+  "binarySha256": "4e11afecd5eef88e3e79417ba079e848685de93e0636006d8c519472aac1ab47",
+  "nativeLibrarySha256": "9d79dcf377505e856a91bcae1c7b8084a8919ef851d4e7e3d407bcfbb5399f70",
+  "commons": {
+    "passed": true,
+    "actualStandalone": true,
+    "packages": 5,
+    "activities": 14,
+    "videoAdvanced": true,
+    "physicalHeadset": false
+  },
+  "generated": {
+    "passed": true,
+    "actualStandalone": true,
+    "actualGeneratedAssets": true,
+    "orangePixels": 18040,
+    "audioTime": 1.368667,
+    "revision": "61264d9e6d9353ef90c9934b76261f1be53a1f90118995c5d3470b65860796c3",
+    "headset": "not accepted"
+  },
+  "physicalHeadset": false
+}

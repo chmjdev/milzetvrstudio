@@ -11,3 +11,8 @@ ClientProjects/
 .DS_Store
 
 dist-webxr/
+!Artifacts/
+Artifacts/*
+!Artifacts/DeviceAcceptance/
+Artifacts/DeviceAcceptance/*.apk
+Artifacts/DeviceAcceptance/*.mp4

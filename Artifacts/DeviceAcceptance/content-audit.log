@@ -1,0 +1,10 @@
+npm notice run milzetvrstudio@0.1.0 audit:content
+npm notice run node scripts/audit-content.mjs
+file:///Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/scripts/audit-content.mjs:10
+if(found.length) throw Error('Foundation must contain no bundled media: '+found.join(', '));
+                       ^
+
+Error: Foundation must contain no bundled media: Unity/Assets/Milzet/TemporaryViewerBuild.unity
+    at file:///Users/mziwamadoda/Projects/Binteca/Interactive/milzetvrstudio/scripts/audit-content.mjs:10:24
+
+Node.js v26.5.0

@@ -1,0 +1,689 @@
+PAGE 1
+CareerWIL · Generic XR Simulation Generator
+What this file is
+Companion catalogue and object model for the generic XR UI that sits behind the CareerWIL Control Tower XR door. Wor
+shadow; then prove competency with little or no supervision.
+Official QCTO source of truth
+QCTO Skills Programmes Airtable: https://www.qcto.org.za/skillsProgrammesForNewLeavers.html — Full & part occupa
+compiled from public SDP aggregators (7Sundays, Mzanzi Skills Hub, JIET, Prospen, EWSETA, MQA status list 08 May 202
+portal before accreditation or FISA claims. Some 2025–2026 OHS and mining SPs may still show Pending.
+Scale of the OQSF (context)
+Ministerial statement June 2026: 948 occupational qualifications and part-qualifications registered on the NQF. Skills pro
+and assessed by FISA, not EISA. CareerWIL first binding remains OC Project Manager SAQA 101869 (KM 11 + PM 13 + WM
+How the XR generator uses this list
+Each SP is tagged to an industry cluster and a default XR scene template (Site / Plant / Workshop / Field / Studio / Office
+the generator instantiates that template with 180/360 plates, overlays, hotspots and assessments. Construction 180 plat
+Pedagogy lock (Thulane session)
+INDUCT (mentor orientation) → SHADOW (worker follows expert) → PERFORM (fading supervision) → PROVE (unsupervi
+WM and to SP knowledge + practical + simulated/work experience.
+Sheets in this workbook
+01 Skills Programmes · 02 Clusters & scene templates · 03 Pedagogy & roles · 04 UI screens · 05 Object model · 06 Pilot
+
+PAGE 2
+rkers, not learners. Stipend work on live host projects. Mentor sets the scene; workers
+ational qualifications: QCTO / SAQA registers. This sheet is a WORKING catalogue
+26) so the XR generator has occupation hooks today. Always re-check status on the QCTO
+ogrammes are recorded by QCTO (credit-bearing toward a qualification / part-qualification)
+M 4) with SPs attachable as workplace scenarios.
+/ Clinic / Community). Mentor picks an SP or full OC, captures a live project scenario, and
+tes already live in CareerWIL app 1.0.6 are the first scene family.
+sed competency + Digital Paper PoE + FISA-ready evidence). Maps to QCTO KM / PM /
+t scenarios (Milzet first) · 07 Integration to careerwil.online
+
+PAGE 3
+QCTO Occupational Skills Programmes — working catalogue for XR binding (
+SP ID Skills Programme Title NQF Credits
+SP-220326 Abattoir Process Worker 1 56
+SP-191217 Bricklayer's Assistant 1 45
+SP-210405 Handicraft Footwear Maker 1 47
+SP-210406 Handicraft Frame Weaver 1 47
+SP-210407 Handicraft Knitter 1 47
+SP-210404 Handicraft Sewer 1 57
+SP-191219 Early Childhood Caregiver 1 32
+SP-191206 Assistant Baker: Fermented Dough Products 2 36
+SP-230801 Basic Emergency First Aid Responder 2 2
+SP-191221 Basic Furniture Upholsterer 2 28
+SP-191210 Basic Kitchen Appliance Repairer 2 27
+SP-220901 Chainsaw Operator 2 23
+SP-230302 Hair and Scalp Treatment Attendant 2 23
+SP-210401 New Venture Creation 2 32
+SP-2110010 New Venture 2 32
+SP-220325 Red Meat De-boner 2 48
+SP-210408 Refrigerant Safe Handling 2 37
+SP-191208 Shielded Metal Arc Welder 2 24
+SP-191207 Workshop Tool Assistant 2 24
+SP-191209 Wheel Balancer 2 30
+SP-201201 Workplace Preparation 2 30
+SP-200901 Work Place Preparedness and Risk Control Assistant 3 3
+SP-230802 Intermediate Emergency First Aid Responder 3 5
+SP-220805 Covid-19 Vaccine Demand Creation and Community Advocacy Practitioner 3 15
+SP-220903 Specialised Chainsaw Operator 3 15
+SP-220317 Rail Mounted Stacker Lift Truck F15 Driver 3 17
+SP-220318 Rail Mounted Stacker Lift Truck F16 Driver 3 17
+SP-220303 Counterbalanced Lift Truck Driver F1 3 20
+SP-220304 Counterbalanced Lift Truck Driver F2 3 20
+SP-220305 Counterbalanced Lift Truck Driver F3 3 20
+SP-220306 Counterbalanced Lift Truck Driver F4 3 20
+SP-220310 Order Picker Lift Truck Driver F8 3 20
+SP-220311 Order Picker Lift Truck Driver F9 3 20
+SP-220314 Pallet Lift Truck F12 Driver 3 20
+SP-220308 Pedestrian-controlled Lift Truck Driver F6 3 20
+SP-220309 Pedestrian-controlled Lift Truck Driver F7 3 20
+SP-220307 Reach Lift Truck Driver F5 3 20
+SP-220312 Side Loader Lift Truck Driver F10 3 20
+SP-220315 VNA Lift Truck Driver F13 3 20
+SP-220316 VNA Lift Truck Driver F14 3 20
+SP-220313 Rough Terrain Lift Truck F11 Driver 3 26
+SP-211024 Pillar Mounted Jib Crane Operator C54 3 29
+SP-211038 Wall Mounted Jib Crane Operator C58 3 29
+SP-191202 General Residential Repairer 3 31
+SP-220902 Aerial Chainsaw Operator 3 36
+SP-191215 Barber 3 36
+SP-191214 Seamstress 3 36
+
+PAGE 4
+SP-220906 Forestry SHE Representative 3 39
+SP-211010 Cantilever Container Crane C50 Operator 3 40
+SP-211012 Floating Crane C57 Operator 3 40
+SP-211022 Overhead Crane Cab Controlled Operator C31 3 40
+SP-211023 Overhead Crane Pendant Radio Controlled Operator C30 3 40
+SP-211025 3 3 40
+SP-211027 Rubber Tyred Gantry Crane C55 Operator 3 40
+SP-211028 Scotch Derrick Crane C51 Operator 3 40
+SP-211029 Ships Crane C45 Operator 3 40
+SP-211032 Straddle Carrier Operator C49 3 40
+SP-211035 Tower Crane Bottom Slewing Operator C42 3 40
+SP-211036 Tower Crane Top Slewing Operator C41 3 40
+SP-211039 Wharf Side (Rail-mounted) Crane Operator C47 3 40
+SP-211040 Wharf Side Jib Crane (Rubber tyred) C59 Operator 3 40
+SP-211013 Hydraulic Crane Pick Up and Carry Operator C34 3 42
+SP-211015 Hydraulic Mobile Crane Operator C33 3 42
+SP-211017 Hydraulic Mobile Crane Operator C43 3 42
+SP-211018 Lattice Boom Mobile Crawler Crane Operator C38 3 42
+SP-211026 Reach Stacker C48 Operator 3 42
+SP-211030 Side Boom Crane C60 Operator 3 42
+SP-211031 Side Loader Container C56 Operator 3 42
+SP-211034 Telescopic Boom Handler Operator C46 3 42
+SP-211037 Truck Mounted Crane Operator C32 3 42
+SP-191201 Domestic Water and Drainage Pipe Repairer 3 49
+SP-210403 Plumbing Hand 3 49
+SP-240201 Basic End User Computing 3 30
+SP-211011 Crawler Hydraulic Crane Uncoded Operator 3 56
+SP-230305 Hairstylist 3 56
+SP-211014 Hydraulic Crane Pick Up and Carry C36 Operator 3 56
+SP-211016 Hydraulic Mobile Crane Operator C35 3 56
+SP-211019 Lattice Boom Mobile Crawler Crane Operator C40 3 56
+SP-211020 Lattice Boom Mobile Truck Crane Operator C37 3 56
+SP-211021 Lattice Boom Mobile Truck Crane Operator C39 3 56
+SP-20802 Dam Siltation Process Controller 3 60
+SP-240208 Domestic Refrigeration Appliance Repairer 3 60
+SP-240207 Small Domestic Appliance Repairer 3 46
+SP-240209 Major Domestic Appliance Repairer 3 57
+SP-210501 Assistant Handyperson 3 82
+SP-291202 General Residential Repairer (Garden Maintenance) 3 31
+SP-230803 Advanced Emergency First Aid Responder 4 6
+SP-200902 Work Place Preparedness and Risk Control Officer 4 5
+SP-230203 Store Person Explosives 4 19
+SP-211009 Workplace Essential Skills 4 20
+SP-240202 4 4 20
+SP-210602 Renewable Energy Workshop Assistant 4 24
+SP-220905 Forestry Incident Investigator 4 32
+SP-220904 Forestry Hazard and Risk Assessor 4 35
+SP-230301 Chemical Hair Reformation Attendant 4 51
+SP-230303 Hair Colouring Attendant 4 51
+SP-220329 Java Programmer 4 53
+SP-220327 Fifth Generation (5G) Cellular Network Administrator 4 59
+SP-191213 Eco Ranger 4 60
+
+PAGE 5
+SP-220330 Cybersecurity Defender 4 60
+SP-230202 Front-End Web Designer 4 60
+SP-230304 Hair Cutting Attendant 4 60
+SP-230372 HTML Programmer 4 60
+SP-220373 JavaScript Programmer 4 60
+SP-230374 C++ Programmer 4 60
+SP-230375 Python Programmer 4 60
+SP-220328 Technopreneur 4 60
+SP-211004 Hot- and Cold-Water Systems Installer 4 93
+SP-210402 Coded Welding 4 96
+SP-210409 Conflict Management 5 8
+SP-210502 Conflict Management (alt ID) 5 8
+SP-211002 Occupational Screening Spirometry 5 8
+SP-220320 Assessment Practitioner 5 20
+SP-211007 Learning Support Facilitator 5 20
+SP-240203 Advanced End User Computing 5 20
+SP-220323 Energy Performance Certificate (EPC) Practitioner 5 25
+SP-211003 Community Counsellor 5 25
+SP-211006 Community Development Facilitator (Drug and Alcohol Abuse Awareness) 5 25
+SP-211001 Assistant Life Coach: Communication, Integrity and Confidence Coaching 5 30
+SP-211005 Moral Regeneration Education and Awareness Facilitator 5 30
+SP-220322 Work Based Learning and Development Practitioner 5 30
+SP-220324 Magazine Master 5 31
+SP-220319 Learning and Development Facilitator 5 36
+SP-230201 Hydrogen Fuel Cell System Practitioner 5 39
+SP-210603 Advanced Spatial Intelligence Data Scientist 5 40
+SP-220321 Skills Development Facilitation Practitioner 5 40
+SP-210604 Spatial Intelligence Data Scientist 5 56
+SP-220803 Dam Siltation Practitioner 5 60
+SP-210601 Auxiliary Community Development Facilitator 5 70
+SP-250113 Backfill Plant Operator 2 24
+SP-250603 Operational Occupational Health and Safety Risk Assessor 5
+SP-250601 Advanced OHS Compliance Ensurer 5
+SP-250602 Workplace OHS Risk Assessment Specialist 5
+SP-250604 Essential OHS Compliance Ensurer 4
+SP-250605 Intermediate OHS Compliance Ensurer 4
+SP-250707 Emergency Response and Evacuation Co-ordinator 4
+SP-250815 Essential OHS Representative (Low Risk Work Area) 3
+SP-250816 Intermediate OHS Representative (High Risk Work Area) 4
+SP-250817 Evacuation Marshal 3
+SP-250818 Incident Investigation Team Leader 5
+SP-250906 Incident Investigation Team Member 4
+Count
+Distinct clusters
+
+PAGE 6
+(compiled 4 Sep 2026)
+Industry cluster Default XR scene XR fit (1-5) Pilot priority
+Food processing Workshop 5 P3 plant/workshop
+Built environment Site 5 P0 Milzet / construction plates
+Manufacturing / crafts Workshop 5 P3 workshop
+Manufacturing / crafts Workshop 5 P3 workshop
+Manufacturing / crafts Workshop 5 P3 workshop
+Manufacturing / crafts Workshop 5 P3 workshop
+Care & community Community 3 P3 community plates
+Food processing Workshop 5 P3 plant/workshop
+Safety & emergency Site 5 P0 site induction
+Manufacturing / crafts Workshop 5 P3 workshop
+Trades / services Workshop 5 P1 workshop plates
+Forestry & land Field 4 P2 field plates
+Personal services Studio 3 P3 studio plates
+Enterprise Office 3 P2 office XR
+Enterprise Office 3 P2 office XR
+Food processing Workshop 5 P3 plant/workshop
+Energy & HVAC Workshop 5 P1 EWSETA adjacent
+Trades / fabrication Workshop 5 P1 workshop plates
+Trades / fabrication Workshop 5 P1 workshop plates
+Automotive Workshop 5 P3 workshop
+Workplace essentials Office 3 P1 all occupations
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Care & community Community 3 P3 community plates
+Forestry & land Field 4 P2 field plates
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Materials handling Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Built environment Site 5 P0 Milzet / construction plates
+Forestry & land Field 4 P2 field plates
+Personal services Studio 3 P3 studio plates
+Manufacturing / crafts Workshop 5 P3 workshop
+
+PAGE 7
+Forestry & land Field 4 P2 field plates
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Plant 4 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Built environment Site 5 P0 Milzet / construction plates
+Built environment Site 5 P0 Milzet / construction plates
+Digital Office 3 P2 office XR
+Lifting operations Site 5 P2 plant sim
+Personal services Studio 3 P3 studio plates
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Lifting operations Site 5 P2 plant sim
+Water & environment Field 4 P2 field plates
+Energy & HVAC Workshop 5 P1 EWSETA adjacent
+Trades / services Workshop 5 P1 workshop plates
+Trades / services Workshop 5 P1 workshop plates
+Built environment Site 5 P0 Milzet / construction plates
+Built environment Site 5 P0 Milzet / construction plates
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Plant 4 P0 site induction
+Workplace essentials Office 3 P1 all occupations
+Digital Office 3 P2 office XR
+Energy & HVAC Workshop 5 P1 EWSETA adjacent
+Forestry & land Field 4 P2 field plates
+Forestry & land Field 4 P2 field plates
+Personal services Studio 3 P3 studio plates
+Personal services Studio 3 P3 studio plates
+Digital Office 3 P2 office XR
+Digital Plant 4 P2 office XR
+Water & environment Field 4 P2 field plates
+
+PAGE 8
+Digital Office 3 P2 office XR
+Digital Office 3 P2 office XR
+Personal services Studio 3 P3 studio plates
+Digital Office 3 P2 office XR
+Digital Office 3 P2 office XR
+Digital Office 3 P2 office XR
+Digital Office 3 P2 office XR
+Enterprise Office 3 P2 office XR
+Built environment Site 5 P0 Milzet / construction plates
+Trades / fabrication Workshop 5 P1 workshop plates
+Workplace essentials Office 3 P1 all occupations
+Workplace essentials Office 3 P1 all occupations
+Care & community Clinic 3 P3 community plates
+Learning & assessment Office 3 P0 mentor / assessor path
+Learning & assessment Office 3 P0 mentor / assessor path
+Digital Office 3 P2 office XR
+Energy & HVAC Site 5 P1 EWSETA adjacent
+Care & community Community 3 P3 community plates
+Care & community Community 3 P3 community plates
+Care & community Office 3 P3 community plates
+Care & community Community 3 P3 community plates
+Learning & assessment Office 3 P0 mentor / assessor path
+Learning & assessment Office 3 P0 mentor / assessor path
+Learning & assessment Office 3 P0 mentor / assessor path
+Energy & HVAC Plant 4 P1 EWSETA adjacent
+Digital Office 3 P2 office XR
+Learning & assessment Office 3 P0 mentor / assessor path
+Digital Office 3 P2 office XR
+Water & environment Field 4 P2 field plates
+Care & community Community 3 P3 community plates
+Mining Plant 4 P3 specialist
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Site 5 P0 site induction
+Safety & emergency Office 3 P0 site induction
+Safety & emergency Site 5 P0 site induction
+
+PAGE 9
+Notes
+
+PAGE 10
+
+
+PAGE 11
+Duplicate title with alternate SP ID in aggregator lists — verify
+canonical ID.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+Title listed publicly; confirm credits/status on QCTO portal before use.
+
+PAGE 12
+Industry clusters → generic XR scene templates (occupation-agn
+Cluster Default scene Plate family (media)
+Learning & Phone-AR 180 construction plates (already live: trench &
+Built environment
+assessment fibre duct); optional 360 supervisor cam
+Trades / fabrication Workshop Bay plate + tool-wall photo set + process clip
+Trades / services Workshop Bench + appliance exploded overlay
+Energy & HVAC Workshop Plant room / roof plate + schematic overlay
+Lifting operations Plant / Site Yard plate + crane envelope overlay (no fake physics in v1)
+Materials handling Plant Aisle plate + rack overlay
+Forestry & land Field Trail / stand 180 plate
+Water & environment Field Catchment / dam wall plate
+Safety & emergency Site Induction yard + first-aid room plate
+Learning & assessment Office Assessment room + live stream to site
+Workplace essentials Office Host reception + project war-room
+Digital Office Dev bench / NOC plate (screen-space XR)
+Enterprise Office New-venture desk + market stall plate
+Care & community Community Hall / household plate (privacy-first)
+Personal services Studio Chair / station plate
+Food processing Workshop Line plate (hygiene-first)
+Manufacturing / crafts Workshop Bench + jig plate
+Automotive Workshop Pit / balancer plate
+
+PAGE 13
+Mining Plant Plant / UG mock plate (host-controlled)
+Clinic Clinic Screening booth plate
+
+PAGE 14
+ostic engine)
+Typical hotspots Typical overlays
+PPE station, excavation edge, service mark-out, permit SOP strip, KM cite, risk rating, Drawing/WBS pin,
+board, toolbox talk point voice mentor note
+Machine guard, consumable rack, weld coupon, inspection WPS / procedure card, heat/amp overlay, defect
+bench callout
+Isolation point, nameplate, test point, parts bin Wiring diagram, torque table, lock-out card
+Isolator, gauge, condensate, gas cylinder P&ID snippet, refrigerant charge card, EPC field
+Exclusion zone, slinging point, banksman mark, load chart
+Load chart, wind/limit overlay, radio protocol
+board
+Aisle entry, load centre mark, charging bay, pedestrian
+Capacity plate, travel path, stacking rule
+crossing
+PPE, exclusion, species tag, slope hazard Risk card, species card, emergency rally
+Gauge board, silt trap, sample point Reading card, method statement, KM cite
+Assembly point, extinguisher, spill kit, first-aid box Evac map, hierarchy of controls, incident flow
+PoE tray, observation window, moderation stamp AAC checklist, KM-06 quality of evidence, FISA spec
+Visitor book, POPIA notice, meeting table Induction pack, comms protocol, ethics card
+Repo, ticket board, staging box Architecture overlay, secure-coding card
+Pricing board, till, supplier crate Canvas overlay, cash discipline card
+Consent card, referral board, quiet room Scope of practice, referral tree, ethics
+Sanitise point, client card, chemical store Colour wheel / cut map, allergy flag
+PPE, CCP, knife rack, chill door HACCP overlay, temp log
+Pattern, stitch/weld line, QC lamp Spec card, tolerance overlay
+Wheel, torque sequence, balancer hood Torque table, balance spec
+
+PAGE 15
+Tag board, refuge, isolation BOE / safe declaration overlay
+Spirometer, calibration log, consent Procedure card, quality control
+
+PAGE 16
+Fading-supervision tasks
+Set out, inspect, log, isolate, backfill sequence,
+close-out photo
+Prep → execute → inspect → tag
+Diagnose → isolate → repair → test
+Safe isolate → measure → charge/fit → certify
+Plan lift → inspect gear → signal → land → stack
+Pre-op → pick → travel → place → park
+Assess → cut/treat plan → execute → rehab
+Observe → sample/log → intervene → report
+Spot hazard → control → report → drill
+Observe → capture voice evidence → score →
+sign-off
+Arrive → induct → communicate → close shift
+Spec → build → test → hand over
+Pitch → trade → record → review
+Engage → assess → support → refer
+Consult → prepare → perform → aftercare
+Don PPE → process → check CCP → clean
+Lay up → make → inspect → pack
+Remove → service → balance → refit
+
+PAGE 17
+Declare safe → operate → hand over
+Calibrate → screen → record → refer
+
+PAGE 18
+Thulane lock: mentor sets the scene · workers shado
+Phase CareerWIL name Who leads
+0. Capture Mentor Studio Mentor (industry expert) + host
+1. Induct Orientation plate Mentor
+2. Shadow Follow-the-expert Mentor demonstrates; worker shadows
+3. Perform Fading supervision Mentor present but quiet
+Worker alone; assessor observes or
+4. Prove Unsupervised competency
+reviews
+5. Close Handoff & stipend Mentor + admin worker
+Roles on every scenario (CareerWIL language — never 'learner')
+Role Who XR permissions
+Mentor / industry Author Studio + live presence + freeze
+Host artisan, PM, or SME
+expert worker scene
+Play Induct/Shadow/Perform/Prove;
+Worker Stipend participant
+capture evidence
+Observe mode; score rubrics; lock FISA
+Assessor / Facilitator SDP / Milzet assessor
+items
+Seconder Workplace seconder Countersign Observe + Prove
+Approve live plates; kill-switch scene if
+Host supervisor Site / facility owner
+site changes
+Core Team / funder CareerWIL M&E tower Read-only board + impact counts
+
+PAGE 19
+ow · then prove competency unsupervised
+Worker action XR objects
+Scenario brief (voice), 180/photo plates, risk, WBS,
+None yet — scene is being authored
+module bind
+Watch + voice-confirm understanding; pin Timed hotspots on induction path; overlays for PPE,
+questions permits, stakeholders, scope
+Stay in mentor camera / ghost path; call out Ghost trail, freeze-frame, 'what would you do' hotspots,
+hazards; do not execute critical steps commentary track
+Execute sequenced tasks; may request hint (costs Task rails, constraint overlays, hint budget, live mentor
+a supervision flag) whisper
+Complete the job to standard with little/no Locked-down scene, no hints, assessment hotspots, FISA
+supervision items
+File evidence; claim stipend shift against productive
+Evidence door deep-link; board card moves
+work
+Voice Sign-off
+Sets scene by voice; narration track Competency recommendation
+Ask, narrate actions, submit voice PoE Self-declaration of readiness
+Moderation notes Assessment decision
+Confirm workplace authenticity Second signature on Digital Paper
+Safety brief Site authenticity
+— —
+
+PAGE 20
+Evidence to Digital Paper QCTO mapping
+Author log: who set the scene, when, which live project Pre-WM: workplace context captured
+KM (ethics, scope, risk, comms) + SP
+Induction checklist + voice acknowledgement
+knowledge module
+Shadow log + identified hazards + questions asked PM practical demonstration / simulated work
+Attempt log, hint count, time-on-task, photos PM → WM transition
+PoE pack: video/180, voice, Digital Paper strokes,
+WM + SP FISA / OC EISA readiness
+mentor/seconder sign-off
+Signed pack in Evidence door; KnowledgeForge cite of WM-04 close-out; stipend = work not
+KM page attendance
+Stipend angle Notes
+Thulane: expert sets project scenario
+Offloads induction repetition
+induction
+Paid for productive scenario work + admin offload Never labelled learner in UI
+Admin offload via voice-to-PoE OC 101869 KM-06 / PM-08
+— CHB logbook pattern already in app 1.0.6
+360 cam option from job-spec AR/VR field
+Host admin offload
+link
+Sees completion ≠ attendance careerwil.online control tower
+
+PAGE 21
+Generic XR UI — screens behind Control Tower door XR (web + Caree
+Screen Primary user Purpose
+XR Lobby All Pick occupation / live scenario / continue shift
+Occupation binder Mentor / Training coordinator Bind scenario to SP or OC modules
+Mentor Studio — Capture Mentor Capture project scenario context
+Generate environment + overlays + hotspots +
+Scene Composer Mentor
+assessments
+Induction Player Worker Be oriented by the expert
+Shadow mode Worker Follow expert before touching tools
+Perform mode Worker Do the work with fading supervision
+Prove mode Worker + Assessor Competency with little/no supervision
+Hotspot inspector Both Read / complete one overlay
+Evidence drawer Worker / Assessor See what this scenario will file
+Assessor gallery Assessor Score a cohort without putting on a headset
+Kill / freshness Host / Mentor Scene dies if the live site changed
+
+PAGE 22
+erWIL app 1.0.6+)
+Key components Voice-first
+Search SP or OC; cluster chips; My scenarios; Live host projects; Continue
+'Open plumbing hand induction'
+last plate
+SP picker from catalogue; OC 101869 KM/PM/WM multi-select; credits &
+'Bind this scene to SP-210403 and KM-09'
+NQF badge; FISA/EISA flag
+Voice scenario brief; add 180/photo/clip; pin site name; safety constraints;
+Full dictation of induction
+WBS; 'generate scene'
+Template preview; plate stack; overlay library; hotspot timeline;
+'Drop a hotspot on the permit board at 00:12'
+assessment drop; KnowledgeForge cite picker
+180/plate view; mentor avatar or recorded path; timed hotspots; confirm
+Hold-to-talk questions
+chips; ask-the-mentor
+Ghost path; freeze; 'call the hazard'; no critical actuation; commentary Call-outs only
+Task rail; hint budget; constraint overlays; capture photo/voice per step Narrate each step
+Hints off; rubric visible to assessor only; timed FISA items; Digital Paper slip Worker narrates; assessor scores by voice
+Type: info / SOP / KM cite / quiz / observe / hazard / tool Read-aloud TTS (mother-tongue later)
+Clip list, voice notes, Digital Paper pages, sign-off state, module tags 'File this as PM-08 evidence'
+Grid of Prove recordings; rubric; moderation flag Score by voice
+Stale-plate banner; recapture CTA 'This trench is closed'
+
+PAGE 23
+Exit / next
+Opens scenario or Mentor Studio
+Saves binding on scenario card
+Hands to Scene Composer
+Publish to workers
+Unlocks Shadow
+Unlocks Perform when mentor releases
+Mentor can release to Prove
+Evidence door pack
+Returns to plate
+Pushes to Evidence door
+Updates board + PoE
+Archives scenario version
+
+PAGE 24
+Minimal objects the generator must persist (CareerWIL / Busines
+Object Fields (minimum)
+OccupationRef type=SP|OC|PQ; id; title; nqf; credits; qp/seta; status_checked_on
+Scenario id; host_project_id; title; voice_brief_uri; site_name; safety_class; version; stale
+Binding scenario_id; occupation_refs[]; km[]; pm[]; wm[]; fisa_flag
+Plate id; kind=phone_180|photo|clip|360; uri; captured_at; capture_device; honest_fov
+Overlay id; plate_id; kind=label|sop|km_cite|diagram|ppe|limit; anchor; content_ref
+Hotspot id; plate_id; t_sec or xyz; kind=info|hazard|tool|task|quiz|observe; unlocks
+Task id; phase=induct|shadow|perform|prove; steps[]; hint_budget; constraints[]
+AssessmentItem id; kind=mcq|voice|observe|perform|digital_paper; rubric; fisa_tag
+Attempt worker_id; scenario_version; phase; started; hint_used; media[]; score
+SignOff role=mentor|seconder|assessor|host; decision; voice_or_stroke; timestamp
+
+PAGE 25
+sSite)
+Owned by Integrates to
+System catalogue Modules door
+Mentor Board card
+Mentor + Training coordinator Modules + KnowledgeForge
+Mentor / Host XR door (existing 1.0.6 plates)
+Mentor KnowledgeForge
+Mentor Induction / Shadow / Perform
+Mentor Perform / Prove
+Assessor templates Prove + Evidence
+Worker runtime Evidence + stipend ledger
+Those roles Digital Paper / CHB logbook
+
+PAGE 26
+Notes
+Refresh from QCTO; do not treat this sheet as legal register
+One live project can have many scenario versions
+101869 first; SPs attach as workplace scenarios
+Keep the 'honest phone_180, not fake 360' contract
+KM cites use module + page locator already in 1.0.6
+Timed on 180 plates; spatial when 3D template exists
+Fading supervision = shrinking hint_budget
+SP → FISA; OC → towards EISA readiness
+Stipend attaches to productive attempt + admin offload, not
+to 'attendance'
+Reuse 1.0.6 worker/mentor/seconder/assessor roles
+
+PAGE 27
+4 Sep prototype track — first scenarios (Milzet construction + OC
+# Scenario Occupation bind
+OC 101869 KM-01/03/09 + workplace SP analogue (residential
+A Trench & fibre duct induction
+repair / plumbing hand)
+B Toolbox talk → permit board OC 101869 KM-09 risk + PM-08 quality of evidence
+C Daily site log from virtual walk Job spec: Project / Facilities Manager
+D Assessment session virtual presence Job spec: Facilitator / Assessor / Mentor
+E Generic SP switch test SP-230801 Basic Emergency First Aid Responder
+
+PAGE 28
+101869)
+Scene template Plates we already have / need
+Site · phone_180 HAVE: trench & fibre duct 180 with timed hotspots (app 1.0.6)
+Site NEED: permit-board photo set + mentor voice brief
+Job-spec already: 360 camera on supervisor; worker walks virtually
+Site / 360 option
+while logging
+Office + live stream Job-spec already: stream classroom or workplace assessment
+Site / first-aid room NEED: 6 stills + 1 180 of assembly point
+
+PAGE 29
+Phases in v1 Owner Done when
+Worker can walk the plate, hit 4 hotspots, voice-confirm PPE,
+Induct + Shadow + one Prove observe MOADEfy / Charles
+file Digital Paper slip
+Mentor records 90s induction; worker shadows; assessor sees
+Induct + Shadow Thulane content + mentor
+attempt
+Perform (documentation task) Facilities / worker stipend Voice site log auto-drafts into template; stipend shift logged
+Observe / Prove Assessor WIL worker virtually present; PoE voice-captured
+Induct + 3-item Prove quiz Content Proves the engine is occupation-agnostic — swap bind, keep UI
+
+PAGE 30
+Integration map — careerwil.online Control Tower + BusinesSite
+Surface Today (1.0.6 / portal)
+Construction plates · live · recorded; phone_180 trench & fibre duct with
+Control Tower door XR
+timed hotspots
+Modules door 28 KM/PM/WM · stipend shifts · SAQA 101869
+Evidence door Digital Paper PoE; stroke + one-tap sign-off; CHB logbook roles
+Board Dual-track kanban, workers not learners
+Connect / BusinesSite chat WhatsApp-style web+mobile for workers, mentors, hosts, funders
+KnowledgeForge Cite KM guides with module + page locators
+Job specs Five Milzet cards with AR/VR field links
+Impact dashboard 50 worker cohort · stipend model · Sep pitch
+Auth / roles worker / mentor / seconder / assessor
+Device reality Android app primary; honest phone_180
+Non-goals for the 4 Sep prototype
+Do not build a different UI per occupation. One engine, many bindings.
+Do not fake 360 from 180. Keep the honest phone_180 contract already on the site.
+Do not simulate full crane/weld physics in v1. Overlays + hotspots + tasks beat a half-real simulator.
+Do not call anyone a learner in the XR chrome.
+Do not treat this catalogue as the QCTO legal register.
+Do not block prototype on a headset. Phone AR is the product.
+
+PAGE 31
+e + app
+XR generator adds Rule
+Lobby + Studio + Composer + four-phase player Do not replace plates — generalise them
+Occupation binder: SP or OC modules on every scenario Every hotspot/task carries a module tag
+Attempt media + sign-off land here automatically Prove without a PoE is incomplete work
+Scenario cards: draft / live / stale / closed Board language stays work, not schoolwork
+Share scene, ask-the-mentor, assessor whisper XR never becomes a separate social silo
+Overlay kind=km_cite uses the same locator No orphan content in the headset
+Each field link becomes a scenario template Facilitator, Facilities, Admin, Training Coord, CEO support
+Counts: scenarios published, inducts completed, prove packs signed Completion of work, not login time
+Studio + kill-switch gated to mentor/host Workers cannot publish scenes
+v1 = phone + web. Headset optional later No Quest dependency for 4 Sep prototype

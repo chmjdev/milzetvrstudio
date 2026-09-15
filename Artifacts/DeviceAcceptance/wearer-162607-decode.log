@@ -1,0 +1,8 @@
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 6 >= 6
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 11 >= 11
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 16 >= 16
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 86 >= 86
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 91 >= 91
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 96 >= 96
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 101 >= 101
+[null @ 0xb1ec1b700] Application provided invalid, non monotonically increasing dts to muxer in stream 0: 106 >= 106

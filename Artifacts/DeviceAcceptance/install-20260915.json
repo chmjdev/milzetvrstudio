@@ -1,0 +1,16 @@
+{
+  "installedAtLocal": "2026-09-15 01:40:35",
+  "device": "3487C10GBM006L",
+  "deviceModel": "Quest 3S",
+  "package": "com.binteca.interactive.milzet.viewer",
+  "versionName": "1.2.0",
+  "versionCode": 7,
+  "apk": "Artifacts/Builds/milzetvrstudio.apk",
+  "apkBytes": 66324070,
+  "apkSha256": "b6a216487848324e3cee654fc8ae32c78c5df8260b2693851c7d4daf47148603",
+  "sourceCommit": "ac25fb6",
+  "tool": "metavr (hzdb) app install --grant-permissions",
+  "priorInstall": "none present on device at install time; 1.1.1/code 6 recorded 2026-09-10 was absent",
+  "launched": true,
+  "wearerAcceptance": "pending"
+}

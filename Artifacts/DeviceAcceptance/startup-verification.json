@@ -1,0 +1,44 @@
+{
+  "verifiedAt": "2026-09-09T10:14:25.462103+00:00",
+  "target": "3487C10GBM006L",
+  "process": 15798,
+  "installed": true,
+  "openXRFocused": true,
+  "screenshot": "welcome.jpg",
+  "observed": [
+    "Milzet welcome menu rendered",
+    "controller ray rendered",
+    "later MEDIA menu observed",
+    "procedural presentation package opened; schematic and both rays rendered"
+  ],
+  "controllers": {
+    "left": "CONNECTED_ACTIVE/POSITION",
+    "right": "CONNECTED_ACTIVE/POSITION"
+  },
+  "audioDevice": {
+    "volume": 9,
+    "max": 15,
+    "muted": false
+  },
+  "performance": {
+    "scope": "welcome only; startup included",
+    "samples": 13,
+    "fpsMin": 68,
+    "fpsMax": 73,
+    "displayRefreshHz": 72,
+    "appTimeMsObserved": [
+      0.84,
+      1.5
+    ]
+  },
+  "wearerConfirmed": false,
+  "remaining": [
+    "hand-specific trigger selection",
+    "physical narration audio",
+    "readability and comfort",
+    "projection orientation",
+    "video and timed interactions",
+    "content performance",
+    "WebXR headset session"
+  ]
+}

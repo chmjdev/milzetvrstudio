@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "bytes": 46925226,
+  "sha256": "bccb845a9e62f41fba041c28ba56a7c81ebce551e5c969f28835767fda868e33",
+  "applicationId": "com.binteca.interactive.milzet.viewer",
+  "versionName": "1.0.1",
+  "versionCode": 2,
+  "signatureV2Verified": true,
+  "signerSha256": "8fc66db7ff075a3644acd2a0000c107ff0dd8b372058ac776ff2fa472ede5411",
+  "libraries": [
+    "lib/arm64-v8a/libUnityOpenXR.so",
+    "lib/arm64-v8a/lib_burst_generated.so",
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libgame.so",
+    "lib/arm64-v8a/libil2cpp.so",
+    "lib/arm64-v8a/libmain.so",
+    "lib/arm64-v8a/libopenxr_loader.so",
+    "lib/arm64-v8a/libswappywrapper.so",
+    "lib/arm64-v8a/libunity.so"
+  ],
+  "bootConfig": "player-connection-mode=Listen\nplayer-connection-guid=1588413702\nplayer-connection-debug=0\nplayer-connection-project-name=Milzet VR Studio\nplayer-connection-ip=192.168.1.108\ngfx-threading-mode=4\nwait-for-native-debugger=0\nhdr-display-enabled=0\ngc-max-time-slice=3\nxrsdk-pre-init-library=UnityOpenXR\nxr-latelatching-enabled=0\nxr-latelatchingdebug-enabled=0\nxr-vulkan-extension-fragment-density-map-enabled=1\nxr-low-latency-audio-enabled=1\nxr-require-backbuffer-textures=0\nxr-keyboard-overlay-enabled=1\nxr-pipeline-cache-enabled=1\nxr-skip-B10G11R11-special-casing=1\nxr-hide-memoryless-render-texture=1\nxr-skip-audio-buffer-size-check=1\nxr-usable-core-mask-enabled=1\nxr-mvpvv-enabled=0\nandroidStartInFullscreen=1\nandroid-preferred-data-location=1\nbuild-guid=d8d30b987bb5459fb64b33280e84e178\n"
+}

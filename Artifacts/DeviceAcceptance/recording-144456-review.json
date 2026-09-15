@@ -1,0 +1,17 @@
+{
+  "file": "Artifacts/DeviceAcceptance/wearer-144456.mp4",
+  "bytes": 76534331,
+  "sha256": "22126b83e9b0be406413d5e259b821c596aafa878c65179e45188db414234a18",
+  "durationSeconds": 184.93545,
+  "stableSizeBeforeCopy": 76534331,
+  "fullVideoDecodePassed": true,
+  "review": "Sampled every10seconds across full timeline",
+  "observations": [
+    "Initial menu low",
+    "Screen large and menu overlaps",
+    "Reference overlay covers main image",
+    "Repeated overview/playback navigation",
+    "Both controller rays visible"
+  ],
+  "transport": "Initial copy failed at65%; exact device reappeared and retry succeeded without reboot or data clear; no evidence of physical unplug"
+}

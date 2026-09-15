@@ -1,0 +1,10 @@
+{
+  "scope": "Actual Quest app during procedural presentation/menu navigation; not a stress test",
+  "samples": 52,
+  "fpsMin": 72,
+  "fpsMax": 73,
+  "appTimeMsMin": 0.81,
+  "appTimeMsMax": 1.48,
+  "staleFramesSum": 3,
+  "headsetHz": 72
+}

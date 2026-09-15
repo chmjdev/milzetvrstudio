@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "versionName": "1.1.1",
+  "versionCode": 6,
+  "applicationId": "com.binteca.interactive.milzet.viewer",
+  "bytes": 66315614,
+  "sha256": "832e8f8c43fb2ac7f07c32b9890b07bc49da088fe8d95623a0fbae47cae91339",
+  "signatureV2Verified": true,
+  "handAndScenePermissions": true,
+  "libraries": [
+    "lib/arm64-v8a/libOVRMetricsTool.so",
+    "lib/arm64-v8a/libOVRPlugin.so",
+    "lib/arm64-v8a/libUnityOpenXR.so",
+    "lib/arm64-v8a/lib_burst_generated.so",
+    "lib/arm64-v8a/libc++_shared.so",
+    "lib/arm64-v8a/libgame.so",
+    "lib/arm64-v8a/libil2cpp.so",
+    "lib/arm64-v8a/libloaderimpl.so",
+    "lib/arm64-v8a/libmain.so",
+    "lib/arm64-v8a/libmrutilitykitshared.so",
+    "lib/arm64-v8a/libopenxr_loader.so",
+    "lib/arm64-v8a/libswappywrapper.so",
+    "lib/arm64-v8a/libunity.so"
+  ],
+  "bootConfig": "player-connection-mode=Listen\nplayer-connection-guid=1077104572\nplayer-connection-debug=0\nplayer-connection-project-name=Milzet VR Studio\nplayer-connection-ip=192.168.1.108\ngfx-threading-mode=4\nwait-for-native-debugger=0\nhdr-display-enabled=0\ngc-max-time-slice=3\nxrsdk-pre-init-library=UnityOpenXR\nxr-request-additional-vulkan-graphics-queue=0\nxr-use-vulkan-offscreen-swapchain-no-main-display-buffer=1\nxr-meta-enabled=1\nxr-vulkan-extension-fragment-density-map-enabled=1\nxr-latelatching-enabled=0\nxr-latelatchingdebug-enabled=0\nxr-low-latency-audio-enabled=1\nxr-require-backbuffer-textures=0\nxr-keyboard-overlay-enabled=1\nxr-pipeline-cache-enabled=1\nxr-skip-B10G11R11-special-casing=1\nxr-hide-memoryless-render-texture=1\nxr-skip-audio-buffer-size-check=1\nxr-usable-core-mask-enabled=1\nxr-mvpvv-enabled=0\nandroidStartInFullscreen=1\nandroid-preferred-data-location=1\nbuild-guid=21e937c589894f9ca071650483e59979\n",
+  "signature": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: 8fc66db7ff075a3644acd2a0000c107ff0dd8b372058ac776ff2fa472ede5411\nSigner #1 certificate SHA-1 digest: c6f15c63986ef6fc271d709a61d99cad049625dc\nSigner #1 certificate MD5 digest: 4131128ac427042c24baf3da2e2631b9\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 2ee9884ce691cd1cde994c5e12c703e0a63c497c460863a12394d5f5076853fa\nSigner #1 public key SHA-1 digest: 9b931de7dc024b09b34fd95ee7fb760156bb782f\nSigner #1 public key MD5 digest: 794aed194f49f61ebe3a75cded4c4c00\n",
+  "physicalHeadset": false
+}

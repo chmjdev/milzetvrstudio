@@ -1,0 +1,17 @@
+{
+  "file": "Artifacts/DeviceAcceptance/wearer-complete-121551-1.mp4",
+  "bytes": 108869524,
+  "sha256": "64bcd62667578166a7eabcdd1e312375bd974e5a348c71628a1e0196ea79318e",
+  "durationSeconds": 262.911729,
+  "stableAcrossSeconds": 30,
+  "fullVideoDecodePassed": true,
+  "reviewMethod": "sampled frames every16seconds across full timeline plus earlier short recording",
+  "observations": [
+    "package menus and panorama/video plates render",
+    "multiple package switches visible",
+    "small buttons with wrapped/truncated filenames",
+    "Continue scene reports unmet progression prerequisites",
+    "later return to system UI"
+  ],
+  "limits": "Button force and intended physical motion cannot be established from sampled video. Wearer-reported controller failure remains failed acceptance until retest."
+}

@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-09-09T10:09:05.994Z",
+  "target": "3487C10GBM006L",
+  "artifact": {
+    "sha256": "b5b25d81c98d40f1f995dd55aae75eda740030372014684e2f5f6849dde0b004",
+    "bytes": 64786082,
+    "package": "com.binteca.interactive.milzet.viewer",
+    "versionCode": 1,
+    "versionName": "1.0",
+    "signatureV2Verified": true,
+    "signerSha256": "8fc66db7ff075a3644acd2a0000c107ff0dd8b372058ac776ff2fa472ede5411"
+  },
+  "baseline": {
+    "content": [
+      {
+        "type": "text",
+        "text": "[\n  {\n    \"package\": \"com.binteca.anthvrstudio\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.capivrstudio.lessons.beatingheart\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.crytek.climb2\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.facebook.arvr.quillplayer\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.fasttravelgames.solero\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.google.android.apps.youtube.vr.oculus\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.curio.ruler\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.curio.toybox\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.handseducationmodule\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.shell.env.footprint.haven2025\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.meta.shell.env.vista.calming\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.accountscenter\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.facebook\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.igvr\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.samples.firsthand\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.oculus.vrprivacycheckup\",\n    \"is_system\": false\n  },\n  {\n    \"package\": \"com.spotify.horizon\",\n    \"is_system\": false\n  }\n]\n"
+      }
+    ],
+    "isError": false
+  },
+  "install": {
+    "content": [
+      {
+        "type": "text",
+        "text": ""
+      }
+    ],
+    "isError": false
+  },
+  "preservedPackages": [
+    {
+      "package": "com.binteca.anthvrstudio",
+      "before": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"package\": \"com.binteca.anthvrstudio\",\n  \"version_name\": \"2.0.9\",\n  \"version_code\": \"39\",\n  \"install_path\": \"/data/app/~~fjvN-qMNJJ48h8hfrzdomQ==/com.binteca.anthvrstudio-xdeafs09A1TbBh_xmZa2_w==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-07 17:17:24\",\n  \"last_update_time\": \"2026-09-07 17:17:24\",\n  \"data_dir\": \"/data/user/0/com.binteca.anthvrstudio\"\n}\n"
+          }
+        ],
+        "isError": false
+      },
+      "after": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"package\": \"com.binteca.anthvrstudio\",\n  \"version_name\": \"2.0.9\",\n  \"version_code\": \"39\",\n  \"install_path\": \"/data/app/~~fjvN-qMNJJ48h8hfrzdomQ==/com.binteca.anthvrstudio-xdeafs09A1TbBh_xmZa2_w==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-07 17:17:24\",\n  \"last_update_time\": \"2026-09-07 17:17:24\",\n  \"data_dir\": \"/data/user/0/com.binteca.anthvrstudio\"\n}\n"
+          }
+        ],
+        "isError": false
+      }
+    },
+    {
+      "package": "com.binteca.interactive.vrstudio.viewer",
+      "before": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n  \"version_name\": \"2.3.0\",\n  \"version_code\": \"58\",\n  \"install_path\": \"/data/app/~~OeeSltn0cLxdHCZPRJxPTw==/com.binteca.interactive.vrstudio.viewer-KwEk7fA-UURpBZTZ-vOI9w==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-08 21:25:01\",\n  \"last_update_time\": \"2026-09-08 21:25:01\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.vrstudio.viewer\"\n}\n"
+          }
+        ],
+        "isError": false
+      },
+      "after": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\n  \"package\": \"com.binteca.interactive.vrstudio.viewer\",\n  \"version_name\": \"2.3.0\",\n  \"version_code\": \"58\",\n  \"install_path\": \"/data/app/~~OeeSltn0cLxdHCZPRJxPTw==/com.binteca.interactive.vrstudio.viewer-KwEk7fA-UURpBZTZ-vOI9w==\",\n  \"is_system\": false,\n  \"first_install_time\": \"2026-09-08 21:25:01\",\n  \"last_update_time\": \"2026-09-08 21:25:01\",\n  \"data_dir\": \"/data/user/0/com.binteca.interactive.vrstudio.viewer\"\n}\n"
+          }
+        ],
+        "isError": false
+      }
+    }
+  ],
+  "startup": "Horizon controllers-required dialog; no application playback acceptance yet"
+}
