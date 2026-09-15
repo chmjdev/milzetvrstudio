@@ -71,20 +71,28 @@ Verified results:
 - Content audit passes (clean shipped library).
 - Production and WebXR builds pass with zero errors.
 
-## Outstanding items inventory
+## Outstanding items inventory (refreshed 2026-09-15)
 
-0. **Installed 2026-09-15**: 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`) installed to Quest 3S `3487C10GBM006L` via metavr and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. No prior Milzet package was present on the device at install time (the 1.1.1 recorded on 2026-09-10 was absent; cause not determined). Wearer acceptance of all 1.1.1 fixes plus the format 9 features is pending on this build. USB note: a Chrome WebUSB permission was auto-claiming the headset and blocking ADB; remove it at chrome://settings/content/usbDevices.
+Current state: `main` == `origin/main` at `82571a7`. Quest 3S `3487C10GBM006L` carries viewer 1.2.0 / code 7 (commit `ac25fb6`, APK sha256 `b6a21648…8603`), installed via metavr 2026-09-15 01:40:35 and launched; receipt `Artifacts/DeviceAcceptance/install-20260915.json`. Tests at that commit: 53/53 Node, content audit clean, 9/9 native C# suites. `Artifacts/DeviceAcceptance/` logs, receipts and screenshots are tracked since `82571a7`; APKs and recordings stay local.
 
-1. **Deferred physical wearer testing (Quest 3S)**:
-   - Wearer acceptance of 1.1.1 fixes: pinch-only drag start, 5cm distance threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App state saving/quit, and reference card pagination.
-   - User explicitly indicated testing is deferred; no unsolicited adb/device querying.
-   - Physical WebXR immersive session verification.
+1. **Wearer acceptance on build 1.2.0 (Quest 3S)** — nothing has been physically accepted on any build yet:
+   - 1.1.1 interaction fixes: pinch-only drag start, 5cm drag threshold, stable panel facing, controller grip 6DOF, neutral rearm after focus/tracking loss, Exit App save-and-quit, reference card pagination.
+   - Format 9 features first on-device in 1.2.0: site freshness / host kill-switch (`site.invalidated`, `scenario.revoked`), assessor rubric evaluation.
+   - Real Toolbox talk movie playback (earlier Play example was a still-image presentation, not a video failure).
+   - Physical WebXR immersive session verification (browser consumer).
+   - Testing is user-driven; no unsolicited device querying.
 
-2. **Onsite client content capture & review (external to tooling)**:
-   - Onsite 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets serve as technical demonstration packs only.
+2. **Device state anomaly to explain** — at install time the headset held no Milzet package, and none of the sibling Studio 2.4.0 / Physio 1.0.0 packages recorded here on 2026-09-10. Uninstall vs. reset not determined. If the 11 lesson package files on the device mattered, check whether they survived; do not assume.
 
-3. **CareerWIL external boundaries**:
-   - Worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records. These remain external services interacting solely via defined package and event interfaces.
+3. **Voice authoring on device** — `Web/voice-authoring.jsx` is browser-only (Web Speech API with manual fallback). No native voice path exists and none is scoped; confirm with the user before adding one.
+
+4. **Onsite client content capture** (external to tooling): 180°/360° capture for the 5 pilot scenarios (Trench & fibre duct, Toolbox talk, Daily site log, Virtual assessment, First-aid switch). Current Commons assets are technical demonstration packs only.
+
+5. **CareerWIL external boundaries**: worker identity/enrolment, qualification registry, authoritative grading/PoE, live communication/presence, stipend records remain external, interacting only through the package and event interfaces. Do not invent integration success.
+
+6. **Repo hygiene** — `Unity/.utmp/` compiler intermediates are tracked and churn on every build; candidate for `.gitignore` + `git rm --cached`. Needs a decision, not done.
+
+7. **Workstation USB note** — a Chrome WebUSB permission auto-claims the Quest on connect and blocks ADB (no debugging prompt appears). Remove the Quest 3S entry at `chrome://settings/content/usbDevices`, or quit Chrome before device work.
 
 ## Physical and external pending
 
