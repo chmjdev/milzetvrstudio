@@ -17,7 +17,7 @@
     "contentAudit": "passed after repaired builds; shipped library empty",
     "gitDiffCheck": "passed",
     "generatedConsumers": "Actual Meshy GLB and George WAV pass browser playback/export/reopen and rebuilt 1.1.0 ARM64 Mac rendering/audio advancement/completion; no new generation.",
-    "commonsExamples": "Browser checks passed previously; rebuilt1.1.1 Mac passes five packages/14activities/video.",
+    "commonsExamples": "Browser checks passed previously on the five flat packs; the 1.2.0 Mac player (built 2026-09-16) passes twelve packages — five flat plus seven licensed 360/180 spheres — 34 activities and video advancement (Artifacts/Commons/native-verification.json, native-1.2.0.log).",
     "startupRestoration": "passed locally; real device Space Setup, permissions, tracking and room placement pending",
     "structuredReferences": "Complete in source: scenario/hotspot/activity bindings, package9/template2, scoped browser/native displays, strict validation, target cleanup and template replacement.",
     "freshnessAndRevocation": "Passed in JS and C#; validity date windows enforced, host push-kill simulation and site.invalidated events verified.",

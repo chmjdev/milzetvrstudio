@@ -43,7 +43,7 @@ Structural requirements come from `Shared/pilot-checks.mjs` (what the tool check
 - Four inspection points must be identifiable in the frame: shoring/trench box, duct entry, spoil edge, access ladder or equivalent — confirm the four with the mentor on site before shooting.
 - Optional second 180° from the opposite end for the Prove phase.
 - Voice: PPE acknowledgement prompt is an authored activity; no recording needed. If the mentor is willing, a short WAV brief for the Induct phase.
-- Check passes when: `equirect180` plate, ≥4 hotspots, Induct/Shadow/Prove phases, an Induct acknowledgement, a Prove observation request.
+- Check passes when: a 180° or 360° plate (a full sphere contains the front hemisphere, so either satisfies the source check; the plate label must still be what was captured), ≥4 hotspots, Induct/Shadow/Prove phases, an Induct acknowledgement, a Prove observation request.
 
 ### B — Toolbox talk → permit board (Site)
 - **Need:** the permit board as a flat photo set — the whole board legible, then each section close enough to read (three to six stills).
@@ -65,7 +65,7 @@ Structural requirements come from `Shared/pilot-checks.mjs` (what the tool check
 - **Need:** **six distinct stills** (flat photos, six separate scenes): kit location, kit contents, eyewash/burn station, incident book, emergency numbers board, assembly-point sign — adjust to what the site actually has.
 - **Need:** **one 180° plate of the assembly point**, standing where the muster line forms.
 - Three Prove quiz items are authored from the client's procedure.
-- Check passes when: ≥6 flat still scenes, one `equirect180` scene, Induct and Prove phases, ≥3 Prove quiz items.
+- Check passes when: ≥6 flat still scenes, one 180° or 360° scene, Induct and Prove phases, ≥3 Prove quiz items.
 
 ## On the day
 1. Shoot each 180°/360° from a tripod at ~1.5 m; level the camera — the runtime does not correct horizon tilt.

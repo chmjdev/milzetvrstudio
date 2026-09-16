@@ -4,7 +4,7 @@ A content-free fork of VR Studio for authoring client-owned workplace VR scenari
 
 ## Current state
 
-Implementation continues from baseline commit `1019a64`. The suite has 53 passing Node tests, passing Chrome desktop/375px workflows, native C# checks across nine smoke/verification stages (including freshness revocation and AssessorSmoke), and visible controls with simulated headset/controller input. Local Mac and Android builds have succeeded. The built Mac app passes media and multi-scene checks; the corrected Android APK (1.1.1/code 6) is installed on Quest 3S with physical wearer acceptance deferred. See the acceptance matrix for precise limits.
+Implementation continues from baseline commit `1019a64`. The suite has 53 passing Node tests, passing Chrome desktop/375px workflows, native C# checks across nine smoke/verification stages (including freshness revocation and AssessorSmoke), and visible controls with simulated headset/controller input. Local Mac and Android builds have succeeded. The built Mac app passes media and multi-scene checks, and its Commons verification walks twelve demonstration packs including seven genuine 360°/180° spheres; the corrected Android APK (1.1.1/code 6) is installed on Quest 3S with physical wearer acceptance deferred. See the acceptance matrix for precise limits.
 
 This is a working local authoring prototype. The complete plan is not finished. [Acceptance and compatibility](Docs/ACCEPTANCE.md) records the remaining implementation, generation, headset and onsite requirements. [Walkable 3D environments](Docs/IMMERSIVE_ENVIRONMENTS_DESIGN.md) is a design for review, not implemented. Historical milestone JSON files describe their original increments; [VERIFICATION_STATUS.json](Docs/VERIFICATION_STATUS.json) records this verification run.
 
@@ -20,7 +20,7 @@ This is a working local authoring prototype. The complete plan is not finished. 
 - Compose portable multi-scene experiences with completion/release gates. Reuse custom templates or eight distinct blank environment layouts.
 - Place client text/image overlays, author guide paths and timed highlights, and synchronize narration with pause/seek cues.
 - Prepare separate image and H.264 video delivery copies while retaining originals and checksums.
-- Check the required structure of the five pilot workflows without treating those checks as client acceptance.
+- Check the required structure of the five pilot workflows without treating those checks as client acceptance. A 360° plate satisfies the 180° source requirement, since a full sphere contains the front hemisphere; the plate label must still state what was captured.
 - Import WAV narration or record local PCM narration. Preserve original sources, rights/credit information and revisions in source-library backups.
 - Prepare Meshy preview/refinement and ElevenLabs narration requests; the local worker persists submissions, receipts and uncertain states. Real paid-output acceptance remains pending.
 - Preview and export a self-contained, versioned package. Restore media from IndexedDB or a package backup; native Unity consumes the browser export.
