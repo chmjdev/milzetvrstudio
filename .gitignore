@@ -17,3 +17,5 @@ Artifacts/*
 Artifacts/DeviceAcceptance/*.apk
 Artifacts/DeviceAcceptance/*.mp4
 Unity/.utmp/
+Unity/Assets/StreamingAssets/RuntimeActionBindings.json
+Unity/Assets/StreamingAssets/RuntimeActionBindings.json.meta
